@@ -36,19 +36,4 @@ class JsonSchemaProviderTest extends TestCase
 
         $this->assertEquals($config->get('specifications.path'), $loader->getPath());
     }
-
-    protected function getPackageProviders($app)
-    {
-        return [JsonSchemaProvider::class];
-    }
-
-    protected function getEnvironmentSetUp($app)
-    {
-        /**
-         * @var Config $config
-         */
-        $config = $app->make(Config::class);
-
-        $config->set('specifications.path', 'test');
-    }
 }
