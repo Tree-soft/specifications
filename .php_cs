@@ -25,7 +25,10 @@ $phpCSConfig = function () {
             'phpdoc_no_package' => true,
             'phpdoc_single_line_var_spacing' => false,
             'phpdoc_add_missing_param_annotation' => true,
-            'phpdoc_align' => false
+            'phpdoc_align' => false,
+            'phpdoc_order' => true,
+            'no_multiline_whitespace_around_double_arrow' => false
+
         ])
         ->setFinder(new ArrayIterator($files));
 };
