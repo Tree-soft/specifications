@@ -31,10 +31,8 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
                     $this->app->configPath() . '/specifications.php',
             ],
             'schema' => [
-                "{$root}/resources/schema/common/empty.json" =>
-                    $this->app->resourcePath() . 'schema/common/empty.json',
-                "{$root}/resources/schema/common/force-empty.json" =>
-                    $this->app->resourcePath() . 'schema/common/force-empty.json',
+                "{$root}/resources/schema" =>
+                    $this->app->resourcePath() . 'schema',
             ],
         ];
     }
