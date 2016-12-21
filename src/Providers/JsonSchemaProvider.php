@@ -33,6 +33,8 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
 
     public function register()
     {
+        $this->publishData();
+
         $this->app->register(ResolversProvider::class);
 
         $this->app->singleton(Loader::class, function (Application $app) {
@@ -53,5 +55,12 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
 
             $specification->setFactory($factory);
         });
+    }
+
+    protected function publishData()
+    {
+        foreach ($this->getPublishingData() as $tag => $data) {
+            $this->publishes($data, $tag);
+        }
     }
 }
