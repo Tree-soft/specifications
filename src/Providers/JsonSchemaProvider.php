@@ -32,7 +32,7 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
             ],
             'schema' => [
                 "{$root}/resources/schema" =>
-                    $this->app->resourcePath() . 'schema',
+                    $this->app->resourcePath() . '/schema',
             ],
         ];
     }
