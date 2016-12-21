@@ -23,10 +23,18 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
 
     public function getPublishingData()
     {
+        $root = dirname(dirname(__DIR__));
+
         return [
             'config' => [
-                dirname(dirname(__DIR__)).'/config/specifications.php' =>
-                    $this->app->configPath().'/specifications.php',
+                "{$root}/config/specifications.php" =>
+                    $this->app->configPath() . '/specifications.php',
+            ],
+            'schema' => [
+                "{$root}/resources/schema/common/empty.json" =>
+                    $this->app->resourcePath() . 'schema/common/empty.json',
+                "{$root}/resources/schema/common/force-empty.json" =>
+                    $this->app->resourcePath() . 'schema/common/force-empty.json',
             ],
         ];
     }

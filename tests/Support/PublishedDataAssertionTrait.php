@@ -39,5 +39,11 @@ trait PublishedDataAssertionTrait
         foreach (array_keys($data['config']) as $path) {
             $this->assertFileExists($path);
         }
+
+        $this->assertArrayHasKey('schema', $data);
+
+        foreach (array_keys($data['schema']) as $path) {
+            $this->assertFileExists($path);
+        }
     }
 }
