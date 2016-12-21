@@ -2,11 +2,14 @@
 
 namespace Mildberry\Tests\Specifications\Providers;
 
-use Mildberry\Specifications\Provider\JsonSchemaProvider;
+use Mildberry\Specifications\Providers\JsonSchemaProvider;
+use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Specifications\EntitySpecification;
 use Mildberry\Tests\Specifications\Support\PublishedDataAssertionTrait;
 use Mildberry\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
+use Rnr\Resolvers\Providers\ResolversProvider;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -24,6 +27,8 @@ class JsonSchemaProviderTest extends TestCase
 
         $this->assertPublishData($provider);
 
+        $this->assertNotEmpty($this->app->getProvider(ResolversProvider::class));
+
         /**
          * @var Config $config
          */
@@ -35,5 +40,12 @@ class JsonSchemaProviderTest extends TestCase
         $loader = $this->app->make(Loader::class);
 
         $this->assertEquals($config->get('specifications.path'), $loader->getPath());
+
+        /**
+         * @var EntitySpecification $specification
+         */
+        $specification = $this->app->make(EntitySpecification::class);
+
+        $this->assertInstanceOf(LaravelFactory::class, $specification->getFactory());
     }
 }

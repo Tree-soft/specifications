@@ -5,7 +5,7 @@ namespace Mildberry\Specifications\Specifications;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class ResponseSpecification implements SpecificationInterface
+class ResponseSpecification extends AbstractSpecification
 {
     public function check($data)
     {

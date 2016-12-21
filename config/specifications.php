@@ -4,5 +4,5 @@
  */
 
 return [
-    'path' => dirname(__DIR__).'resources/schema',
+    'path' => dirname(__DIR__) . '/resources/schema',
 ];

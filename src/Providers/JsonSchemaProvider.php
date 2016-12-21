@@ -1,12 +1,15 @@
 <?php
 
-namespace Mildberry\Specifications\Provider;
+namespace Mildberry\Specifications\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Specifications\AbstractSpecification;
 use Mildberry\Specifications\Support\PublisherInterface;
 use Illuminate\Contracts\Config\Repository as Config;
+use Rnr\Resolvers\Providers\ResolversProvider;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -30,6 +33,8 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
 
     public function register()
     {
+        $this->app->register(ResolversProvider::class);
+
         $this->app->singleton(Loader::class, function (Application $app) {
             $config = $app->make(Config::class);
 
@@ -38,6 +43,15 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
             $loader->setPath($config->get('specifications.path'));
 
             return $loader;
+        });
+
+        $this->app->afterResolving(AbstractSpecification::class, function (AbstractSpecification $specification) {
+            /**
+             * @var LaravelFactory $factory
+             */
+            $factory = $this->app->make(LaravelFactory::class);
+
+            $specification->setFactory($factory);
         });
     }
 }

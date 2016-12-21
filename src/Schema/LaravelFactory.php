@@ -2,23 +2,16 @@
 
 namespace Mildberry\Specifications\Schema;
 
-use Illuminate\Contracts\Container\Container;
 use League\JsonGuard\Dereferencer;
+use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
+use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class LaravelFactory extends Factory
+class LaravelFactory extends Factory implements ContainerAwareInterface
 {
-    /**
-     * @var Container
-     */
-    private $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
+    use ContainerAwareTrait;
 
     public function dereferencer(): Dereferencer
     {

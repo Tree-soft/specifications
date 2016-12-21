@@ -9,8 +9,15 @@ namespace Mildberry\Specifications\Support;
  */
 trait DynamicSchemaInjectorTrait
 {
-    public function __construct($schema)
+    /**
+     * @param string|object $schema
+     *
+     * @return $this
+     */
+    public function setSchema($schema)
     {
         $this->schema = $schema;
+
+        return $this;
     }
 }

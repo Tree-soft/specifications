@@ -2,7 +2,7 @@
 
 namespace Mildberry\Tests\Specifications;
 
-use Mildberry\Specifications\Provider\JsonSchemaProvider;
+use Mildberry\Specifications\Providers\JsonSchemaProvider;
 use Orchestra\Testbench\TestCase as ParentTestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 
@@ -16,13 +16,21 @@ class TestCase extends ParentTestCase
         return [JsonSchemaProvider::class];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function resolveApplicationConfiguration($app)
     {
+        parent::resolveApplicationConfiguration($app);
+
         /**
          * @var Config $config
          */
         $config = $app->make(Config::class);
 
-        $config->set('specifications.path', 'test');
+        $config->set(
+            'specifications', require dirname(__DIR__) . '/config/specifications.php'
+        );
+
+        $config->set(
+            'container', require dirname(__DIR__) . '/vendor/rnr/resolver-provider/config/container.php'
+        );
     }
 }

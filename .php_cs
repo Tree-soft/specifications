@@ -27,9 +27,10 @@ $phpCSConfig = function () {
             'phpdoc_add_missing_param_annotation' => true,
             'phpdoc_align' => false,
             'phpdoc_order' => true,
-            'no_multiline_whitespace_around_double_arrow' => false
-
+            'no_multiline_whitespace_around_double_arrow' => false,
+            'concat_space' => false,
         ])
+        ->setUsingCache(false)
         ->setFinder(new ArrayIterator($files));
 };
 
