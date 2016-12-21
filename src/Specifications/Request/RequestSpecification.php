@@ -28,6 +28,11 @@ class RequestSpecification extends AbstractSpecification
     protected $dataSchema = 'schema://common/empty';
 
     /**
+     * @var string
+     */
+    protected $routeSchema = 'schema://common/empty';
+
+    /**
      * @var HeaderSpecification
      */
     protected $headerSpecification;
@@ -43,10 +48,16 @@ class RequestSpecification extends AbstractSpecification
     protected $dataSpecification;
 
     /**
+     * @var RouteSpecification
+     */
+    protected $routeSpecification;
+
+    /**
      * @param RequestInterface $request
      */
     public function check($request)
     {
+        $this->getRouteSpecification()->check($request->getRoute());
         $this->getHeaderSpecification()->check($request->getHeaders());
         $this->getQuerySpecification()->check($request->getQuery());
         $this->getDataSpecification()->check($request->getData());
@@ -86,6 +97,15 @@ class RequestSpecification extends AbstractSpecification
         }
 
         return $this->dataSpecification;
+    }
+
+    public function getRouteSpecification(): RouteSpecification
+    {
+        if (empty($this->routeSpecification)) {
+            $this->routeSpecification = $this->createBlock(RouteSpecification::class, $this->routeSchema);
+        }
+
+        return $this->routeSpecification;
     }
 
     /**

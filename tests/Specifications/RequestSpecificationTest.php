@@ -9,6 +9,7 @@ use Mildberry\Tests\Specifications\Mocks\RequestMock;
 use Mildberry\Tests\Specifications\Mocks\Specifications\EmptyQuerySpecification;
 use Mildberry\Tests\Specifications\Mocks\Specifications\HeaderTeapotSpecification;
 use Mildberry\Tests\Specifications\Mocks\Specifications\IntegerIdSpecification;
+use Mildberry\Tests\Specifications\Mocks\Specifications\RouteTestSpecification;
 use Mildberry\Tests\Specifications\TestCase;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Exceptions\EntityValidateException;
@@ -107,6 +108,19 @@ class RequestSpecificationTest extends TestCase
                 $headers, [[
                     'keyword' => 'enum',
                     'message' => 'Value "Bosch XXX" is not one of: ["Bosch 123","Vitek"]',
+                ]],
+            ],
+            'route' => [
+                $schemaMap,
+                RouteTestSpecification::class,
+                (new RequestMock())
+                    ->setRoute($data),
+                $data, [[
+                    'keyword' => 'type',
+                    'message' => 'Value "test" is not a(n) "integer"',
+                ], [
+                    'keyword' => 'required',
+                    'message' => 'Required properties missing: ["name"]',
                 ]],
             ],
         ];

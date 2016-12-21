@@ -21,4 +21,9 @@ interface RequestInterface
      * @return array
      */
     public function getData(): array;
+
+    /**
+     * @return array
+     */
+    public function getRoute(): array;
 }

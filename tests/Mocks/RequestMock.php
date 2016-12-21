@@ -25,6 +25,11 @@ class RequestMock implements RequestInterface
     private $data = [];
 
     /**
+     * @var array
+     */
+    private $route = [];
+
+    /**
      * @return array
      */
     public function getHeaders(): array
@@ -80,6 +85,26 @@ class RequestMock implements RequestInterface
     public function setData(array $data)
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoute(): array
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param array $route
+     *
+     * @return $this
+     */
+    public function setRoute(array $route)
+    {
+        $this->route = $route;
 
         return $this;
     }
