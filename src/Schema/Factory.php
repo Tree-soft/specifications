@@ -48,7 +48,7 @@ class Factory
      */
     public function validator($data, $schema): Validator
     {
-        $validator = $this->createValidator($data, $schema);
+        $validator = $this->createValidator($this->prepareData($data), $schema);
 
         return $validator;
     }
@@ -56,5 +56,10 @@ class Factory
     protected function createValidator($data, $schema): Validator
     {
         return new Validator($data, $this->schema($schema));
+    }
+
+    public function prepareData($data)
+    {
+        return (object) $data;
     }
 }

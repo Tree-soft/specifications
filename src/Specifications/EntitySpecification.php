@@ -17,6 +17,9 @@ class EntitySpecification extends AbstractSpecification
 
         if ($validator->fails()) {
             $exception = new EntityValidateException('Cannot validate object.');
+            $exception
+                ->setData($data)
+                ->setErrors($validator->errors());
 
             throw $exception;
         }

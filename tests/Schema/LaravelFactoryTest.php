@@ -40,6 +40,6 @@ class LaravelFactoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->factory = new LaravelFactory($this->app);
+        $this->factory = $this->app->make(LaravelFactory::class);
     }
 }

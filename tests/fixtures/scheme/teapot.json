@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "X-TEAPOT": {
+            "type": "string",
+            "enum": ["Bosch 123", "Vitek"]
+        }
+    }
+}
