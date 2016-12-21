@@ -7,7 +7,7 @@ use Exception;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class EntityValidateException extends Exception
+class EntityValidationException extends Exception
 {
     /**
      * @var array

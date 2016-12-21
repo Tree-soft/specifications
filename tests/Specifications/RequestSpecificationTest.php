@@ -2,6 +2,10 @@
 
 namespace Mildberry\Tests\Specifications\Specifications;
 
+use Mildberry\Specifications\Exceptions\DataValidationException;
+use Mildberry\Specifications\Exceptions\HeaderValidationException;
+use Mildberry\Specifications\Exceptions\QueryValidationException;
+use Mildberry\Specifications\Exceptions\RouteValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
 use Mildberry\Specifications\Specifications\Request\RequestSpecification;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
@@ -12,7 +16,7 @@ use Mildberry\Tests\Specifications\Mocks\Specifications\IntegerIdSpecification;
 use Mildberry\Tests\Specifications\Mocks\Specifications\RouteTestSpecification;
 use Mildberry\Tests\Specifications\TestCase;
 use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Exceptions\EntityValidateException;
+use Mildberry\Specifications\Exceptions\EntityValidationException;
 use League\JsonGuard\ValidationError;
 
 /**
@@ -35,10 +39,11 @@ class RequestSpecificationTest extends TestCase
      * @param RequestInterface $request
      * @param array $data
      * @param array $expected
+     * @param string $exceptionClass
      */
     public function testWrongSpecification(
         array $schemaMap, string $class, RequestInterface $request,
-        array $data, array $expected
+        array $data, array $expected, string $exceptionClass = null
     ) {
         $this->app->instance(Loader::class, new LoaderMock($schemaMap));
 
@@ -50,7 +55,11 @@ class RequestSpecificationTest extends TestCase
         try {
             $specification->check($request);
             $this->fail('Request should be failed');
-        } catch (EntityValidateException $e) {
+        } catch (EntityValidationException $e) {
+            if (isset($exceptionClass)) {
+                $this->assertInstanceOf($exceptionClass, $e);
+            }
+
             $this->assertEquals($data, $e->getData());
             $this->assertValidationsError($expected, $e->getErrors());
         }
@@ -89,6 +98,7 @@ class RequestSpecificationTest extends TestCase
                     'keyword' => 'required',
                     'message' => 'Required properties missing: ["name"]',
                 ]],
+                DataValidationException::class,
             ],
             'query' => [
                 $schemaMap,
@@ -99,6 +109,7 @@ class RequestSpecificationTest extends TestCase
                     'keyword' => 'additionalProperties',
                     'message' => 'Additional properties found which are not allowed: "id"',
                 ]],
+                QueryValidationException::class,
             ],
             'header' => [
                 $schemaMap,
@@ -109,6 +120,7 @@ class RequestSpecificationTest extends TestCase
                     'keyword' => 'enum',
                     'message' => 'Value "Bosch XXX" is not one of: ["Bosch 123","Vitek"]',
                 ]],
+                HeaderValidationException::class,
             ],
             'route' => [
                 $schemaMap,
@@ -122,6 +134,7 @@ class RequestSpecificationTest extends TestCase
                     'keyword' => 'required',
                     'message' => 'Required properties missing: ["name"]',
                 ]],
+                RouteValidationException::class,
             ],
         ];
     }

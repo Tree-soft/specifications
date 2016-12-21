@@ -2,6 +2,7 @@
 
 namespace Mildberry\Specifications\Specifications\Request;
 
+use Mildberry\Specifications\Exceptions\EntityValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
 use Mildberry\Specifications\Specifications\AbstractSpecification;
 
@@ -54,6 +55,8 @@ class RequestSpecification extends AbstractSpecification
 
     /**
      * @param RequestInterface $request
+     *
+     * @throws EntityValidationException
      */
     public function check($request)
     {

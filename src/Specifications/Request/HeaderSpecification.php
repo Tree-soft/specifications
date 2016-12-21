@@ -2,6 +2,8 @@
 
 namespace Mildberry\Specifications\Specifications\Request;
 
+use Mildberry\Specifications\Exceptions\EntityValidationException;
+use Mildberry\Specifications\Exceptions\HeaderValidationException;
 use Mildberry\Specifications\Specifications\EntitySpecification;
 use Mildberry\Specifications\Support\DynamicSchemaInjectorTrait;
 
@@ -11,4 +13,9 @@ use Mildberry\Specifications\Support\DynamicSchemaInjectorTrait;
 class HeaderSpecification extends EntitySpecification
 {
     use DynamicSchemaInjectorTrait;
+
+    public function createException(string $message): EntityValidationException
+    {
+        return new HeaderValidationException($message);
+    }
 }
