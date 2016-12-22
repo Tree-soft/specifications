@@ -20,7 +20,9 @@ class Factory
     {
         $dereferencer = $this->dereferencer();
 
-        return $dereferencer->dereference($schema);
+        $data = $dereferencer->dereference($schema);
+
+        return $data;
     }
 
     /**
