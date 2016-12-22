@@ -7,16 +7,12 @@ use Mildberry\Specifications\Exceptions\EntityValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
 use Mildberry\Specifications\Specifications\Request\DynamicRequestSpecification;
 use Mildberry\Specifications\Specifications\Request\RequestSpecification;
-use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
-use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class Request extends FormRequest implements ContainerAwareInterface, RequestInterface
+class Request extends FormRequest implements RequestInterface
 {
-    use ContainerAwareTrait;
-
     /**
      * @var string
      */
