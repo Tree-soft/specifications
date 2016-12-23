@@ -24,9 +24,15 @@ class ObjectBuilder extends AbstractBuilder
      */
     private $factory;
 
+    /**
+     * @var TypeExtractor
+     */
+    private $extractor;
+
     public function __construct(BuilderFactory $factory)
     {
         $this->factory = $factory;
+        $this->extractor = new TypeExtractor();
     }
 
     public function build(): string
@@ -115,7 +121,7 @@ class ObjectBuilder extends AbstractBuilder
         $phpDoc = $this->container->make(PhpDocProperty::class);
 
         $phpDoc
-            ->setType($schema->type);
+            ->setType($this->extractor->extract($schema));
 
         return $this->factory
             ->property($name)
@@ -131,7 +137,7 @@ class ObjectBuilder extends AbstractBuilder
         $phpDoc = $this->container->make(PhpDocFunction::class);
 
         $phpDoc
-            ->setReturnType($schema->type);
+            ->setReturnType($this->extractor->extract($schema));
 
         $return = new Return_(new PropertyFetch(new Expr\Variable('this'), $name));
 
@@ -152,7 +158,7 @@ class ObjectBuilder extends AbstractBuilder
 
         $phpDoc
             ->setParams([
-                $name => $schema->type,
+                $name => $this->extractor->extract($schema),
             ])
             ->setReturnType('$this');
 

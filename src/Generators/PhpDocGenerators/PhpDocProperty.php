@@ -7,8 +7,6 @@ namespace Mildberry\Specifications\Generators\PhpDocGenerators;
  */
 class PhpDocProperty extends AbstractGenerator
 {
-    use ObjectTypeTrait;
-
     /**
      * @var string
      */
@@ -34,9 +32,9 @@ class PhpDocProperty extends AbstractGenerator
      *
      * @return $this
      */
-    public function setType(string $type)
+    public function setType($type)
     {
-        $this->type = $this->convertType($type);
+        $this->type = $type;
 
         return $this;
     }

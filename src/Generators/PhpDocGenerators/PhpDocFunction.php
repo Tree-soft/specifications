@@ -7,8 +7,6 @@ namespace Mildberry\Specifications\Generators\PhpDocGenerators;
  */
 class PhpDocFunction extends AbstractGenerator
 {
-    use ObjectTypeTrait;
-
     /**
      * @var array
      */
@@ -42,9 +40,7 @@ class PhpDocFunction extends AbstractGenerator
      */
     public function setParams(array $params)
     {
-        $this->params = array_map(function ($type) {
-            return $this->convertType($type);
-        }, $params);
+        $this->params = $params;
 
         return $this;
     }
@@ -62,9 +58,9 @@ class PhpDocFunction extends AbstractGenerator
      *
      * @return $this
      */
-    public function setReturnType(string $returnType)
+    public function setReturnType($returnType)
     {
-        $this->returnType = $this->convertType($returnType);
+        $this->returnType = $returnType;
 
         return $this;
     }
