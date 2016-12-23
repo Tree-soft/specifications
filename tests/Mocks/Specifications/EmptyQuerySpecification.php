@@ -2,12 +2,12 @@
 
 namespace Mildberry\Tests\Specifications\Mocks\Specifications;
 
-use Mildberry\Specifications\Specifications\Request\RequestSpecification;
+use Mildberry\Specifications\Checkers\Request\RequestChecker;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class EmptyQuerySpecification extends RequestSpecification
+class EmptyQuerySpecification extends RequestChecker
 {
     protected $querySchema = 'schema://common/force-empty';
 }

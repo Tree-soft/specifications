@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Specifications\Request;
+namespace Mildberry\Specifications\Checkers\Request;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class DynamicRequestSpecification extends RequestSpecification
+class DynamicRequestChecker extends RequestChecker
 {
     /**
      * @return string

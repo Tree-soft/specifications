@@ -1,17 +1,16 @@
 <?php
 
-namespace Mildberry\Specifications\Specifications\Request;
+namespace Mildberry\Specifications\Checkers\Request;
 
 use Mildberry\Specifications\Exceptions\EntityValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
-use Mildberry\Specifications\Specifications\AbstractSpecification;
+use Mildberry\Specifications\Checkers\AbstractChecker;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  *
- * @method
  */
-class RequestSpecification extends AbstractSpecification
+class RequestChecker extends AbstractChecker
 {
     /**
      * @var string
@@ -34,22 +33,22 @@ class RequestSpecification extends AbstractSpecification
     protected $routeSchema = 'schema://common/empty';
 
     /**
-     * @var HeaderSpecification
+     * @var HeaderChecker
      */
     protected $headerSpecification;
 
     /**
-     * @var QuerySpecification
+     * @var QueryChecker
      */
     protected $querySpecification;
 
     /**
-     * @var DataSpecification
+     * @var DataChecker
      */
     protected $dataSpecification;
 
     /**
-     * @var RouteSpecification
+     * @var RouteChecker
      */
     protected $routeSpecification;
 
@@ -67,45 +66,45 @@ class RequestSpecification extends AbstractSpecification
     }
 
     /**
-     * @return HeaderSpecification
+     * @return HeaderChecker
      */
-    public function getHeaderSpecification(): HeaderSpecification
+    public function getHeaderSpecification(): HeaderChecker
     {
         if (empty($this->headerSpecification)) {
-            $this->headerSpecification = $this->createBlock(HeaderSpecification::class, $this->headerSchema);
+            $this->headerSpecification = $this->createBlock(HeaderChecker::class, $this->headerSchema);
         }
 
         return $this->headerSpecification;
     }
 
     /**
-     * @return QuerySpecification
+     * @return QueryChecker
      */
-    public function getQuerySpecification(): QuerySpecification
+    public function getQuerySpecification(): QueryChecker
     {
         if (empty($this->querySpecification)) {
-            $this->querySpecification = $this->createBlock(QuerySpecification::class, $this->querySchema);
+            $this->querySpecification = $this->createBlock(QueryChecker::class, $this->querySchema);
         }
 
         return $this->querySpecification;
     }
 
     /**
-     * @return DataSpecification
+     * @return DataChecker
      */
-    public function getDataSpecification(): DataSpecification
+    public function getDataSpecification(): DataChecker
     {
         if (empty($this->dataSpecification)) {
-            $this->dataSpecification = $this->createBlock(DataSpecification::class, $this->dataSchema);
+            $this->dataSpecification = $this->createBlock(DataChecker::class, $this->dataSchema);
         }
 
         return $this->dataSpecification;
     }
 
-    public function getRouteSpecification(): RouteSpecification
+    public function getRouteSpecification(): RouteChecker
     {
         if (empty($this->routeSpecification)) {
-            $this->routeSpecification = $this->createBlock(RouteSpecification::class, $this->routeSchema);
+            $this->routeSpecification = $this->createBlock(RouteChecker::class, $this->routeSchema);
         }
 
         return $this->routeSpecification;
@@ -115,7 +114,7 @@ class RequestSpecification extends AbstractSpecification
      * @param string $class
      * @param string|object $schema
      *
-     * @return AbstractSpecification
+     * @return AbstractChecker
      */
     protected function createBlock(string $class, $schema)
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Specifications;
+namespace Mildberry\Tests\Specifications\Checkers;
 
 use Mildberry\Specifications\Exceptions\DataValidationException;
 use Mildberry\Specifications\Exceptions\HeaderValidationException;
 use Mildberry\Specifications\Exceptions\QueryValidationException;
 use Mildberry\Specifications\Exceptions\RouteValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
-use Mildberry\Specifications\Specifications\Request\RequestSpecification;
+use Mildberry\Specifications\Checkers\Request\RequestChecker;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\Mocks\RequestMock;
 use Mildberry\Tests\Specifications\Mocks\Specifications\EmptyQuerySpecification;
@@ -22,11 +22,11 @@ use League\JsonGuard\ValidationError;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class RequestSpecificationTest extends TestCase
+class RequestCheckerTest extends TestCase
 {
     public function testEmpty()
     {
-        $specification = $this->app->make(RequestSpecification::class);
+        $specification = $this->app->make(RequestChecker::class);
 
         $specification->check(new RequestMock());
     }
@@ -48,7 +48,7 @@ class RequestSpecificationTest extends TestCase
         $this->app->instance(Loader::class, new LoaderMock($schemaMap));
 
         /**
-         * @var RequestSpecification $specification
+         * @var RequestChecker $specification
          */
         $specification = $this->app->make($class);
 

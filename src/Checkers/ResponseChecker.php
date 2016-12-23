@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Specifications;
+namespace Mildberry\Specifications\Checkers;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class ResponseSpecification extends AbstractSpecification
+class ResponseChecker extends AbstractChecker
 {
     public function check($data)
     {

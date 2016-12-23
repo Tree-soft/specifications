@@ -6,7 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Specifications\AbstractSpecification;
+use Mildberry\Specifications\Checkers\AbstractChecker;
 use Mildberry\Specifications\Support\PublisherInterface;
 use Illuminate\Contracts\Config\Repository as Config;
 use Rnr\Resolvers\Providers\ResolversProvider;
@@ -53,7 +53,7 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
             return $loader;
         });
 
-        $this->app->afterResolving(AbstractSpecification::class, function (AbstractSpecification $specification) {
+        $this->app->afterResolving(AbstractChecker::class, function (AbstractChecker $specification) {
             /**
              * @var LaravelFactory $factory
              */

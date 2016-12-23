@@ -1,21 +1,21 @@
 <?php
 
-namespace Mildberry\Specifications\Specifications\Request;
+namespace Mildberry\Specifications\Checkers\Request;
 
-use Mildberry\Specifications\Exceptions\DataValidationException;
 use Mildberry\Specifications\Exceptions\EntityValidationException;
-use Mildberry\Specifications\Specifications\EntitySpecification;
+use Mildberry\Specifications\Exceptions\RouteValidationException;
+use Mildberry\Specifications\Checkers\EntityChecker;
 use Mildberry\Specifications\Support\DynamicSchemaInjectorTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class DataSpecification extends EntitySpecification
+class RouteChecker extends EntityChecker
 {
     use DynamicSchemaInjectorTrait;
 
     public function createException(string $message): EntityValidationException
     {
-        return new DataValidationException($message);
+        return new RouteValidationException($message);
     }
 }

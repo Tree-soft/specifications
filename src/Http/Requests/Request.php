@@ -5,8 +5,8 @@ namespace Mildberry\Specifications\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Mildberry\Specifications\Exceptions\EntityValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
-use Mildberry\Specifications\Specifications\Request\DynamicRequestSpecification;
-use Mildberry\Specifications\Specifications\Request\RequestSpecification;
+use Mildberry\Specifications\Checkers\Request\DynamicRequestChecker;
+use Mildberry\Specifications\Checkers\Request\RequestChecker;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -42,12 +42,12 @@ class Request extends FormRequest implements RequestInterface
         $specification->check($this);
     }
 
-    protected function createSpecification(): RequestSpecification
+    protected function createSpecification(): RequestChecker
     {
         /**
-         * @var DynamicRequestSpecification $specification
+         * @var DynamicRequestChecker $specification
          */
-        $specification = $this->container->make(DynamicRequestSpecification::class);
+        $specification = $this->container->make(DynamicRequestChecker::class);
 
         $specification
             ->setHeaderSchema($this->headerSchema)

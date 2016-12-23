@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Specifications\Specifications;
+namespace Mildberry\Specifications\Checkers;
 
 use Mildberry\Specifications\Exceptions\EntityValidationException;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class EntitySpecification extends AbstractSpecification
+class EntityChecker extends AbstractChecker
 {
     protected $schema;
 

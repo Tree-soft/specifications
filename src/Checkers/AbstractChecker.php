@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Specifications;
+namespace Mildberry\Specifications\Checkers;
 
 use Mildberry\Specifications\Schema\Factory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
@@ -9,7 +9,7 @@ use Rnr\Resolvers\Traits\ContainerAwareTrait;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-abstract class AbstractSpecification implements ContainerAwareInterface
+abstract class AbstractChecker implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
