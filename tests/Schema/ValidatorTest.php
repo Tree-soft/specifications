@@ -2,12 +2,10 @@
 
 namespace Mildberry\Tests\Specifications\Schema;
 
-use League\JsonGuard\Reference;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
-
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -19,13 +17,14 @@ class ValidatorTest extends TestCase
      */
     private $factory;
 
-    public function testNesting() {
+    public function testNesting()
+    {
         $validator = $this->factory->validator([
             'name' => 'Sergei',
             'phone' => '+7-913-...',
             'company' => [
-                'name' => 'Mildberry'
-            ]
+                'name' => 'Mildberry',
+            ],
         ], 'schema://client');
 
         $this->assertTrue($validator->fails());
@@ -35,11 +34,11 @@ class ValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $fixture = dirname(__DIR__) . '/fixtures/scheme';
+        $fixture = dirname(__DIR__) . '/fixtures/schema';
 
         $this->app->instance(Loader::class, new LoaderMock([
             'client' => "{$fixture}/client.json",
-            'company' => "{$fixture}/company.json"
+            'company' => "{$fixture}/company.json",
         ]));
 
         $this->factory = $this->app->make(LaravelFactory::class);

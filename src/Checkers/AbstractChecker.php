@@ -2,7 +2,7 @@
 
 namespace Mildberry\Specifications\Checkers;
 
-use Mildberry\Specifications\Schema\Factory;
+use Mildberry\Specifications\Support\FactoryInjectorTrait;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
@@ -12,31 +12,7 @@ use Rnr\Resolvers\Traits\ContainerAwareTrait;
 abstract class AbstractChecker implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    /**
-     * @var Factory
-     */
-    protected $factory;
+    use FactoryInjectorTrait;
 
     abstract public function check($data);
-
-    /**
-     * @return Factory
-     */
-    public function getFactory(): Factory
-    {
-        return $this->factory;
-    }
-
-    /**
-     * @param Factory $factory
-     *
-     * @return $this
-     */
-    public function setFactory(Factory $factory)
-    {
-        $this->factory = $factory;
-
-        return $this;
-    }
 }

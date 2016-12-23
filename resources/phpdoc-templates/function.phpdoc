@@ -1,0 +1,11 @@
+/**
+@foreach($params as $name => $type)
+ * {{'@param'}} {{ $type }} ${{ $name }}
+@endforeach
+@if ((count($params) > 0) && isset($returnType))
+ *
+@endif
+@if (isset($returnType))
+ * {{'@return'}} {{ $returnType }}
+@endif
+ */

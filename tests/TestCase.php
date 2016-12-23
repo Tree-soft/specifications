@@ -33,4 +33,14 @@ class TestCase extends ParentTestCase
             'container', require dirname(__DIR__) . '/vendor/rnr/resolver-provider/config/container.php'
         );
     }
+
+    protected function getFixturePath(string $path = '')
+    {
+        return rtrim(__DIR__ . "/fixtures/{$path}", '/');
+    }
+
+    protected function getResourcePath(string $path = '')
+    {
+        return rtrim(dirname(__DIR__) . "/resources/{$path}", '/');
+    }
 }

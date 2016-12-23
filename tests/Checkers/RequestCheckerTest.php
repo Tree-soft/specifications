@@ -75,8 +75,8 @@ class RequestCheckerTest extends TestCase
             'X-TEAPOT' => 'Bosch XXX',
         ];
 
-        $fixture = dirname(__DIR__) . '/fixtures/scheme';
-        $resource = dirname(dirname(__DIR__)) . '/resources/schema';
+        $fixture = $this->getFixturePath('schema');
+        $resource = $this->getResourcePath('schema');
 
         $schemaMap = [
             'common/force-empty' => "{$resource}/common/force-empty.json",
