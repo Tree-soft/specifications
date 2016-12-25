@@ -15,10 +15,20 @@ class Factory extends BuilderFactory implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
+    /**
+     * @var array|AbstractBuilder[]
+     */
     protected $types = [
         'object' => ObjectBuilder::class,
     ];
 
+    /**
+     * @param object $schema
+     *
+     * @throws UnknownTypeException
+     *
+     * @return AbstractBuilder
+     */
     public function create($schema): AbstractBuilder
     {
         if (empty($schema->type) || empty($this->types[$schema->type])) {

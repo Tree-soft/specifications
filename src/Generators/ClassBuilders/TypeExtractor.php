@@ -9,4 +9,17 @@ use Mildberry\Specifications\Generators\TypeExtractor as ParentTypeExtractor;
  */
 class TypeExtractor extends ParentTypeExtractor
 {
+    /**
+     * @param object $schema
+     *
+     * @return null|string
+     */
+    public function extractClass($schema)
+    {
+        if (isset($schema->classGenerator->class)) {
+            $class = $this->extendNamespace($schema->classGenerator->class);
+        }
+
+        return $class ?? parent::extractClass($schema);
+    }
 }

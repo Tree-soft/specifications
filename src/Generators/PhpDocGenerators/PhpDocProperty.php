@@ -12,6 +12,9 @@ class PhpDocProperty extends AbstractGenerator
      */
     private $type;
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->loadTemplate('property', [

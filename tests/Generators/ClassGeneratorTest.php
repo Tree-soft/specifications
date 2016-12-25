@@ -2,6 +2,7 @@
 
 namespace Mildberry\Tests\Specifications\Generators;
 
+use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
 use Mildberry\Specifications\Generators\ClassGenerator;
 use Mildberry\Specifications\Schema\Factory;
 use Mildberry\Specifications\Schema\LaravelFactory;
@@ -34,7 +35,7 @@ class ClassGeneratorTest extends TestCase
     {
         $schema = $this->factory->schema('schema://entities/company');
 
-        $this->generator->setNamespace('\Mildberry\Tests\Specifications\Fixtures');
+        $this->generator->getExtractor()->setNamespace('\Mildberry\Tests\Specifications\Fixtures');
         $this->generator->generate($schema);
 
         $this->assertEquals([
@@ -53,17 +54,22 @@ class ClassGeneratorTest extends TestCase
         $this->assertEquals($expected, $this->generator->getFilename($schema));
     }
 
+    /**
+     * @return array
+     */
     public function fileNamesProvider()
     {
         return [
             'simple' => [
                 'Mock/Company.php', (object) [
                     'id' => 'schema://mock/company',
+                    'type' => 'object',
                 ],
             ],
             'hyphen' => [
                 'Mock/HyphenClass.php', (object) [
                     'id' => 'schema://mock/hyphen-class',
+                    'type' => 'object',
                 ],
             ],
             'class' => [
@@ -72,6 +78,7 @@ class ClassGeneratorTest extends TestCase
                     'classGenerator' => (object) [
                         'class' => 'TestNamespace\TestClass',
                     ],
+                    'type' => 'object',
                 ],
             ],
             'fileName' => [
@@ -80,48 +87,8 @@ class ClassGeneratorTest extends TestCase
                     'classGenerator' => (object) [
                         'filename' => 'Test/Test.php',
                     ],
+                    'type' => 'object',
                 ],
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider fileClassesProvider
-     *
-     * @param string $expected
-     * @param object $schema
-     * @param string $namespace
-     */
-    public function testGetClassName(string $expected, $schema, string $namespace)
-    {
-        $this->generator->setNamespace($namespace);
-
-        $this->assertEquals($expected, $this->generator->getClassName($schema));
-    }
-
-    public function fileClassesProvider()
-    {
-        return [
-            'simple' => [
-                '\TestNamespace\TestClass', (object) [
-                    'id' => 'schema://mock/company',
-                    'classGenerator' => (object) [
-                        'class' => 'TestNamespace\TestClass',
-                    ],
-                ], '\\',
-            ],
-            'root' => [
-                '\Entities\TestNamespace\TestClass', (object) [
-                    'id' => 'schema://mock/company',
-                    'classGenerator' => (object) [
-                        'class' => 'TestNamespace\TestClass',
-                    ],
-                ], '\Entities',
-            ],
-            'byId' => [
-                '\Entities\Mock\Company', (object) [
-                    'id' => 'schema://mock/company',
-                ], '\Entities',
             ],
         ];
     }
@@ -133,7 +100,9 @@ class ClassGeneratorTest extends TestCase
         $this->output = $this->app->make(OutputMock::class);
 
         $this->generator = $this->app->make(ClassGenerator::class);
-        $this->generator->setOutput($this->output);
+        $this->generator
+            ->setOutput($this->output)
+            ->setExtractor(new TypeExtractor());
 
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/company' => $this->getFixturePath('schema/company.json'),

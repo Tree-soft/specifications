@@ -14,5 +14,8 @@ abstract class AbstractChecker implements ContainerAwareInterface
     use ContainerAwareTrait;
     use FactoryInjectorTrait;
 
+    /**
+     * @param mixed $data
+     */
     abstract public function check($data);
 }

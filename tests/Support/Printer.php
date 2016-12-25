@@ -11,6 +11,11 @@ use PhpParser\Node\Stmt;
  */
 class Printer extends Standard
 {
+    /**
+     * @param Stmt\Namespace_ $node
+     *
+     * @return string
+     */
     protected function pStmt_Namespace(Stmt\Namespace_ $node)
     {
         $namespace = ltrim($this->p($node->name), '\\');
@@ -23,6 +28,11 @@ class Printer extends Standard
         }
     }
 
+    /**
+     * @param Stmt\ClassMethod $node
+     *
+     * @return string
+     */
     protected function pStmt_ClassMethod(Stmt\ClassMethod $node)
     {
         return $this->pModifiers($node->flags)
@@ -34,6 +44,12 @@ class Printer extends Standard
                 : ';');
     }
 
+    /**
+     * @param array $nodes
+     * @param bool $indent
+     *
+     * @return mixed|string
+     */
     protected function pStmts(array $nodes, $indent = true)
     {
         $result = '';
@@ -66,6 +82,11 @@ class Printer extends Standard
         }
     }
 
+    /**
+     * @param array $stmts
+     *
+     * @return string
+     */
     public function prettyPrintFile(array $stmts)
     {
         $result = parent::prettyPrintFile($stmts);

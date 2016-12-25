@@ -19,11 +19,20 @@ abstract class AbstractGenerator implements ContainerAwareInterface
      */
     protected $path;
 
+    /**
+     * AbstractGenerator constructor.
+     */
     public function __construct()
     {
         $this->path = dirname(dirname(dirname(__DIR__))) . '/resources/phpdoc-templates';
     }
 
+    /**
+     * @param string $file
+     * @param array $data
+     *
+     * @return string
+     */
     public function loadTemplate(string $file, array $data = []): string
     {
         /**

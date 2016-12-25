@@ -5,6 +5,7 @@ namespace Mildberry\Specifications\Generators;
 use League\JsonGuard\Reference;
 use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
 use Mildberry\Specifications\Generators\ClassBuilders\Factory;
+use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -12,9 +13,9 @@ use Mildberry\Specifications\Generators\ClassBuilders\Factory;
 class ClassGenerator extends AbstractGenerator
 {
     /**
-     * @var string
+     * @var TypeExtractor
      */
-    private $namespace = '\\';
+    private $extractor;
 
     /**
      * @param object $schema
@@ -42,93 +43,7 @@ class ClassGenerator extends AbstractGenerator
     {
         return
             $schema->classGenerator->filename ??
-            $this->getFileNameByClass($schema) ??
-            $this->getFilenameById($schema);
-    }
-
-    /**
-     * @param object $schema
-     *
-     * @throws UndefinedSchemaIdException
-     *
-     * @return string
-     */
-    protected function getFilenameById($schema): string
-    {
-        $parts = $this->getSchemaIdParts($schema);
-
-        return implode(DIRECTORY_SEPARATOR, $parts) . '.php';
-    }
-
-    /**
-     * @param object $schema
-     *
-     * @return string
-     */
-    public function getClassName($schema): string
-    {
-        $namespace = $schema->classGenerator->class ??
-            $this->getClassNameById($schema);
-
-        $parts = array_filter(
-            array_map(function ($namespace) {
-                return trim($namespace, '\\');
-            }, [$this->namespace, $namespace])
-        );
-
-        return '\\' . implode('\\', $parts);
-    }
-
-    /**
-     * @param object $schema
-     *
-     * @return string
-     */
-    protected function getClassNameById($schema): string
-    {
-        $parts = $this->getSchemaIdParts($schema);
-
-        return implode('\\', $parts);
-    }
-
-    /**
-     * @param object $schema
-     *
-     * @throws UndefinedSchemaIdException
-     *
-     * @return array
-     */
-    protected function getSchemaIdParts($schema): array
-    {
-        if (empty($schema->id)) {
-            $exception = new UndefinedSchemaIdException('Undefined id of schema');
-
-            $exception
-                ->setSchema($schema);
-
-            throw $exception;
-        }
-
-        $url = parse_url($schema->id);
-
-        $parts = explode('/', $url['path'] ?? '');
-
-        if ($url['scheme'] == 'schema') {
-            array_unshift($parts, $url['host']);
-        }
-
-        return array_map(
-            function ($part) {
-                return studly_case(str_replace('-', '_', $part));
-            }, array_filter(
-                array_map(function ($part) {
-                    return trim($part, '/');
-                }, $parts),
-                function ($part) {
-                    return !empty(trim($part, '/'));
-                }
-            )
-        );
+            $this->getFileNameByClass($schema);
     }
 
     /**
@@ -138,11 +53,11 @@ class ClassGenerator extends AbstractGenerator
      */
     protected function getFileNameByClass($schema)
     {
-        if (empty($schema->classGenerator->class)) {
-            return null;
-        }
+        $class = $this->extractor->getShortName(
+            $this->extractor->extractClass($schema)
+        );
 
-        return str_replace('\\', DIRECTORY_SEPARATOR, $schema->classGenerator->class) . '.php';
+        return str_replace('\\', DIRECTORY_SEPARATOR, ltrim($class, '\\')) . '.php';
     }
 
     /**
@@ -170,21 +85,21 @@ class ClassGenerator extends AbstractGenerator
     }
 
     /**
-     * @return string
+     * @return TypeExtractor
      */
-    public function getNamespace(): string
+    public function getExtractor(): TypeExtractor
     {
-        return $this->namespace;
+        return $this->extractor;
     }
 
     /**
-     * @param string $namespace
+     * @param TypeExtractor $extractor
      *
      * @return $this
      */
-    public function setNamespace(string $namespace)
+    public function setExtractor(TypeExtractor $extractor)
     {
-        $this->namespace = $namespace;
+        $this->extractor = $extractor;
 
         return $this;
     }

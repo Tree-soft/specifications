@@ -17,6 +17,9 @@ class PhpDocFunction extends AbstractGenerator
      */
     private $returnType;
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->loadTemplate('function', [

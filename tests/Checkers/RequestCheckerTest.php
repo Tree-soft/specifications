@@ -65,6 +65,9 @@ class RequestCheckerTest extends TestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function specificationsProvider()
     {
         $data = [
@@ -139,6 +142,10 @@ class RequestCheckerTest extends TestCase
         ];
     }
 
+    /**
+     * @param $expected
+     * @param $errors
+     */
     public function assertValidationsError($expected, $errors)
     {
         $actual = array_map(function (ValidationError $error) {

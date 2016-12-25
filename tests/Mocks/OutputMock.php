@@ -43,6 +43,12 @@ class OutputMock implements OutputInterface
         return $this;
     }
 
+    /**
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool
+     */
     public function isSaved(string $path, string $content): bool
     {
         return array_key_exists($path, $this->files) && ($this->files == $content);

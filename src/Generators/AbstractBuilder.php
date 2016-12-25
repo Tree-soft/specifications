@@ -22,6 +22,9 @@ abstract class AbstractBuilder implements ContainerAwareInterface
      */
     protected $generator;
 
+    /**
+     * @return string
+     */
     abstract public function build(): string;
 
     /**

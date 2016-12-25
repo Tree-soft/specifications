@@ -7,6 +7,7 @@ use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocFunction;
 use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocProperty;
 use Mildberry\Tests\Specifications\Support\Printer;
 use PhpParser\Builder\Class_;
+use PhpParser\Builder\Method;
 use PhpParser\Builder\Property;
 use PhpParser\BuilderFactory;
 use PhpParser\Node\Expr;
@@ -29,15 +30,25 @@ class ObjectBuilder extends AbstractBuilder
      */
     private $extractor;
 
+    /**
+     * ObjectBuilder constructor.
+     *
+     * @param BuilderFactory $factory
+     */
     public function __construct(BuilderFactory $factory)
     {
         $this->factory = $factory;
         $this->extractor = new TypeExtractor();
     }
 
+    /**
+     * @return string
+     */
     public function build(): string
     {
-        $parts = $this->getNamespace($this->generator->getClassName($this->schema));
+        $parts = $this->getNamespace(
+            $this->generator->getExtractor()->extractClass($this->schema)
+        );
 
         $class = $parts['class'];
         $namespace = $parts['namespace'];
@@ -129,6 +140,12 @@ class ObjectBuilder extends AbstractBuilder
             ->setDocComment((string) $phpDoc);
     }
 
+    /**
+     * @param string $name
+     * @param object $schema
+     *
+     * @return Method
+     */
     protected function makeGetter(string $name, $schema)
     {
         /**
@@ -149,6 +166,12 @@ class ObjectBuilder extends AbstractBuilder
             ->addStmt($return);
     }
 
+    /**
+     * @param string $name
+     * @param $schema
+     *
+     * @return Method
+     */
     protected function makeSetter(string $name, $schema)
     {
         /**

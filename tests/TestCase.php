@@ -2,6 +2,7 @@
 
 namespace Mildberry\Tests\Specifications;
 
+use Illuminate\Foundation\Application;
 use Mildberry\Specifications\Providers\JsonSchemaProvider;
 use Orchestra\Testbench\TestCase as ParentTestCase;
 use Illuminate\Contracts\Config\Repository as Config;
@@ -11,11 +12,19 @@ use Illuminate\Contracts\Config\Repository as Config;
  */
 class TestCase extends ParentTestCase
 {
+    /**
+     * @param Application $app
+     *
+     * @return array
+     */
     protected function getPackageProviders($app)
     {
         return [JsonSchemaProvider::class];
     }
 
+    /**
+     * @param Application $app
+     */
     protected function resolveApplicationConfiguration($app)
     {
         parent::resolveApplicationConfiguration($app);
@@ -34,11 +43,21 @@ class TestCase extends ParentTestCase
         );
     }
 
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
     protected function getFixturePath(string $path = '')
     {
         return rtrim(__DIR__ . "/fixtures/{$path}", '/');
     }
 
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
     protected function getResourcePath(string $path = '')
     {
         return rtrim(dirname(__DIR__) . "/resources/{$path}", '/');

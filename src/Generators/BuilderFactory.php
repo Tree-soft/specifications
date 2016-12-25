@@ -10,10 +10,17 @@ use Mildberry\Specifications\Exceptions\UnknownTypeException;
 abstract class BuilderFactory
 {
     /**
-     * @var array
+     * @var array|AbstractBuilder[]
      */
     protected $types = [];
 
+    /**
+     * @param object $schema
+     *
+     * @throws UnknownTypeException
+     *
+     * @return AbstractBuilder
+     */
     public function create($schema)
     {
         if (empty($schema->type) || $this->types[$schema->type]) {
