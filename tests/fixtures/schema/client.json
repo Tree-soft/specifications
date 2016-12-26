@@ -1,8 +1,8 @@
 {
-    "id": "schema://client",
+    "id": "schema://entities/client",
     "definitions": {
         "company": {
-            "$ref": "schema://company"
+            "$ref": "schema://entities/company"
         }
     },
     "type": "object",

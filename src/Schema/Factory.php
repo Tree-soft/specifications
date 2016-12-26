@@ -3,6 +3,7 @@
 namespace Mildberry\Specifications\Schema;
 
 use League\JsonGuard\Dereferencer;
+use League\JsonGuard\Reference;
 use League\JsonGuard\Validator;
 use Mildberry\Specifications\Support\DatePreparator;
 
@@ -22,7 +23,7 @@ class Factory
 
         $data = $dereferencer->dereference($schema);
 
-        return $data;
+        return $this->resolveReferences($data);
     }
 
     /**
@@ -56,6 +57,12 @@ class Factory
         return $validator;
     }
 
+    /**
+     * @param mixed $data
+     * @param string|object $schema
+     *
+     * @return Validator
+     */
     protected function createValidator($data, $schema): Validator
     {
         return new Validator($data, $this->schema($schema));
@@ -71,5 +78,25 @@ class Factory
         $preparator = new DatePreparator();
 
         return $preparator->prepare($data);
+    }
+
+    /**
+     * @param mixed $schema
+     *
+     * @return mixed
+     */
+    public function resolveReferences($schema)
+    {
+        while ($schema instanceof Reference) {
+            $schema = $schema->resolve();
+        }
+
+        if (is_object($schema) || is_array($schema)) {
+            foreach ($schema as &$value) {
+                $value = $this->resolveReferences($value);
+            }
+        }
+
+        return $schema;
     }
 }

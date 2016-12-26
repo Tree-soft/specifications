@@ -25,7 +25,7 @@ class ValidatorTest extends TestCase
             'company' => [
                 'name' => 'Mildberry',
             ],
-        ], 'schema://client');
+        ], 'schema://entities/client');
 
         $this->assertTrue($validator->fails());
     }
@@ -37,8 +37,8 @@ class ValidatorTest extends TestCase
         $fixture = dirname(__DIR__) . '/fixtures/schema';
 
         $this->app->instance(Loader::class, new LoaderMock([
-            'client' => "{$fixture}/client.json",
-            'company' => "{$fixture}/company.json",
+            'entities/client' => "{$fixture}/client.json",
+            'entities/company' => "{$fixture}/company.json",
         ]));
 
         $this->factory = $this->app->make(LaravelFactory::class);

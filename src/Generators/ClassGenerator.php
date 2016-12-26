@@ -2,7 +2,6 @@
 
 namespace Mildberry\Specifications\Generators;
 
-use League\JsonGuard\Reference;
 use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
 use Mildberry\Specifications\Generators\ClassBuilders\Factory;
 use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
@@ -24,10 +23,6 @@ class ClassGenerator extends AbstractGenerator
      */
     public function generate($schema)
     {
-        while ($schema instanceof Reference) {
-            $schema = $schema->resolve();
-        }
-
         $this->output->write(
             $this->getFilename($schema),
             $this->getContent($schema)
