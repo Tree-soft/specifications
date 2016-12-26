@@ -53,16 +53,16 @@ class ClassGeneratorTest extends TestCase
     public function filesProvider(): array
     {
         return [
-//            'one-file' => [
-//                [
-//                    'Entities/Company.php' => file_get_contents($this->getFixturePath('entities/Company.php')),
-//                ], 'schema://entities/company',
-//            ],
-//            'class' => [
-//                [
-//                    'Entities/Client.php' => file_get_contents($this->getFixturePath('entities/Client.php')),
-//                ], 'schema://entities/client',
-//            ],
+            'one-file' => [
+                [
+                    'Entities/Company.php' => file_get_contents($this->getFixturePath('entities/Company.php')),
+                ], 'schema://entities/company',
+            ],
+            'class' => [
+                [
+                    'Entities/Client.php' => file_get_contents($this->getFixturePath('entities/Client.php')),
+                ], 'schema://entities/client',
+            ],
             'derived-class' => [
                 [
                     'Entities/Derived/Client.php' =>

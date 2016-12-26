@@ -145,15 +145,15 @@ class ObjectBuilder extends AbstractBuilder
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    protected function getBaseClass(): string
+    protected function getBaseClass()
     {
         $baseTypes = $this->getBaseTypes();
 
         $type = array_pop($baseTypes);
 
-        return $this->extractType($type);
+        return isset($type) ? ($this->extractType($type)) : null;
     }
 
     /**
