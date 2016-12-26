@@ -58,7 +58,7 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
             return $loader;
         });
 
-        $this->app->singleton(OutputInterface::class, function (Application $app) {
+        $this->app->bind(OutputInterface::class, function (Application $app) {
             $output = $app->make(FileWriter::class);
 
             return $output;
