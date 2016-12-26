@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace Mildberry\Specifications\Support;
 
 use PhpParser\Node\Expr;
 use PhpParser\PrettyPrinter\Standard;

@@ -5,7 +5,7 @@ namespace Mildberry\Specifications\Generators\ClassBuilders;
 use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocClass;
 use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocFunction;
 use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocProperty;
-use Mildberry\Tests\Specifications\Support\Printer;
+use Mildberry\Specifications\Support\Printer;
 use PhpParser\Builder\Class_;
 use PhpParser\Builder\Method;
 use PhpParser\Builder\Property;

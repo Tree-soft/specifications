@@ -5,6 +5,7 @@ namespace Mildberry\Specifications\Console;
 use Illuminate\Console\Command;
 use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
 use Mildberry\Specifications\Generators\ClassGenerator;
+use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Support\FileWriter;
 
 /**
@@ -17,9 +18,9 @@ class ClassGeneratorCommand extends Command
      */
     protected $signature =
         'specification:class-generate
-        {--output=.: Directory to write new classes}
-        {--namespace=\: Root namespace for classes}
-        {schema*: Uri of schema files of entities that should be generated.';
+        {--output=. : Directory to write new classes}
+        {--namespace=\ : Root namespace for classes}
+        {schema* : Uri of schema files of entities that should be generated.}';
 
     /**
      * @var string
@@ -29,21 +30,22 @@ class ClassGeneratorCommand extends Command
     /**
      * @param ClassGenerator $generator
      * @param FileWriter $output
+     * @param LaravelFactory $factory
      */
-    public function handle(ClassGenerator $generator, FileWriter $output)
+    public function handle(ClassGenerator $generator, FileWriter $output, LaravelFactory $factory)
     {
         $extractor = new TypeExtractor();
 
         $extractor->setNamespace($this->option('namespace'));
 
-        $output->setPath($this->option('path'));
+        $output->setPath($this->option('output'));
 
         $generator
             ->setExtractor($extractor)
             ->setOutput($output);
 
         foreach ($this->argument('schema') as $schema) {
-            $generator->generate($schema);
+            $generator->generate($factory->schema($schema));
             $fileName = $generator->getFilename($schema);
             $this->info("{$schema} was saved to {$fileName}");
         }
