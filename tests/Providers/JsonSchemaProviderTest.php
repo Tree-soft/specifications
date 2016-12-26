@@ -2,10 +2,12 @@
 
 namespace Mildberry\Tests\Specifications\Providers;
 
+use Mildberry\Specifications\Generators\OutputInterface;
 use Mildberry\Specifications\Providers\JsonSchemaProvider;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\EntityChecker;
+use Mildberry\Specifications\Support\FileWriter;
 use Mildberry\Tests\Specifications\Support\PublishedDataAssertionTrait;
 use Mildberry\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
@@ -47,5 +49,9 @@ class JsonSchemaProviderTest extends TestCase
         $specification = $this->app->make(EntityChecker::class);
 
         $this->assertInstanceOf(LaravelFactory::class, $specification->getFactory());
+
+        $output = $this->app->make(OutputInterface::class);
+
+        $this->assertInstanceOf(FileWriter::class, $output);
     }
 }

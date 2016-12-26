@@ -4,9 +4,11 @@ namespace Mildberry\Specifications\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Mildberry\Specifications\Generators\OutputInterface;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\AbstractChecker;
+use Mildberry\Specifications\Support\FileWriter;
 use Mildberry\Specifications\Support\PublisherInterface;
 use Illuminate\Contracts\Config\Repository as Config;
 use Rnr\Resolvers\Providers\ResolversProvider;
@@ -21,6 +23,9 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
      */
     protected $app;
 
+    /**
+     * @return array
+     */
     public function getPublishingData()
     {
         $root = dirname(dirname(__DIR__));
@@ -51,6 +56,12 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
             $loader->setPath($config->get('specifications.path'));
 
             return $loader;
+        });
+
+        $this->app->singleton(OutputInterface::class, function (Application $app) {
+            $output = $app->make(FileWriter::class);
+
+            return $output;
         });
 
         $this->app->afterResolving(AbstractChecker::class, function (AbstractChecker $specification) {
