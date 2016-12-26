@@ -21,9 +21,10 @@ class FileWriter implements OutputInterface
     public function write(string $path, string $content)
     {
         $filename = $this->join([$this->path, $path]);
+        $directory = dirname($filename);
 
-        if (!file_exists($filename)) {
-            mkdir($filename, 0777, true);
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
         }
 
         file_put_contents($this->join([$this->path, $path]), $content);
