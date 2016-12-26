@@ -47,7 +47,7 @@ class ClassGeneratorCommand extends Command
         foreach ($this->argument('schema') as $value) {
             $schema = $factory->schema($value);
             $generator->generate($factory->schema($schema));
-            $fileName = $generator->getFilename($schema);
+            $fileName = $output->getPath() . DIRECTORY_SEPARATOR . $generator->getFilename($schema);
             $this->info("{$value} was saved to {$fileName}");
         }
     }
