@@ -44,10 +44,11 @@ class ClassGeneratorCommand extends Command
             ->setExtractor($extractor)
             ->setOutput($output);
 
-        foreach ($this->argument('schema') as $schema) {
+        foreach ($this->argument('schema') as $value) {
+            $schema = $factory->schema($value);
             $generator->generate($factory->schema($schema));
             $fileName = $generator->getFilename($schema);
-            $this->info("{$schema} was saved to {$fileName}");
+            $this->info("{$value} was saved to {$fileName}");
         }
     }
 }
