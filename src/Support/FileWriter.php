@@ -4,7 +4,6 @@ namespace Mildberry\Specifications\Support;
 
 use Mildberry\Specifications\Generators\OutputInterface;
 
-
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
@@ -21,6 +20,12 @@ class FileWriter implements OutputInterface
      */
     public function write(string $path, string $content)
     {
+        $filename = $this->join([$this->path, $path]);
+
+        if (!file_exists($filename)) {
+            mkdir($filename, 0777, true);
+        }
+
         file_put_contents($this->join([$this->path, $path]), $content);
     }
 
@@ -37,9 +42,11 @@ class FileWriter implements OutputInterface
 
     /**
      * @param array $paths
+     *
      * @return string
      */
-    protected function join($paths = []) {
+    protected function join($paths = [])
+    {
         return implode(DIRECTORY_SEPARATOR, $paths);
     }
 
@@ -53,6 +60,7 @@ class FileWriter implements OutputInterface
 
     /**
      * @param string $path
+     *
      * @return $this
      */
     public function setPath(string $path)
