@@ -31,16 +31,45 @@ class ClassGeneratorTest extends TestCase
      */
     private $output;
 
-    public function testSaveOneFile()
+    /**
+     * @dataProvider filesProvider
+     *
+     * @param array $expected
+     * @param string $fnSchema
+     */
+    public function testGenerate(array $expected, string $fnSchema)
     {
-        $schema = $this->factory->schema('schema://entities/company');
+        $schema = $this->factory->schema($fnSchema);
 
         $this->generator->getExtractor()->setNamespace('\Mildberry\Tests\Specifications\Fixtures');
         $this->generator->generate($schema);
 
-        $this->assertEquals([
-            'Entities/Company.php' => file_get_contents($this->getFixturePath('entities/Company.php')),
-        ], $this->output->getFiles());
+        $this->assertEquals($expected, $this->output->getFiles());
+    }
+
+    /**
+     * @return array
+     */
+    public function filesProvider(): array
+    {
+        return [
+//            'one-file' => [
+//                [
+//                    'Entities/Company.php' => file_get_contents($this->getFixturePath('entities/Company.php')),
+//                ], 'schema://entities/company',
+//            ],
+//            'class' => [
+//                [
+//                    'Entities/Client.php' => file_get_contents($this->getFixturePath('entities/Client.php')),
+//                ], 'schema://entities/client',
+//            ],
+            'derived-class' => [
+                [
+                    'Entities/Derived/Client.php' =>
+                        file_get_contents($this->getFixturePath('entities/Derived/Client.php')),
+                ], 'schema://entities/derived/client',
+            ],
+        ];
     }
 
     /**
@@ -106,6 +135,8 @@ class ClassGeneratorTest extends TestCase
 
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/company' => $this->getFixturePath('schema/company.json'),
+            'entities/client' => $this->getFixturePath('schema/client.json'),
+            'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
         ]));
 
         $this->factory = $this->app->make(LaravelFactory::class);

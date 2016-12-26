@@ -29,6 +29,30 @@ class Printer extends Standard
     }
 
     /**
+     * @param Stmt\UseUse $node
+     *
+     * @return string
+     */
+    protected function pStmt_UseUse(Stmt\UseUse $node)
+    {
+        $namespace = ltrim($this->p($node->name), '\\');
+
+        return $this->pUseType($node->type) . $namespace
+            . ($node->name->getLast() !== $node->alias ? ' as ' . $node->alias : '');
+    }
+
+    /**
+     * @param $type
+     *
+     * @return string
+     */
+    protected function pUseType($type)
+    {
+        return $type === Stmt\Use_::TYPE_FUNCTION ? 'function '
+            : ($type === Stmt\Use_::TYPE_CONSTANT ? 'const ' : '');
+    }
+
+    /**
      * @param Stmt\ClassMethod $node
      *
      * @return string

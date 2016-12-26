@@ -21,8 +21,9 @@ class TypeExtractor
      */
     public function extract($schema)
     {
+        $schema = $this->extendSchema($schema);
+
         return
-            $this->extractMultiple($schema) ??
             $this->extractClass($schema) ??
             $this->extractSimple($schema);
     }
@@ -30,31 +31,19 @@ class TypeExtractor
     /**
      * @param object $schema
      *
-     * @return array|null
+     * @return object
      */
-    public function extractMultiple($schema)
+    public function extendSchema($schema)
     {
-        $type = $schema->type;
-
-        if (!is_object($type)) {
-            return null;
+        if (empty($schema->allOf)) {
+            return $schema;
         }
 
-        $rawTypes = array_map(function ($schema) {
-            return $this->extract($schema);
-        }, $type->allOf ?? $type->anyOf ?? $type->oneOf);
+        $schema = array_reduce($schema->allOf, function ($carry, $schema) {
+            return $this->mergeSchema($carry, $schema);
+        }, $schema);
 
-        $types = [];
-
-        foreach ($rawTypes as $type) {
-            if (is_array($type)) {
-                $types = array_merge($types, $type);
-            } else {
-                $types[] = $type;
-            }
-        }
-
-        return array_values(array_unique($types));
+        return $schema;
     }
 
     /**
@@ -62,7 +51,7 @@ class TypeExtractor
      *
      * @return string|null
      */
-    public function extractSimple($schema)
+    protected function extractSimple($schema)
     {
         $type = $schema->type;
 
@@ -77,7 +66,7 @@ class TypeExtractor
      *
      * @return string|null
      */
-    public function extractClass($schema)
+    protected function extractClass($schema)
     {
         if (
             ($this->extractSimple($schema) != 'object') ||
@@ -177,5 +166,26 @@ class TypeExtractor
     public function getShortName(string $class): string
     {
         return str_replace("{$this->namespace}\\", '', $class);
+    }
+
+    /**
+     * @param object $source
+     * @param object $schema
+     *
+     * @return object
+     */
+    protected function mergeSchema($source, $schema)
+    {
+        $result = (array) $source;
+
+        $result = array_merge((array) $schema, $result);
+
+        foreach ($result as $key => &$value) {
+            if (is_object($value)) {
+                $value = $this->mergeSchema($value, ($schema->{$key} ?? (object) []));
+            }
+        }
+
+        return (object) $result;
     }
 }

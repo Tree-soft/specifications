@@ -9,6 +9,7 @@ use Mildberry\Tests\Specifications\Support\Printer;
 use PhpParser\Builder\Class_;
 use PhpParser\Builder\Method;
 use PhpParser\Builder\Property;
+use PhpParser\Builder\Use_;
 use PhpParser\BuilderFactory;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\PropertyFetch;
@@ -26,9 +27,14 @@ class ObjectBuilder extends AbstractBuilder
     private $factory;
 
     /**
-     * @var TypeExtractor
+     * @var array
      */
-    private $extractor;
+    private $uses = [];
+
+    /**
+     * @var string
+     */
+    private $class;
 
     /**
      * ObjectBuilder constructor.
@@ -38,7 +44,7 @@ class ObjectBuilder extends AbstractBuilder
     public function __construct(BuilderFactory $factory)
     {
         $this->factory = $factory;
-        $this->extractor = new TypeExtractor();
+        $this->clear();
     }
 
     /**
@@ -46,23 +52,37 @@ class ObjectBuilder extends AbstractBuilder
      */
     public function build(): string
     {
-        $parts = $this->getNamespace(
-            $this->generator->getExtractor()->extractClass($this->schema)
-        );
+        $this->clear();
+
+        $this->class = $this->extractor->extract($this->schema);
+
+        $parts = $this->getNamespace($this->class);
 
         $class = $parts['class'];
         $namespace = $parts['namespace'];
 
         $classStmt = $this->makeClass($class);
 
+        $uses = $this->makeUse();
+
         $node = $this->factory
-            ->namespace(new Name($namespace))
-            ->addStmt($classStmt)
-            ->getNode();
+            ->namespace(new Name($namespace));
+
+        if (!empty($uses)) {
+            $node->addStmts($uses);
+        }
+
+        $node->addStmt($classStmt);
 
         $printer = new Printer();
 
-        return $printer->prettyPrintFile([$node]);
+        return $printer->prettyPrintFile([$node->getNode()]);
+    }
+
+    protected function clear()
+    {
+        $this->uses = [];
+        $this->class = null;
     }
 
     /**
@@ -98,7 +118,13 @@ class ObjectBuilder extends AbstractBuilder
             ->class($class)
             ->setDocComment((string) $phpDoc);
 
-        $properties = (array) ($this->schema->properties ?? []);
+        $baseClass = $this->getBaseClass();
+
+        if (isset($baseClass)) {
+            $classStmt->extend($baseClass);
+        }
+
+        $properties = $this->getProperties();
 
         $fields = [];
 
@@ -119,6 +145,46 @@ class ObjectBuilder extends AbstractBuilder
     }
 
     /**
+     * @return string
+     */
+    protected function getBaseClass(): string
+    {
+        $baseTypes = $this->getBaseTypes();
+
+        $type = array_pop($baseTypes);
+
+        return $this->extractType($type);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getProperties(): array
+    {
+        $properties = (array) ($this->schema->properties ?? []);
+
+        $baseTypes = $this->getBaseTypes();
+
+        foreach ($baseTypes as $type) {
+            foreach ($type->properties ?? [] as $key => $value) {
+                unset($properties[$key]);
+            }
+        }
+
+        return $properties;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBaseTypes(): array
+    {
+        return array_filter($this->schema->allOf ?? [], function ($type) {
+            return isset($type->id);
+        });
+    }
+
+    /**
      * @param string $name
      * @param object $schema
      *
@@ -131,8 +197,10 @@ class ObjectBuilder extends AbstractBuilder
          */
         $phpDoc = $this->container->make(PhpDocProperty::class);
 
+        $type = $this->extractType($schema);
+
         $phpDoc
-            ->setType($this->extractor->extract($schema));
+            ->setType($type);
 
         return $this->factory
             ->property($name)
@@ -153,8 +221,10 @@ class ObjectBuilder extends AbstractBuilder
          */
         $phpDoc = $this->container->make(PhpDocFunction::class);
 
+        $type = $this->extractType($schema);
+
         $phpDoc
-            ->setReturnType($this->extractor->extract($schema));
+            ->setReturnType($type);
 
         $return = new Return_(new PropertyFetch(new Expr\Variable('this'), $name));
 
@@ -179,9 +249,11 @@ class ObjectBuilder extends AbstractBuilder
          */
         $phpDoc = $this->container->make(PhpDocFunction::class);
 
+        $type = $this->extractType($schema);
+
         $phpDoc
             ->setParams([
-                $name => $this->extractor->extract($schema),
+                $name => $type,
             ])
             ->setReturnType('$this');
 
@@ -203,5 +275,64 @@ class ObjectBuilder extends AbstractBuilder
             ->addParam($param)
             ->setDocComment((string) $phpDoc)
             ->addStmts($body);
+    }
+
+    /**
+     * @return array|Use_[]
+     */
+    protected function makeUse()
+    {
+        return array_map(function (string $alias, string $class) {
+            $stmt = $this->factory->use($class)->as($alias);
+
+            return $stmt;
+        }, $this->uses, array_keys($this->uses));
+    }
+
+    /**
+     * @param string|object $schema
+     *
+     * @return string|string[]
+     */
+    protected function extractType($schema)
+    {
+        $types = $this->extractor->extract($schema);
+
+        return
+            (is_array($types)) ?
+                (array_map(function ($type) {
+                    return $this->addUseStatement($type);
+                }, $types)) :
+                ($this->addUseStatement($types));
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
+    protected function addUseStatement(string $type): string
+    {
+        if ($type[0] != '\\') {
+            return $type;
+        } elseif (in_array($type, $this->uses)) {
+            return $this->uses[$type];
+        }
+
+        $parts = $this->getNamespace($type);
+
+        $sourceParts = $this->getNamespace($this->class);
+
+        $class = $parts['class'];
+
+        if ($parts['namespace'] != $sourceParts['namespace']) {
+            if ($parts['class'] == $sourceParts['class']) {
+                $class = "Parent{$parts['class']}";
+            }
+
+            $this->uses[$type] = $class;
+        }
+
+        return $class;
     }
 }

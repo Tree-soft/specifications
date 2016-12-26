@@ -49,7 +49,7 @@ class ClassGenerator extends AbstractGenerator
     protected function getFileNameByClass($schema)
     {
         $class = $this->extractor->getShortName(
-            $this->extractor->extractClass($schema)
+            $this->extractor->extract($schema)
         );
 
         return str_replace('\\', DIRECTORY_SEPARATOR, ltrim($class, '\\')) . '.php';
@@ -63,6 +63,9 @@ class ClassGenerator extends AbstractGenerator
     protected function getContent($schema): string
     {
         $factory = $this->createFactory();
+        $factory
+            ->setExtractor($this->extractor);
+
         $builder = $factory->create($schema);
 
         $builder

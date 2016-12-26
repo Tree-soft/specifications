@@ -1,0 +1,11 @@
+{
+    "id": "schema://entities/derived/client",
+    "allOf": [
+        { "$ref": "schema://entities/client" },
+        {
+            "properties": {
+               "ext": { "type": "string" }
+            }
+        }
+    ]
+}

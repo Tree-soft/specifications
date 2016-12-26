@@ -26,6 +26,9 @@ class TypeExtractorTest extends TestCase
         $this->assertEquals($excepted, $this->extractor->extract($schema));
     }
 
+    /**
+     * @return array
+     */
     public function typesProvider()
     {
         return [
@@ -64,54 +67,63 @@ class TypeExtractorTest extends TestCase
                     'type' => 'string',
                 ],
             ],
-            'multiple-all-of' => [
-                ['string', 'null'], (object) [
-                    'type' => (object) [
-                        'allOf' => [
-                            (object) ['type' => 'string'],
-                            (object) ['type' => 'null'],
+            'class' => [
+                '\Entities\Client', (object) [
+                    'type' => 'object',
+                    'id' => 'schema://entities/client',
+                ],
+            ],
+            'extending' => [
+                '\Entities\Derived\Client', (object) [
+                    'id' => 'schema://entities/derived/client',
+                    'allOf' => [
+                        (object) [
+                            'type' => 'object',
+                            'id' => 'schema://entities/client',
                         ],
+                        (object) ['properties' => (object) [
+                            'ext' => ['type' => 'string'],
+                        ]],
                     ],
                 ],
             ],
-            'multiple-any-of' => [
-                ['string', 'null'], (object) [
-                    'type' => (object) [
-                        'anyOf' => [
-                            (object) ['type' => 'string'],
-                            (object) ['type' => 'null'],
-                        ],
-                    ],
-                ],
-            ],
-            'multiple-one-of' => [
-                ['string', 'null'], (object) [
-                    'type' => (object) [
-                        'oneOf' => [
-                            (object) ['type' => 'string'],
-                            (object) ['type' => 'null'],
-                        ],
-                    ],
-                ],
-            ],
-            'multiple-nested' => [
-                ['string', 'null'], (object) [
-                    'type' => (object) [
-                        'oneOf' => [
-                            (object) ['type' => 'string'],
-                            (object) [
-                                'type' => (object) [
-                                    'allOf' => [
-                                        (object) ['type' => 'string'],
-                                        (object) ['type' => 'null'],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-//            'class' => [],
+//            'multiple-any-of' => [
+//                ['string', 'null'], (object) [
+//                    'type' => (object) [
+//                        'anyOf' => [
+//                            (object) ['type' => 'string'],
+//                            (object) ['type' => 'null'],
+//                        ],
+//                    ],
+//                ],
+//            ],
+//            'multiple-one-of' => [
+//                ['string', 'null'], (object) [
+//                    'type' => (object) [
+//                        'oneOf' => [
+//                            (object) ['type' => 'string'],
+//                            (object) ['type' => 'null'],
+//                        ],
+//                    ],
+//                ],
+//            ],
+//            'multiple-nested' => [
+//                ['string', 'null'], (object) [
+//                    'type' => (object) [
+//                        'oneOf' => [
+//                            (object) ['type' => 'string'],
+//                            (object) [
+//                                'type' => (object) [
+//                                    'allOf' => [
+//                                        (object) ['type' => 'string'],
+//                                        (object) ['type' => 'null'],
+//                                    ],
+//                                ],
+//                            ],
+//                        ],
+//                    ],
+//                ],
+//            ],
         ];
     }
 

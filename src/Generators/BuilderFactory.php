@@ -3,16 +3,25 @@
 namespace Mildberry\Specifications\Generators;
 
 use Mildberry\Specifications\Exceptions\UnknownTypeException;
+use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
+use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-abstract class BuilderFactory
+abstract class BuilderFactory implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @var array|AbstractBuilder[]
      */
     protected $types = [];
+
+    /**
+     * @var TypeExtractor
+     */
+    protected $extractor;
 
     /**
      * @param object $schema
@@ -23,7 +32,9 @@ abstract class BuilderFactory
      */
     public function create($schema)
     {
-        if (empty($schema->type) || $this->types[$schema->type]) {
+        $schema = $this->extractor->extendSchema($schema);
+
+        if (empty($schema->type) || empty($this->types[$schema->type])) {
             $exception = new UnknownTypeException('Unknown type of scheme');
             $exception
                 ->setSchema($schema);
@@ -33,6 +44,35 @@ abstract class BuilderFactory
 
         $class = $this->types[$schema->type];
 
-        return new $class();
+        /**
+         * @var AbstractBuilder $builder
+         */
+        $builder = $this->container->make($class);
+
+        $builder
+            ->setSchema($schema)
+            ->setExtractor($this->extractor);
+
+        return $builder;
+    }
+
+    /**
+     * @return TypeExtractor
+     */
+    public function getExtractor(): TypeExtractor
+    {
+        return $this->extractor;
+    }
+
+    /**
+     * @param TypeExtractor $extractor
+     *
+     * @return $this
+     */
+    public function setExtractor(TypeExtractor $extractor)
+    {
+        $this->extractor = $extractor;
+
+        return $this;
     }
 }

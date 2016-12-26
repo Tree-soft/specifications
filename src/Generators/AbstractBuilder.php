@@ -23,6 +23,11 @@ abstract class AbstractBuilder implements ContainerAwareInterface
     protected $generator;
 
     /**
+     * @var TypeExtractor
+     */
+    protected $extractor;
+
+    /**
      * @return string
      */
     abstract public function build(): string;
@@ -63,6 +68,26 @@ abstract class AbstractBuilder implements ContainerAwareInterface
     public function setGenerator($generator)
     {
         $this->generator = $generator;
+
+        return $this;
+    }
+
+    /**
+     * @return TypeExtractor
+     */
+    public function getExtractor(): TypeExtractor
+    {
+        return $this->extractor;
+    }
+
+    /**
+     * @param TypeExtractor $extractor
+     *
+     * @return $this
+     */
+    public function setExtractor(TypeExtractor $extractor)
+    {
+        $this->extractor = $extractor;
 
         return $this;
     }
