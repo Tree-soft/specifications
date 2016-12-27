@@ -2,6 +2,8 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers;
 
+use DeepCopy\DeepCopy;
+
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
@@ -15,6 +17,8 @@ class CopyTransformer extends AbstractTransformer
      */
     public function transform($from, $to = null)
     {
-        // TODO: Implement transform() method.
+        $copier = new DeepCopy();
+
+        return $copier->copy($from);
     }
 }

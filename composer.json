@@ -4,7 +4,8 @@
     "type": "library",
     "require": {
         "league/json-guard": "dev-master as 0.5.1",
-        "rnr/resolver-provider": "^1.0"
+        "rnr/resolver-provider": "^1.0",
+        "myclabs/deep-copy": "^1.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",
