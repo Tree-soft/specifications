@@ -1,0 +1,10 @@
+{
+    "$schema": "schema://transformations",
+    "id": "transform://transformations",
+    "transformations": {
+        "client-extending": {
+            "from": "schema://entities/client",
+            "to": "schema://entities/derived/client"
+        }
+    }
+}

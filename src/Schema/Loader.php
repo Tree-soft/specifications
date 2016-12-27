@@ -11,6 +11,9 @@ use League\JsonGuard;
  */
 class Loader implements LoaderInterface
 {
+    /**
+     * @var string
+     */
     private $path = '';
 
     /**
@@ -29,7 +32,12 @@ class Loader implements LoaderInterface
         return JsonGuard\json_decode(file_get_contents($path), false, 512, JSON_BIGINT_AS_STRING);
     }
 
-    public function getFileName($path)
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getFileName(string $path): string
     {
         $path = rtrim(JsonGuard\strip_fragment($path), '#');
         $paths = [$path];

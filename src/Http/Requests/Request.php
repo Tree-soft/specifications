@@ -42,6 +42,9 @@ class Request extends FormRequest implements RequestInterface
         $specification->check($this);
     }
 
+    /**
+     * @return RequestChecker
+     */
     protected function createSpecification(): RequestChecker
     {
         /**
@@ -58,21 +61,33 @@ class Request extends FormRequest implements RequestInterface
         return $specification;
     }
 
+    /**
+     * @return array
+     */
     public function getHeaders(): array
     {
         return $this->headers->all();
     }
 
+    /**
+     * @return array
+     */
     public function getQuery(): array
     {
         return $this->query->all();
     }
 
+    /**
+     * @return array
+     */
     public function getData(): array
     {
         return $this->all();
     }
 
+    /**
+     * @return array
+     */
     public function getRoute(): array
     {
         return $this->route()->parameters();

@@ -4,6 +4,7 @@ namespace Mildberry\Tests\Specifications\Schema;
 
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Schema\TransformerLoader;
 use Mildberry\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 
@@ -22,18 +23,25 @@ class LaravelFactoryTest extends TestCase
         $dereferencer = $this->factory->dereferencer();
 
         /**
+         * @var Config $config
+         */
+        $config = $this->app->make(Config::class);
+
+        /**
          * @var Loader $loader
          */
         $loader = $dereferencer->getLoader('schema');
 
         $this->assertInstanceOf(Loader::class, $loader);
+        $this->assertEquals($config->get('specifications.path'), $loader->getPath());
 
         /**
-         * @var Config $config
+         * @var Loader $loader
          */
-        $config = $this->app->make(Config::class);
+        $loader = $dereferencer->getLoader('transform');
 
-        $this->assertEquals($config->get('specifications.path'), $loader->getPath());
+        $this->assertInstanceOf(TransformerLoader::class, $loader);
+        $this->assertEquals($config->get('specifications.transform.path'), $loader->getPath());
     }
 
     protected function setUp()

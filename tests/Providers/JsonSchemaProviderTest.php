@@ -7,6 +7,7 @@ use Mildberry\Specifications\Providers\JsonSchemaProvider;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\EntityChecker;
+use Mildberry\Specifications\Schema\TransformerLoader;
 use Mildberry\Specifications\Support\FileWriter;
 use Mildberry\Tests\Specifications\Support\PublishedDataAssertionTrait;
 use Mildberry\Tests\Specifications\TestCase;
@@ -42,6 +43,13 @@ class JsonSchemaProviderTest extends TestCase
         $loader = $this->app->make(Loader::class);
 
         $this->assertEquals($config->get('specifications.path'), $loader->getPath());
+
+        /**
+         * @var TransformerLoader $loader
+         */
+        $loader = $this->app->make(TransformerLoader::class);
+
+        $this->assertEquals($config->get('specifications.transform.path'), $loader->getPath());
 
         /**
          * @var EntityChecker $specification

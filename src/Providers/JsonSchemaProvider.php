@@ -8,6 +8,7 @@ use Mildberry\Specifications\Generators\OutputInterface;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\AbstractChecker;
+use Mildberry\Specifications\Schema\TransformerLoader;
 use Mildberry\Specifications\Support\FileWriter;
 use Mildberry\Specifications\Support\PublisherInterface;
 use Illuminate\Contracts\Config\Repository as Config;
@@ -54,6 +55,16 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
             $loader = new Loader();
 
             $loader->setPath($config->get('specifications.path'));
+
+            return $loader;
+        });
+
+        $this->app->singleton(TransformerLoader::class, function (Application $app) {
+            $config = $app->make(Config::class);
+
+            $loader = new TransformerLoader();
+
+            $loader->setPath($config->get('specifications.transform.path'));
 
             return $loader;
         });

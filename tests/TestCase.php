@@ -38,6 +38,8 @@ class TestCase extends ParentTestCase
             'specifications', require dirname(__DIR__) . '/config/specifications.php'
         );
 
+        $config->set('specifications.transform.path', $this->getFixturePath('transform'));
+
         $config->set(
             'container', require dirname(__DIR__) . '/vendor/rnr/resolver-provider/config/container.php'
         );

@@ -13,11 +13,20 @@ class LaravelFactory extends Factory implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
+    /**
+     * @return Dereferencer
+     */
     public function dereferencer(): Dereferencer
     {
         $dereferencer = parent::dereferencer();
-        $loader = $this->container->make(Loader::class);
-        $dereferencer->registerLoader($loader, 'schema');
+
+        $dereferencer->registerLoader(
+            $this->container->make(Loader::class), 'schema'
+        );
+
+        $dereferencer->registerLoader(
+            $this->container->make(TransformerLoader::class), 'transform'
+        );
 
         return $dereferencer;
     }
