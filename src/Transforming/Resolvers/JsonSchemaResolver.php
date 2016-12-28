@@ -44,20 +44,22 @@ class JsonSchemaResolver extends AbstractResolver
         return
             (empty($key)) ?
                 ($this->next($from, $to, $next)) :
-                ($this->createTransformer($transformations[$key]));
+                ($this->createTransformer($transformations[$key], $config['rules'] ?? []));
     }
 
     /**
      * @param object $transformation
+     * @param array $rules
      *
      * @return JsonSchemaTransformer
      */
-    protected function createTransformer($transformation): JsonSchemaTransformer
+    protected function createTransformer($transformation, array $rules): JsonSchemaTransformer
     {
         $transformer = new JsonSchemaTransformer();
 
         $transformer
-            ->setTransformation($transformation);
+            ->setTransformation($transformation)
+            ->setRules($rules);
 
         return $transformer;
     }

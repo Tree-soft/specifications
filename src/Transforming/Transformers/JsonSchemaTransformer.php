@@ -8,12 +8,7 @@ use DeepCopy\Matcher\PropertyNameMatcher;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\AbstractRule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\ConstRule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\IgnoreRule;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\PostRuleInterface;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\RemoveRule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\ShiftFromRule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\ShiftToRule;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -33,13 +28,7 @@ class JsonSchemaTransformer extends AbstractTransformer
     /**
      * @var array
      */
-    private $rules = [
-        'ignore' => IgnoreRule::class,
-        'remove' => RemoveRule::class,
-        'const' => ConstRule::class,
-        'shiftFrom' => ShiftFromRule::class,
-        'shiftTo' => ShiftToRule::class,
-    ];
+    private $rules = [];
 
     /**
      * @param mixed $from
@@ -197,6 +186,26 @@ class JsonSchemaTransformer extends AbstractTransformer
     public function setTransformation($transformation)
     {
         $this->transformation = $transformation;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRules(): array
+    {
+        return $this->rules;
+    }
+
+    /**
+     * @param array $rules
+     *
+     * @return $this
+     */
+    public function setRules(array $rules)
+    {
+        $this->rules = $rules;
 
         return $this;
     }

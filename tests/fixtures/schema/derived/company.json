@@ -1,0 +1,11 @@
+{
+    "id": "schema://entities/derived/company",
+    "allOf": [
+        { "$ref": "schema://entities/company" },
+        {
+            "properties": {
+                "client": { "type": "string" }
+            }
+        }
+    ]
+}

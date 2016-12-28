@@ -6,6 +6,7 @@ use DeepCopy\DeepCopy;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -32,7 +33,14 @@ class JsonSchemaTransformerTest extends TestCase
     public function testTransform($expected, $transformation, $from, $to = null)
     {
         $this->transformer
-            ->setTransformation($transformation);
+            ->setTransformation($transformation)
+            ->setRules([
+                'ignore' => Rules\IgnoreRule::class,
+                'remove' => Rules\RemoveRule::class,
+                'const' => Rules\ConstRule::class,
+                'shiftFrom' => Rules\ShiftFromRule::class,
+                'shiftTo' => Rules\ShiftToRule::class,
+            ]);
 
         $this->assertEquals($expected, $this->transformer->transform($from, $to));
     }
@@ -125,6 +133,9 @@ class JsonSchemaTransformerTest extends TestCase
                     ],
                 ], $client,
             ],
+//            'nested' => [
+//
+//            ]
 //            'shiftTo' => [
 //                $extendedClient3, (object) [
 //                    'to' => 'schema://entities/derived/client',
