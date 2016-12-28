@@ -37,9 +37,7 @@ abstract class AbstractRule
     /**
      * @param array $spec
      */
-    public function configure(array $spec)
-    {
-    }
+    abstract public function configure(array $spec);
 
     /**
      * @param mixed $object
