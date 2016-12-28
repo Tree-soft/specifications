@@ -55,10 +55,6 @@ class JsonSchemaTransformerTest extends TestCase
         $client = (object) [
             'name' => 'Name',
             'phone' => 'Phone',
-            'company' => (object) [
-                'id' => 5,
-                'name' => 'Company name',
-            ],
         ];
 
         $extendedClient = $copier->copy($client);
@@ -73,16 +69,16 @@ class JsonSchemaTransformerTest extends TestCase
         return [
             'simple' => [
                 $client, (object) [
-                    'to' => 'schema://entities/client',
-                    'from' => 'schema://entities/derived/client',
+                    'to' => 'schema://entities/simple-client',
+                    'from' => 'schema://entities/derived/simple-client',
                     'rules' => (object) [],
                 ],
                 $client,
             ],
             'ignore' => [
                 $client, (object) [
-                    'to' => 'schema://entities/derived/client',
-                    'from' => 'schema://entities/client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
                     'rules' => (object) [
                         'ext' => 'ignore',
                     ],
@@ -90,8 +86,8 @@ class JsonSchemaTransformerTest extends TestCase
             ],
             'ignore-save-old' => [
                 $extendedClient, (object) [
-                    'to' => 'schema://entities/derived/client',
-                    'from' => 'schema://entities/client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
                     'rules' => (object) [
                         'ext' => 'ignore',
                     ],
@@ -99,8 +95,8 @@ class JsonSchemaTransformerTest extends TestCase
             ],
             'remove' => [
                 $client, (object) [
-                    'to' => 'schema://entities/derived/client',
-                    'from' => 'schema://entities/client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
                     'rules' => (object) [
                         'ext' => 'remove',
                     ],
@@ -108,8 +104,8 @@ class JsonSchemaTransformerTest extends TestCase
             ],
             'extend' => [
                 $extendedClient, (object) [
-                    'to' => 'schema://entities/derived/client',
-                    'from' => 'schema://entities/client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
                     'rules' => (object) [
                         'ext' => 'const:Ext',
                     ],
@@ -117,8 +113,8 @@ class JsonSchemaTransformerTest extends TestCase
             ],
             'extend-with-old' => [
                 $extendedClient, (object) [
-                    'to' => 'schema://entities/derived/client',
-                    'from' => 'schema://entities/client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
                     'rules' => (object) [
                         'ext' => 'const:Ext',
                     ],
@@ -126,16 +122,13 @@ class JsonSchemaTransformerTest extends TestCase
             ],
             'shiftFrom' => [
                 $extendedClient3, (object) [
-                    'to' => 'schema://entities/derived/client',
-                    'from' => 'schema://entities/client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
                     'rules' => (object) [
                         'ext' => 'shiftFrom:name',
                     ],
                 ], $client,
             ],
-//            'nested' => [
-//
-//            ]
 //            'shiftTo' => [
 //                $extendedClient3, (object) [
 //                    'to' => 'schema://entities/derived/client',
@@ -148,14 +141,49 @@ class JsonSchemaTransformerTest extends TestCase
         ];
     }
 
+//    public function testNested() {
+//        $factory = new class() extends TransformerFactory {
+//            /**
+//             * @param string $from
+//             * @param string $to
+//             * @return AbstractTransformer
+//             * @throws SuccessException
+//             */
+//            public function create(string $from, string $to): AbstractTransformer
+//            {
+//                throw new SuccessException();
+//            }
+//        };
+//
+//        $transformation = (object) [
+//            'from' => 'schema://entities/client',
+//            'to' => 'schema://entities/ext-client',
+//            'rules' => (object) [],
+//        ];
+//
+//        $this->transformer
+//            ->setTransformation($transformation)
+//            ->setRules([
+//                'ignore' => Rules\IgnoreRule::class,
+//                'remove' => Rules\RemoveRule::class,
+//                'const' => Rules\ConstRule::class,
+//                'shiftFrom' => Rules\ShiftFromRule::class,
+//                'shiftTo' => Rules\ShiftToRule::class,
+//            ]);
+//
+//        $this->assertEquals($expected, $this->transformer->transform($from, $to));
+//
+//        $this->app->instance(TransformerFactory::class, $factory);
+//    }
+
     protected function setUp()
     {
         parent::setUp();
 
         $this->app->instance(Loader::class, new LoaderMock([
-            'entities/company' => $this->getFixturePath('schema/company.json'),
-            'entities/client' => $this->getFixturePath('schema/client.json'),
-            'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
+//            'entities/company' => $this->getFixturePath('schema/company.json'),
+            'entities/simple-client' => $this->getFixturePath('schema/simple-client.json'),
+            'entities/derived/simple-client' => $this->getFixturePath('schema/derived/simple-client.json'),
         ]));
     }
 }
