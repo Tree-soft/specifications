@@ -15,10 +15,7 @@ class IgnoreRule extends AbstractRule
       */
      protected $filter;
 
-    /**
-     * @param array $spec
-     */
-    public function configure(array $spec)
+    public function configure()
     {
         $this->filter = new IgnorePropertyFilter();
     }

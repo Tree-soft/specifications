@@ -14,6 +14,11 @@ abstract class AbstractRule
     /**
      * @var mixed
      */
+    protected $from;
+
+    /**
+     * @var mixed
+     */
     protected $to;
 
     /**
@@ -27,6 +32,11 @@ abstract class AbstractRule
     protected $filter;
 
     /**
+     * @var array
+     */
+    protected $spec;
+
+    /**
      * @param DeepCopy $copier
      */
     public function apply(DeepCopy $copier)
@@ -34,20 +44,26 @@ abstract class AbstractRule
         $copier->addFilter($this->filter, $this->matcher);
     }
 
-    /**
-     * @param array $spec
-     */
-    abstract public function configure(array $spec);
+    abstract public function configure();
 
     /**
-     * @param mixed $object
-     * @param string $property
-     *
      * @return mixed
      */
-    public function afterCopy($object, string $property)
+    public function getFrom()
     {
-        return $object;
+        return $this->from;
+    }
+
+    /**
+     * @param mixed $from
+     *
+     * @return $this
+     */
+    public function setFrom($from)
+    {
+        $this->from = $from;
+
+        return $this;
     }
 
     /**
@@ -86,6 +102,46 @@ abstract class AbstractRule
     public function setMatcher(Matcher $matcher)
     {
         $this->matcher = $matcher;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSpec(): array
+    {
+        return $this->spec;
+    }
+
+    /**
+     * @param array $spec
+     *
+     * @return $this
+     */
+    public function setSpec(array $spec)
+    {
+        $this->spec = $spec;
+
+        return $this;
+    }
+
+    /**
+     * @return Filter
+     */
+    public function getFilter(): Filter
+    {
+        return $this->filter;
+    }
+
+    /**
+     * @param Filter $filter
+     *
+     * @return $this
+     */
+    public function setFilter(Filter $filter)
+    {
+        $this->filter = $filter;
 
         return $this;
     }

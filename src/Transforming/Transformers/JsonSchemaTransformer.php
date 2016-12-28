@@ -10,7 +10,10 @@ use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\AbstractRule;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\ConstRule;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\IgnoreRule;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\PostRuleInterface;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\RemoveRule;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\ShiftFromRule;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\ShiftToRule;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -34,6 +37,8 @@ class JsonSchemaTransformer extends AbstractTransformer
         'ignore' => IgnoreRule::class,
         'remove' => RemoveRule::class,
         'const' => ConstRule::class,
+        'shiftFrom' => ShiftFromRule::class,
+        'shiftTo' => ShiftToRule::class,
     ];
 
     /**
@@ -54,21 +59,27 @@ class JsonSchemaTransformer extends AbstractTransformer
 
         $copier = new DeepCopy();
 
-        $rules = $this->applyFilters($copier, $to);
+        $rules = $this->applyFilters($copier, $from, $to);
 
         $fields = $this->getFields();
 
         if (isset($fields)) {
-            $to = array_reduce($rules, function ($to, AbstractRule $rule) use ($fields) {
-                return array_reduce(
-                    array_filter($fields, function ($field) use ($rule, $to) {
-                        return $rule->getMatcher()->matches($to, $field);
-                    }),
-                    function ($object, $field) use ($rule) {
-                        return $rule->afterCopy($object, $field);
-                    }, $to
-                );
-            }, $copier->copy($from));
+            $to = array_reduce(
+                array_filter($rules, function ($filter) {
+                    return $filter instanceof PostRuleInterface;
+                }), function ($to, PostRuleInterface $rule) use ($fields) {
+                    return array_reduce(
+                        array_filter($fields, function ($field) use ($rule, $to) {
+                            /**
+                             * @var AbstractRule|PostRuleInterface $rule
+                             */
+                            return $rule->getMatcher()->matches($to, $field);
+                        }),
+                        function ($object, $field) use ($rule) {
+                            return $rule->afterCopy($object, $field);
+                        }, $to
+                    );
+                }, $copier->copy($from));
         }
 
         $this->hashMap[$hash] = $to;
@@ -78,11 +89,12 @@ class JsonSchemaTransformer extends AbstractTransformer
 
     /**
      * @param DeepCopy $copier
+     * @param $from
      * @param mixed $to
      *
      * @return array
      */
-    protected function applyFilters(DeepCopy $copier, $to)
+    protected function applyFilters(DeepCopy $copier, $from, $to)
     {
         $rules = [];
 
@@ -91,7 +103,10 @@ class JsonSchemaTransformer extends AbstractTransformer
 
             $rule
                 ->setMatcher($this->createMatcher($property))
+                ->setFrom($from)
                 ->setTo($to);
+
+            $rule->configure();
 
             $rule->apply($copier);
 
@@ -115,7 +130,7 @@ class JsonSchemaTransformer extends AbstractTransformer
          */
         $rule = $this->container->make($this->rules[$name]);
 
-        $rule->configure($spec);
+        $rule->setSpec($spec);
 
         return $rule;
     }

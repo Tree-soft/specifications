@@ -9,10 +9,7 @@ use Mildberry\Specifications\Support\DeepCopy\Filters\RemovePropertyFilter;
  */
 class RemoveRule extends AbstractRule
 {
-    /**
-     * @param array $spec
-     */
-    public function configure(array $spec)
+    public function configure()
     {
         $this->filter = new RemovePropertyFilter();
     }

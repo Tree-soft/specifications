@@ -7,7 +7,7 @@ use Mildberry\Specifications\Support\DeepCopy\Filters\ConstantPropertyFilter;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class ConstRule extends AbstractRule implements PostRuleInterface
+class ShiftFromRule extends AbstractRule implements PostRuleInterface
 {
     use PostRuleTrait;
 
@@ -16,6 +16,6 @@ class ConstRule extends AbstractRule implements PostRuleInterface
         $this->filter = new ConstantPropertyFilter();
 
         $this->filter
-            ->setValue($this->spec[0]);
+            ->setValue($this->from->{$this->spec[0]});
     }
 }
