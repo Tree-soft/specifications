@@ -129,18 +129,21 @@ class JsonSchemaTransformerTest extends TestCase
                     'rules' => (object) [
                         'name' => 'shiftTo:ext',
                     ],
-                ], $client
-            ]
+                ], $client,
+            ],
         ];
     }
 
-    public function testNested() {
+    public function testNested()
+    {
         $factory = new class() extends TransformerFactory {
             /**
              * @param string $from
              * @param string $to
-             * @return AbstractTransformer
+             *
              * @throws SuccessException
+             *
+             * @return AbstractTransformer
              */
             public function create(string $from, string $to): AbstractTransformer
             {
@@ -157,18 +160,15 @@ class JsonSchemaTransformerTest extends TestCase
         ];
 
         $this->transformer
-            ->setTransformation($transformation)
-            ->setRules([
-                'schema' => SchemaRule::class
-            ]);
+            ->setTransformation($transformation);
 
         $from
             = (object) [
             'name' => 'Name',
             'phone' => 'Phone',
             'company' => [
-                'name' => 'Company name'
-            ]
+                'name' => 'Company name',
+            ],
         ];
 
         try {

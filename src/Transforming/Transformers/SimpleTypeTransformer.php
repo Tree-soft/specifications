@@ -2,7 +2,6 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers;
 
-
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
@@ -18,8 +17,15 @@ class SimpleTypeTransformer extends AbstractTransformer
      */
     private $to;
 
+    /**
+     * @param mixed $from
+     * @param mixed|null $to
+     *
+     * @return mixed
+     */
     public function transform($from, $to = null)
     {
+        return $from;
     }
 
     /**
@@ -32,6 +38,7 @@ class SimpleTypeTransformer extends AbstractTransformer
 
     /**
      * @param string $from
+     *
      * @return $this
      */
     public function setFrom(string $from)
@@ -51,6 +58,7 @@ class SimpleTypeTransformer extends AbstractTransformer
 
     /**
      * @param string $to
+     *
      * @return $this
      */
     public function setTo(string $to)

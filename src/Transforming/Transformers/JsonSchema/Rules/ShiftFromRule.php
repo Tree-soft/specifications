@@ -9,12 +9,11 @@ class ShiftFromRule extends AbstractRuleTo
 {
     /**
      * @param string $property
-     * @param object $spec
      * @param object $object
      *
      * @return object
      */
-    protected function innerApply(string $property, $spec, $object)
+    protected function innerApply(string $property, $object)
     {
         $fromProperty = $this->spec[0];
 

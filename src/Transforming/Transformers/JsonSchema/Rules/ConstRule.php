@@ -9,12 +9,11 @@ class ConstRule extends AbstractRuleTo
 {
     /**
      * @param string $property
-     * @param object $spec
      * @param object $object
      *
      * @return object
      */
-    protected function innerApply(string $property, $spec, $object)
+    protected function innerApply(string $property, $object)
     {
         $value = $this->spec[0];
 
@@ -22,5 +21,4 @@ class ConstRule extends AbstractRuleTo
 
         return $object;
     }
-
 }

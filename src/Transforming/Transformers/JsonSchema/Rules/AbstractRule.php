@@ -3,12 +3,16 @@
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher\MatcherInterface;
+use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
+use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-abstract class AbstractRule
+abstract class AbstractRule implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @var mixed
      */
@@ -18,6 +22,16 @@ abstract class AbstractRule
      * @var mixed
      */
     protected $to;
+
+    /**
+     * @var object|mixed
+     */
+    protected $fromSchema;
+
+    /**
+     * @var object|mixed
+     */
+    protected $toSchema;
 
     /**
      * @var array
@@ -31,14 +45,14 @@ abstract class AbstractRule
 
     /**
      * @param string $property
-     * @param object $spec
      * @param mixed $object
      *
      * @return mixed
      */
-    public function apply(string $property, $spec, $object) {
-        if ($this->matcher->match($property, $spec)) {
-            return $this->innerApply($property, $spec, $object);
+    public function apply(string $property, $object)
+    {
+        if ($this->matcher->match($property)) {
+            return $this->innerApply($property, $object);
         }
 
         return $object;
@@ -46,12 +60,11 @@ abstract class AbstractRule
 
     /**
      * @param string $property
-     * @param object $spec
      * @param object $object
      *
      * @return object
      */
-    abstract protected function innerApply(string $property, $spec, $object);
+    abstract protected function innerApply(string $property, $object);
 
     /**
      * @return mixed
@@ -123,11 +136,52 @@ abstract class AbstractRule
 
     /**
      * @param MatcherInterface $matcher
+     *
      * @return $this
      */
     public function setMatcher(MatcherInterface $matcher)
     {
         $this->matcher = $matcher;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed|object
+     */
+    public function getFromSchema()
+    {
+        return $this->fromSchema;
+    }
+
+    /**
+     * @param mixed|object $fromSchema
+     *
+     * @return $this
+     */
+    public function setFromSchema($fromSchema)
+    {
+        $this->fromSchema = $fromSchema;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed|object
+     */
+    public function getToSchema()
+    {
+        return $this->toSchema;
+    }
+
+    /**
+     * @param mixed|object $toSchema
+     *
+     * @return $this
+     */
+    public function setToSchema($toSchema)
+    {
+        $this->toSchema = $toSchema;
 
         return $this;
     }

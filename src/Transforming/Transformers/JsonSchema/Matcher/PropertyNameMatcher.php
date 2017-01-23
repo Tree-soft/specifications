@@ -2,7 +2,6 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher;
 
-
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
@@ -15,11 +14,10 @@ class PropertyNameMatcher implements MatcherInterface
 
     /**
      * @param string $property
-     * @param object $spec
      *
      * @return bool
      */
-    public function match(string $property, $spec): bool
+    public function match(string $property): bool
     {
         return $property == $this->name;
     }
@@ -34,6 +32,7 @@ class PropertyNameMatcher implements MatcherInterface
 
     /**
      * @param string $name
+     *
      * @return $this
      */
     public function setName(string $name)
