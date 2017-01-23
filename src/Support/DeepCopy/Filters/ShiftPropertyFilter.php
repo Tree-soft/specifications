@@ -21,7 +21,7 @@ class ShiftPropertyFilter implements Filter
      */
     public function apply($object, $property, $objectCopier)
     {
-        $object->{$this->to} = $object->{$property};
+        $object->{$this->to} = $objectCopier($object->{$property});
     }
 
     /**

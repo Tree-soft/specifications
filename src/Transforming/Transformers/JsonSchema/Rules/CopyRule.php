@@ -2,23 +2,29 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
+
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class ShiftFromRule extends AbstractRuleTo
+class CopyRule extends AbstractRuleFrom
 {
     /**
      * @param string $property
      * @param object $spec
      * @param object $object
      *
-     * @return object
+     * @return @mixed
      */
     protected function innerApply(string $property, $spec, $object)
     {
-        $fromProperty = $this->spec[0];
+        $value =
+            (property_exists($this->to, $property)) ?
+                ($this->to->{$property}) :
+                ($this->from->{$property} ?? null);
 
-        $object->{$property} = $this->from->{$fromProperty};
+        if (!empty($value)) {
+            $object->{$property} = $value;
+        }
 
         return $object;
     }

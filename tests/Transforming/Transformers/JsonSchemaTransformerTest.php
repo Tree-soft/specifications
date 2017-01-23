@@ -4,9 +4,12 @@ namespace Mildberry\Tests\Specifications\Transforming\Transformers;
 
 use DeepCopy\DeepCopy;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Transforming\TransformerFactory;
+use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
+use Mildberry\Tests\Specifications\Support\SuccessException;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -36,7 +39,6 @@ class JsonSchemaTransformerTest extends TestCase
             ->setTransformation($transformation)
             ->setRules([
                 'ignore' => Rules\IgnoreRule::class,
-                'remove' => Rules\RemoveRule::class,
                 'const' => Rules\ConstRule::class,
                 'shiftFrom' => Rules\ShiftFromRule::class,
                 'shiftTo' => Rules\ShiftToRule::class,
@@ -93,15 +95,6 @@ class JsonSchemaTransformerTest extends TestCase
                     ],
                 ], $extendedClient2, $extendedClient,
             ],
-            'remove' => [
-                $client, (object) [
-                    'to' => 'schema://entities/derived/simple-client',
-                    'from' => 'schema://entities/simple-client',
-                    'rules' => (object) [
-                        'ext' => 'remove',
-                    ],
-                ], $extendedClient2, $extendedClient,
-            ],
             'extend' => [
                 $extendedClient, (object) [
                     'to' => 'schema://entities/derived/simple-client',
@@ -129,61 +122,75 @@ class JsonSchemaTransformerTest extends TestCase
                     ],
                 ], $client,
             ],
-//            'shiftTo' => [
-//                $extendedClient3, (object) [
-//                    'to' => 'schema://entities/derived/client',
-//                    'from' => 'schema://entities/client',
-//                    'rules' => (object) [
-//                        'name' => 'shiftTo:ext',
-//                    ],
-//                ], $client
-//            ]
+            'shiftTo' => [
+                $extendedClient3, (object) [
+                    'to' => 'schema://entities/derived/client',
+                    'from' => 'schema://entities/client',
+                    'rules' => (object) [
+                        'name' => 'shiftTo:ext',
+                    ],
+                ], $client
+            ]
         ];
     }
 
-//    public function testNested() {
-//        $factory = new class() extends TransformerFactory {
-//            /**
-//             * @param string $from
-//             * @param string $to
-//             * @return AbstractTransformer
-//             * @throws SuccessException
-//             */
-//            public function create(string $from, string $to): AbstractTransformer
-//            {
-//                throw new SuccessException();
-//            }
-//        };
-//
-//        $transformation = (object) [
-//            'from' => 'schema://entities/client',
-//            'to' => 'schema://entities/ext-client',
-//            'rules' => (object) [],
-//        ];
-//
-//        $this->transformer
-//            ->setTransformation($transformation)
-//            ->setRules([
-//                'ignore' => Rules\IgnoreRule::class,
-//                'remove' => Rules\RemoveRule::class,
-//                'const' => Rules\ConstRule::class,
-//                'shiftFrom' => Rules\ShiftFromRule::class,
-//                'shiftTo' => Rules\ShiftToRule::class,
-//            ]);
-//
-//        $this->assertEquals($expected, $this->transformer->transform($from, $to));
-//
-//        $this->app->instance(TransformerFactory::class, $factory);
-//    }
+    public function testNested() {
+        $factory = new class() extends TransformerFactory {
+            /**
+             * @param string $from
+             * @param string $to
+             * @return AbstractTransformer
+             * @throws SuccessException
+             */
+            public function create(string $from, string $to): AbstractTransformer
+            {
+                throw new SuccessException();
+            }
+        };
+
+        $this->app->instance(TransformerFactory::class, $factory);
+
+        $transformation = (object) [
+            'from' => 'schema://entities/client',
+            'to' => 'schema://entities/ext-client',
+            'rules' => (object) [],
+        ];
+
+        $this->transformer
+            ->setTransformation($transformation)
+            ->setRules([
+                'schema' => SchemaRule::class
+            ]);
+
+        $from
+            = (object) [
+            'name' => 'Name',
+            'phone' => 'Phone',
+            'company' => [
+                'name' => 'Company name'
+            ]
+        ];
+
+        try {
+            $this->transformer->transform($from);
+
+            $this->fail('Factory should be called.');
+        } catch (SuccessException $e) {
+        }
+    }
 
     protected function setUp()
     {
         parent::setUp();
 
         $this->app->instance(Loader::class, new LoaderMock([
-//            'entities/company' => $this->getFixturePath('schema/company.json'),
+            'entities/company' => $this->getFixturePath('schema/company.json'),
+            'entities/client' => $this->getFixturePath('schema/client.json'),
+            'entities/ext-client' => $this->getFixturePath('schema/ext-client.json'),
             'entities/simple-client' => $this->getFixturePath('schema/simple-client.json'),
             'entities/derived/simple-client' => $this->getFixturePath('schema/derived/simple-client.json'),
+            'entities/derived/company' => $this->getFixturePath('schema/derived/company.json'),
+            'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
         ]));
     }
 }

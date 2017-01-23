@@ -2,32 +2,26 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
-use DeepCopy\DeepCopy;
 use Mildberry\Specifications\Support\DeepCopy\Filters\IgnorePropertyFilter;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class IgnoreRule extends AbstractRule
+class IgnoreRule extends AbstractRuleFrom
 {
     /**
-      * @var IgnorePropertyFilter
-      */
-     protected $filter;
-
-    public function configure()
-    {
-        $this->filter = new IgnorePropertyFilter();
-    }
-
-    /**
-     * @param DeepCopy $copier
+     * @param string $property
+     * @param object $spec
+     * @param object $object
+     *
+     * @return @mixed
      */
-    public function apply(DeepCopy $copier)
+    public function innerApply(string $property, $spec, $object)
     {
-        $this->filter
-            ->setValue($this->to);
-
-        parent::apply($copier);
+        if (property_exists($this->to, $property)) {
+            $object->{$property} = $this->to->{$property};
+        } else {
+            unset($object->{$property});
+        }
     }
 }

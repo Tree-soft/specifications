@@ -55,7 +55,7 @@ class JsonSchemaResolver extends AbstractResolver
      */
     protected function createTransformer($transformation, array $rules): JsonSchemaTransformer
     {
-        $transformer = new JsonSchemaTransformer();
+        $transformer = $this->container->make(JsonSchemaTransformer::class);
 
         $transformer
             ->setTransformation($transformation)

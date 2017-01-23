@@ -21,7 +21,7 @@ class ConstantPropertyFilter implements Filter
      */
     public function apply($object, $property, $objectCopier)
     {
-        $object->{$property} = $this->value;
+        $object->{$property} = $objectCopier($this->value);
     }
 
     /**

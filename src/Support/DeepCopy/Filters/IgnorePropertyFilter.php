@@ -22,7 +22,7 @@ class IgnorePropertyFilter implements Filter
     public function apply($object, $property, $objectCopier)
     {
         if (property_exists($this->value, $property)) {
-            $object->{$property} = $this->value->{$property};
+            $object->{$property} = $objectCopier($this->value->{$property});
         } else {
             unset($object->{$property});
         }

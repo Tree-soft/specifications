@@ -2,9 +2,7 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
-use DeepCopy\DeepCopy;
-use DeepCopy\Filter\Filter;
-use DeepCopy\Matcher\Matcher;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher\MatcherInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -22,29 +20,38 @@ abstract class AbstractRule
     protected $to;
 
     /**
-     * @var Matcher
-     */
-    protected $matcher;
-
-    /**
-     * @var Filter
-     */
-    protected $filter;
-
-    /**
      * @var array
      */
     protected $spec;
 
     /**
-     * @param DeepCopy $copier
+     * @var MatcherInterface
      */
-    public function apply(DeepCopy $copier)
-    {
-        $copier->addFilter($this->filter, $this->matcher);
+    protected $matcher;
+
+    /**
+     * @param string $property
+     * @param object $spec
+     * @param mixed $object
+     *
+     * @return mixed
+     */
+    public function apply(string $property, $spec, $object) {
+        if ($this->matcher->match($property, $spec)) {
+            return $this->innerApply($property, $spec, $object);
+        }
+
+        return $object;
     }
 
-    abstract public function configure();
+    /**
+     * @param string $property
+     * @param object $spec
+     * @param object $object
+     *
+     * @return object
+     */
+    abstract protected function innerApply(string $property, $spec, $object);
 
     /**
      * @return mixed
@@ -87,26 +94,6 @@ abstract class AbstractRule
     }
 
     /**
-     * @return Matcher
-     */
-    public function getMatcher(): Matcher
-    {
-        return $this->matcher;
-    }
-
-    /**
-     * @param Matcher $matcher
-     *
-     * @return $this
-     */
-    public function setMatcher(Matcher $matcher)
-    {
-        $this->matcher = $matcher;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getSpec(): array
@@ -127,21 +114,20 @@ abstract class AbstractRule
     }
 
     /**
-     * @return Filter
+     * @return MatcherInterface
      */
-    public function getFilter(): Filter
+    public function getMatcher(): MatcherInterface
     {
-        return $this->filter;
+        return $this->matcher;
     }
 
     /**
-     * @param Filter $filter
-     *
+     * @param MatcherInterface $matcher
      * @return $this
      */
-    public function setFilter(Filter $filter)
+    public function setMatcher(MatcherInterface $matcher)
     {
-        $this->filter = $filter;
+        $this->matcher = $matcher;
 
         return $this;
     }

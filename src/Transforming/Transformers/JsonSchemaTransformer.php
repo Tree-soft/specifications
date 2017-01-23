@@ -2,13 +2,16 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers;
 
-use DeepCopy\DeepCopy;
-use DeepCopy\Matcher\Matcher;
-use DeepCopy\Matcher\PropertyNameMatcher;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\LaravelFactory;
+use Mildberry\Specifications\Support\DeepCopy\Matchers\SchemaMatcher;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher\PropertyNameMatcher;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher\SuccessMatcher;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\AbstractRule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\PostRuleInterface;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\CopyRule;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\RuleFromInterface;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\RuleToInterface;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\SchemaRule;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -31,6 +34,37 @@ class JsonSchemaTransformer extends AbstractTransformer
     private $rules = [];
 
     /**
+     * @var LaravelFactory
+     */
+    private $factory;
+
+    /**
+     * @var TypeExtractor
+     */
+    private $extractor;
+
+    /**
+     * @var object $fromSchema
+     */
+    private $fromSchema;
+
+    /**
+     * @var object $toSchema
+     */
+    private $toSchema;
+
+    /**
+     * JsonSchemaTransformer constructor.
+     * @param LaravelFactory $factory
+     */
+    public function __construct(LaravelFactory $factory)
+    {
+        $this->factory = $factory;
+        $this->extractor = new TypeExtractor();
+    }
+
+
+    /**
      * @param mixed $from
      * @param mixed|null $to
      *
@@ -46,71 +80,80 @@ class JsonSchemaTransformer extends AbstractTransformer
             return $this->hashMap[$hash];
         }
 
-        $copier = new DeepCopy();
+        $rules = $this->createFilters($from, $to);
 
-        $rules = $this->applyFilters($copier, $from, $to);
+        $object = clone $to;
 
-        $fields = $this->getFields();
+        $object = $this->applyFilters($rules['from'], (array)$this->fromSchema->properties, $object);
+        $object = $this->applyFilters($rules['to'], (array)$this->toSchema->properties, $object);
 
-        if (isset($fields)) {
-            $to = array_reduce(
-                array_filter($rules, function ($filter) {
-                    return $filter instanceof PostRuleInterface;
-                }), function ($to, PostRuleInterface $rule) use ($fields) {
-                    return array_reduce(
-                        array_filter($fields, function ($field) use ($rule, $to) {
-                            /**
-                             * @var AbstractRule|PostRuleInterface $rule
-                             */
-                            return $rule->getMatcher()->matches($to, $field);
-                        }),
-                        function ($object, $field) use ($rule) {
-                            return $rule->afterCopy($object, $field);
-                        }, $to
-                    );
-                }, $copier->copy($from));
-        }
+        $this->hashMap[$hash] = $object;
 
-        $this->hashMap[$hash] = $to;
-
-        return $to;
+        return $object;
     }
 
     /**
-     * @param DeepCopy $copier
-     * @param $from
+     * @param array $rules
+     * @param array $properties
+     * @param mixed $object
+     *
+     * @return mixed
+     */
+    protected function applyFilters(array $rules, array $properties, $object) {
+        foreach ($properties as $property => $spec) {
+            $object = array_reduce($rules,
+                function ($object, AbstractRule $rule) use ($property, $spec) {
+                    return $rule->apply($property, $spec, $object);
+                }, $object
+            );
+        }
+
+        return $object;
+    }
+    /**
+     * @param mixed $from
      * @param mixed $to
      *
-     * @return array
+     * @return array|AbstractRule[][]
      */
-    protected function applyFilters(DeepCopy $copier, $from, $to)
+    protected function createFilters($from, $to)
     {
-        $rules = [];
+        $rulesDefinitions = (array) $this->transformation->rules;
 
-        foreach ($this->transformation->rules as $property => $ruleDefinition) {
-            $rule = $this->createRule($ruleDefinition);
+        /**
+         * @var AbstractRule[] $rules
+         */
+        $rules = array_map(
+            [$this, 'createRule'],
+            array_keys($rulesDefinitions),
+            $rulesDefinitions
+        );
 
+        array_unshift($rules, $this->createCopyRule());
+
+        foreach ($rules as $rule) {
             $rule
-                ->setMatcher($this->createMatcher($property))
                 ->setFrom($from)
                 ->setTo($to);
-
-            $rule->configure();
-
-            $rule->apply($copier);
-
-            $rules[] = $rule;
         }
 
-        return $rules;
+        return [
+            'from' => array_filter($rules, function ($rule) {
+                return $rule instanceof RuleFromInterface;
+            }),
+            'to' => array_filter($rules, function ($rule) {
+                return $rule instanceof  RuleToInterface;
+            })
+        ];
     }
 
     /**
+     * @param string $property
      * @param string $ruleDefinition
      *
      * @return AbstractRule
      */
-    protected function createRule(string $ruleDefinition): AbstractRule
+    protected function createRule(string $property, string $ruleDefinition): AbstractRule
     {
         list($name, $spec) = $this->parseSpecification($ruleDefinition);
 
@@ -119,7 +162,62 @@ class JsonSchemaTransformer extends AbstractTransformer
          */
         $rule = $this->container->make($this->rules[$name]);
 
-        $rule->setSpec($spec);
+        /**
+         * @var PropertyNameMatcher $matcher
+         */
+        $matcher = $this->container->make(PropertyNameMatcher::class);
+        $matcher
+            ->setName($property);
+
+        $rule
+            ->setSpec($spec)
+            ->setMatcher($matcher);
+
+        return $rule;
+    }
+
+    /**
+     * @return CopyRule
+     */
+    protected function createCopyRule(): CopyRule {
+        /**
+         * @var CopyRule $rule
+         */
+        $rule = $this->container->make(CopyRule::class);
+
+        $rule
+            ->setMatcher($this->container->make(SuccessMatcher::class));
+
+        return $rule;
+    }
+
+    /**
+     * @param $from
+     * @param $to
+     *
+     * @return SchemaRule
+     */
+    protected function createSchemaRule($from, $to): SchemaRule {
+        /**
+         * @var SchemaRule $rule
+         */
+        $rule = $this->container->make(SchemaRule::class);
+
+        $matcher = new SchemaMatcher();
+
+        $schemaFrom = $this->factory->schema($this->transformation->to);
+        $schemaTo = $this->factory->schema($this->transformation->from);
+
+        $matcher
+            ->setFrom($from)
+            ->setTo($to)
+            ->setSchemaTo($schemaTo)
+            ->setSchemaFrom($schemaFrom);
+
+        $rule
+            ->setMatcher($matcher)
+            ->setSchemaTo($schemaTo)
+            ->setSchemaFrom($schemaFrom);
 
         return $rule;
     }
@@ -145,15 +243,9 @@ class JsonSchemaTransformer extends AbstractTransformer
      */
     protected function getFields(): array
     {
-        /**
-         * @var LaravelFactory $factory
-         */
-        $factory = $this->container->make(LaravelFactory::class);
+        $schema = $this->factory->schema($this->transformation->to);
 
-        $schema = $factory->schema($this->transformation->to);
-
-        $extractor = new TypeExtractor();
-        $schema = $extractor->extendSchema($schema);
+        $schema = $this->extractor->extendSchema($schema);
 
         $properties = (array) ($schema->properties ?? []);
 
@@ -186,6 +278,14 @@ class JsonSchemaTransformer extends AbstractTransformer
     public function setTransformation($transformation)
     {
         $this->transformation = $transformation;
+
+        $this->fromSchema = $this->extractor->extendSchema(
+            $this->factory->schema($this->transformation->from)
+        );
+
+        $this->toSchema = $this->extractor->extendSchema(
+            $this->factory->schema($this->transformation->to)
+        );
 
         return $this;
     }
