@@ -9,8 +9,16 @@ use Mildberry\Specifications\Exceptions\EntityValidationException;
  */
 class EntityChecker extends AbstractChecker
 {
+    /**
+     * @var string|object
+     */
     protected $schema;
 
+    /**
+     * @param mixed $data
+     *
+     * @throws EntityValidationException
+     */
     public function check($data)
     {
         $validator = $this->factory->validator($data, $this->schema);

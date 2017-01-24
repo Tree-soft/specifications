@@ -8,6 +8,7 @@ use Mildberry\Specifications\Exceptions\QueryValidationException;
 use Mildberry\Specifications\Exceptions\RouteValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
 use Mildberry\Specifications\Checkers\Request\RequestChecker;
+use Mildberry\Specifications\Support\DatePreparator;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\Mocks\RequestMock;
 use Mildberry\Tests\Specifications\Mocks\Specifications\EmptyQuerySpecification;
@@ -37,13 +38,13 @@ class RequestCheckerTest extends TestCase
      * @param array $schemaMap
      * @param string $class
      * @param RequestInterface $request
-     * @param array $data
+     * @param array $expectedData
      * @param array $expected
      * @param string $exceptionClass
      */
     public function testWrongSpecification(
         array $schemaMap, string $class, RequestInterface $request,
-        array $data, array $expected, string $exceptionClass = null
+        $expectedData, array $expected, string $exceptionClass = null
     ) {
         $this->app->instance(Loader::class, new LoaderMock($schemaMap));
 
@@ -60,7 +61,7 @@ class RequestCheckerTest extends TestCase
                 $this->assertInstanceOf($exceptionClass, $e);
             }
 
-            $this->assertEquals($data, $e->getData());
+            $this->assertEquals($expectedData, $e->getData());
             $this->assertValidationsError($expected, $e->getErrors());
         }
     }
@@ -70,13 +71,15 @@ class RequestCheckerTest extends TestCase
      */
     public function specificationsProvider()
     {
-        $data = [
-            'id' => 'test',
-        ];
+        $preparator = new DatePreparator();
 
-        $headers = [
+        $data = $preparator->prepare([
+            'id' => 'test',
+        ]);
+
+        $headers = $preparator->prepare([
             'X-TEAPOT' => 'Bosch XXX',
-        ];
+        ]);
 
         $fixture = $this->getFixturePath('schema');
         $resource = $this->getResourcePath('schema');

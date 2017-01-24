@@ -8,22 +8,22 @@ namespace Mildberry\Specifications\Objects;
 interface RequestInterface
 {
     /**
-     * @return array
+     * @return object
      */
-    public function getHeaders(): array;
+    public function getHeaders();
 
     /**
-     * @return array
+     * @return object
      */
-    public function getQuery(): array;
+    public function getQuery();
 
     /**
-     * @return array
+     * @return object
      */
-    public function getData(): array;
+    public function getData();
 
     /**
-     * @return array
+     * @return object
      */
-    public function getRoute(): array;
+    public function getRoute();
 }

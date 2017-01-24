@@ -10,39 +10,39 @@ use Mildberry\Specifications\Objects\RequestInterface;
 class RequestMock implements RequestInterface
 {
     /**
-     * @var array
+     * @var object
      */
     private $headers = [];
 
     /**
-     * @var array
+     * @var object
      */
     private $query = [];
 
     /**
-     * @var array
+     * @var object
      */
     private $data = [];
 
     /**
-     * @var array
+     * @var object
      */
     private $route = [];
 
     /**
-     * @return array
+     * @return object
      */
-    public function getHeaders(): array
+    public function getHeaders()
     {
         return $this->headers;
     }
 
     /**
-     * @param array $headers
+     * @param object $headers
      *
      * @return $this
      */
-    public function setHeaders(array $headers)
+    public function setHeaders($headers)
     {
         $this->headers = $headers;
 
@@ -50,19 +50,19 @@ class RequestMock implements RequestInterface
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getQuery(): array
+    public function getQuery()
     {
         return $this->query;
     }
 
     /**
-     * @param array $query
+     * @param object $query
      *
      * @return $this
      */
-    public function setQuery(array $query)
+    public function setQuery($query)
     {
         $this->query = $query;
 
@@ -70,19 +70,19 @@ class RequestMock implements RequestInterface
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getData(): array
+    public function getData()
     {
         return $this->data;
     }
 
     /**
-     * @param array $data
+     * @param object $data
      *
      * @return $this
      */
-    public function setData(array $data)
+    public function setData($data)
     {
         $this->data = $data;
 
@@ -90,19 +90,19 @@ class RequestMock implements RequestInterface
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getRoute(): array
+    public function getRoute()
     {
         return $this->route;
     }
 
     /**
-     * @param array $route
+     * @param object $route
      *
      * @return $this
      */
-    public function setRoute(array $route)
+    public function setRoute($route)
     {
         $this->route = $route;
 

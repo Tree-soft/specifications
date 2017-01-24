@@ -7,6 +7,7 @@ use Mildberry\Specifications\Exceptions\EntityValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
 use Mildberry\Specifications\Checkers\Request\DynamicRequestChecker;
 use Mildberry\Specifications\Checkers\Request\RequestChecker;
+use Mildberry\Specifications\Support\DatePreparator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -66,7 +67,7 @@ class Request extends FormRequest implements RequestInterface
      */
     public function getHeaders(): array
     {
-        return $this->headers->all();
+        return $this->prepareData($this->headers->all());
     }
 
     /**
@@ -74,7 +75,7 @@ class Request extends FormRequest implements RequestInterface
      */
     public function getQuery(): array
     {
-        return $this->query->all();
+        return $this->prepareData($this->query->all());
     }
 
     /**
@@ -82,7 +83,7 @@ class Request extends FormRequest implements RequestInterface
      */
     public function getData(): array
     {
-        return $this->all();
+        return $this->prepareData($this->all());
     }
 
     /**
@@ -90,6 +91,50 @@ class Request extends FormRequest implements RequestInterface
      */
     public function getRoute(): array
     {
-        return $this->route()->parameters();
+        return $this->prepareData($this->route()->parameters());
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeaderSchema(): string
+    {
+        return $this->headerSchema;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDataSchema(): string
+    {
+        return $this->dataSchema;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuerySchema(): string
+    {
+        return $this->querySchema;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRouteSchema(): string
+    {
+        return $this->routeSchema;
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return mixed
+     */
+    public function prepareData($data)
+    {
+        $preparator = new DatePreparator();
+
+        return $preparator->prepare($data);
     }
 }

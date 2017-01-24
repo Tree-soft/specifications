@@ -5,7 +5,6 @@ namespace Mildberry\Specifications\Schema;
 use League\JsonGuard\Dereferencer;
 use League\JsonGuard\Reference;
 use League\JsonGuard\Validator;
-use Mildberry\Specifications\Support\DatePreparator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -52,7 +51,7 @@ class Factory
      */
     public function validator($data, $schema): Validator
     {
-        $validator = $this->createValidator($this->prepareData($data), $schema);
+        $validator = $this->createValidator($data, $schema);
 
         return $validator;
     }
@@ -66,18 +65,6 @@ class Factory
     protected function createValidator($data, $schema): Validator
     {
         return new Validator($data, $this->schema($schema));
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return mixed
-     */
-    public function prepareData($data)
-    {
-        $preparator = new DatePreparator();
-
-        return $preparator->prepare($data);
     }
 
     /**
