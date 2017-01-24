@@ -63,33 +63,33 @@ class Request extends FormRequest implements RequestInterface
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getHeaders(): array
+    public function getHeaders()
     {
         return $this->prepareData($this->headers->all());
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getQuery(): array
+    public function getQuery()
     {
         return $this->prepareData($this->query->all());
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getData(): array
+    public function getData()
     {
         return $this->prepareData($this->all());
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getRoute(): array
+    public function getRoute()
     {
         return $this->prepareData($this->route()->parameters());
     }
