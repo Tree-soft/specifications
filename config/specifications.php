@@ -8,6 +8,7 @@ use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
 
 return [
     'path' => dirname(__DIR__) . '/resources/schema',
+    'namespace' => '',
     'transform' => [
         'path' => dirname(__DIR__) . '/resources/transform',
         'resolvers' => [

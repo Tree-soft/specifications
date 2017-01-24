@@ -2,7 +2,7 @@
 
 namespace Mildberry\Tests\Specifications\Support;
 
-use Mildberry\Specifications\Support\DatePreparator;
+use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Tests\Specifications\TestCase;
 
 /**
@@ -11,7 +11,7 @@ use Mildberry\Tests\Specifications\TestCase;
 class DatePreparatorTest extends TestCase
 {
     /**
-     * @var DatePreparator
+     * @var DataPreparator
      */
     private $preparator;
 
@@ -26,6 +26,9 @@ class DatePreparatorTest extends TestCase
         $this->assertEquals($expected, $this->preparator->prepare($data));
     }
 
+    /**
+     * @return array
+     */
     public function dataProvider()
     {
         return [
@@ -60,6 +63,6 @@ class DatePreparatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->preparator = $this->app->make(DatePreparator::class);
+        $this->preparator = $this->app->make(DataPreparator::class);
     }
 }

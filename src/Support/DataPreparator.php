@@ -5,7 +5,7 @@ namespace Mildberry\Specifications\Support;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class DatePreparator
+class DataPreparator
 {
     /**
      * @param mixed $data
@@ -19,13 +19,18 @@ class DatePreparator
                 $value = $this->prepare($value);
             }
 
-            $data = ($this->is_vector($data)) ? ($data) : ((object) $data);
+            $data = ($this->isVector($data)) ? ($data) : ((object) $data);
         }
 
         return $data;
     }
 
-    public function is_vector(array $data)
+    /**
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function isVector(array $data): bool
     {
         return $data === array_values($data);
     }

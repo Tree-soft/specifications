@@ -1,0 +1,10 @@
+{
+    "$schema": "schema://transformations",
+    "id": "transform://transformations",
+    "transformations": {
+        "request-2-client": {
+            "from": "schema://entities/simple-client",
+            "to": "schema://entities/client"
+        }
+    }
+}

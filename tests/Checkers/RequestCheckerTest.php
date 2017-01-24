@@ -8,7 +8,7 @@ use Mildberry\Specifications\Exceptions\QueryValidationException;
 use Mildberry\Specifications\Exceptions\RouteValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
 use Mildberry\Specifications\Checkers\Request\RequestChecker;
-use Mildberry\Specifications\Support\DatePreparator;
+use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\Mocks\RequestMock;
 use Mildberry\Tests\Specifications\Mocks\Specifications\EmptyQuerySpecification;
@@ -71,7 +71,7 @@ class RequestCheckerTest extends TestCase
      */
     public function specificationsProvider()
     {
-        $preparator = new DatePreparator();
+        $preparator = new DataPreparator();
 
         $data = $preparator->prepare([
             'id' => 'test',

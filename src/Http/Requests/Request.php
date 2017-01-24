@@ -7,7 +7,7 @@ use Mildberry\Specifications\Exceptions\EntityValidationException;
 use Mildberry\Specifications\Objects\RequestInterface;
 use Mildberry\Specifications\Checkers\Request\DynamicRequestChecker;
 use Mildberry\Specifications\Checkers\Request\RequestChecker;
-use Mildberry\Specifications\Support\DatePreparator;
+use Mildberry\Specifications\Support\DataPreparator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -133,7 +133,7 @@ class Request extends FormRequest implements RequestInterface
      */
     public function prepareData($data)
     {
-        $preparator = new DatePreparator();
+        $preparator = new DataPreparator();
 
         return $preparator->prepare($data);
     }

@@ -7,12 +7,16 @@ use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
 use Mildberry\Specifications\Generators\ClassGenerator;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Support\FileWriter;
+use Rnr\Resolvers\Interfaces\ConfigAwareInterface;
+use Rnr\Resolvers\Traits\ConfigAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class ClassGeneratorCommand extends Command
+class ClassGeneratorCommand extends Command implements ConfigAwareInterface
 {
+    use ConfigAwareTrait;
+
     /**
      * @var string
      */
@@ -36,7 +40,10 @@ class ClassGeneratorCommand extends Command
     {
         $extractor = new TypeExtractor();
 
-        $extractor->setNamespace($this->option('namespace'));
+        $extractor->setNamespace(
+            $this->option('namespace') ??
+            $this->config->get('specifications.namespace')
+        );
 
         $output->setPath($this->option('output'));
 

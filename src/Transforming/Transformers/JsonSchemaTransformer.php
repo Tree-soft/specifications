@@ -118,7 +118,7 @@ class JsonSchemaTransformer extends AbstractTransformer
      */
     protected function createFilters($from, $to)
     {
-        $rulesDefinitions = (array) $this->transformation->rules;
+        $rulesDefinitions = (array) ($this->transformation->rules ?? []);
 
         /**
          * @var AbstractRule[] $rules
