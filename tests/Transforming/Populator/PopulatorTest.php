@@ -59,7 +59,6 @@ class PopulatorTest extends TestCase
         $preparator = new DataPreparator();
 
         $data = [
-            'name' => 'Client name',
             'phone' => '+71234567890',
         ];
 
@@ -71,9 +70,9 @@ class PopulatorTest extends TestCase
         $this->assertInstanceOf(Client::class, $actual);
 
         $this->assertEmpty($actual->getCompany());
+        $this->assertEmpty($actual->getName());
 
         $this->assertEquals($data, [
-            'name' => $actual->getName(),
             'phone' => $actual->getPhone(),
         ]);
     }

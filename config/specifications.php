@@ -41,6 +41,9 @@ return [
     'populate' => [
         'filler' => SetterFiller::class,
         'resolvers' => [
+            'nullable' => [
+                'class' => PopulatorResolvers\NullableResolver::class,
+            ],
             'simple' => [
                 'class' => PopulatorResolvers\SimpleResolver::class,
             ],
