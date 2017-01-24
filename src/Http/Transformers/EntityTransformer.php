@@ -5,12 +5,16 @@ namespace Mildberry\Specifications\Http\Transformers;
 use Mildberry\Specifications\Http\Requests\Request;
 use Mildberry\Specifications\Transforming\Populator\Populator;
 use Mildberry\Specifications\Transforming\TransformerFactory;
+use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
+use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class EntityTransformer
+class EntityTransformer implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @var TransformerFactory
      */
@@ -25,11 +29,6 @@ class EntityTransformer
      * @var string
      */
     private $namespace = '';
-
-    /**
-     * @var Populator
-     */
-    private $populator;
 
     /**
      * EntityTransformer constructor.
@@ -50,11 +49,19 @@ class EntityTransformer
     {
         $schema = $this->getSchema($this->class);
 
+        /**
+         * @var Populator $populator
+         */
+        $populator = $this->container->make(Populator::class);
+
+        $populator
+            ->setNamespace($this->namespace);
+
         $transformer = $this->factory->create($request->getDataSchema(), $schema);
 
         $data = $transformer->transform($request->getData());
 
-        return $this->populator->populate($data, $schema);
+        return $populator->populate($data, $schema);
     }
 
     /**

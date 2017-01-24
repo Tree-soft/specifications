@@ -60,8 +60,8 @@ class ClassGeneratorTest extends TestCase
             ],
             'class' => [
                 [
-                    'Entities/Client.php' => file_get_contents($this->getFixturePath('entities/Client.php')),
-                ], 'schema://entities/client',
+                    'Entities/ClientFull.php' => file_get_contents($this->getFixturePath('entities/ClientFull.php')),
+                ], 'schema://entities/clientFull',
             ],
             'derived-class' => [
                 [
@@ -136,6 +136,7 @@ class ClassGeneratorTest extends TestCase
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/company' => $this->getFixturePath('schema/company.json'),
             'entities/client' => $this->getFixturePath('schema/client.json'),
+            'entities/clientFull' => $this->getFixturePath('schema/clientFull.json'),
             'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
         ]));
 

@@ -1,0 +1,15 @@
+{
+    "id": "schema://entities/clientFull",
+    "definitions": {
+        "company": {
+            "$ref": "schema://entities/company"
+        }
+    },
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "company": { "$ref": "#/definitions/company" }
+    },
+    "required": ["name", "phone", "company"]
+}

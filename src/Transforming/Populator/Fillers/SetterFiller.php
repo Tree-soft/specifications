@@ -14,6 +14,10 @@ class SetterFiller implements FillerInterface
      */
     public function fill($entity, string $field, $value)
     {
+        if (is_null($value)) {
+            return;
+        }
+
         $setter = $this->getMethod($field);
         $entity->{$setter}($value);
     }

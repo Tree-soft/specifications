@@ -104,7 +104,12 @@ class EntityTransformerTest extends TestCase
 
         $request->data = $data;
 
-        $this->transformer->populateFromRequest($request);
+        /**
+         * @var Client $client
+         */
+        $client = $this->transformer->populateFromRequest($request);
+
+        $this->assertInstanceOf(Client::class, $client);
     }
 
     protected function setUp()

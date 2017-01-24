@@ -54,6 +54,30 @@ class PopulatorTest extends TestCase
         ]);
     }
 
+    public function testIncomplete()
+    {
+        $preparator = new DataPreparator();
+
+        $data = [
+            'name' => 'Client name',
+            'phone' => '+71234567890',
+        ];
+
+        /**
+         * @var Client $actual
+         */
+        $actual = $this->populator->populate($preparator->prepare($data), 'schema://entities/client');
+
+        $this->assertInstanceOf(Client::class, $actual);
+
+        $this->assertEmpty($actual->getCompany());
+
+        $this->assertEquals($data, [
+            'name' => $actual->getName(),
+            'phone' => $actual->getPhone(),
+        ]);
+    }
+
     protected function setUp()
     {
         parent::setUp();

@@ -5,7 +5,7 @@ namespace Mildberry\Tests\Specifications\Fixtures\Entities;
 /**
  * @author Json-schema class generator
  */
-class Client
+class ClientFull
 {
     /**
      * @var string
@@ -18,7 +18,7 @@ class Client
     private $phone;
 
     /**
-     * @var Company|null
+     * @var Company
      */
     private $company;
 
@@ -63,19 +63,19 @@ class Client
     }
 
     /**
-     * @return Company|null
+     * @return Company
      */
-    public function getCompany()
+    public function getCompany(): Company
     {
         return $this->company;
     }
 
     /**
-     * @param Company|null $company
+     * @param Company $company
      *
      * @return $this
      */
-    public function setCompany($company)
+    public function setCompany(Company $company)
     {
         $this->company = $company;
 

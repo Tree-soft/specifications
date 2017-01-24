@@ -48,8 +48,9 @@ class ObjectResolver extends AbstractResolver
         $populator
             ->setNamespace($this->populator->getNamespace());
 
-        return $populator->populate(
-            $this->data->{$property}, $this->schema->properties->{$property}
-        );
+        return (property_exists($this->data, $property)) ?
+            ($populator->populate(
+                $this->data->{$property}, $this->schema->properties->{$property}
+            )) : (null);
     }
 }
