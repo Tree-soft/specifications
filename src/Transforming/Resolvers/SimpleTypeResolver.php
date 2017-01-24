@@ -11,13 +11,6 @@ use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 class SimpleTypeResolver extends AbstractResolver
 {
     /**
-     * @var array|string[]
-     */
-    private $types = [
-        'boolean', 'number', 'string', 'integer',
-    ];
-
-    /**
      * @param string $from
      * @param string $to
      * @param callable $next
@@ -38,7 +31,9 @@ class SimpleTypeResolver extends AbstractResolver
      */
     public function isSimpleType(string $type): bool
     {
-        return in_array($type, $this->types);
+        $casters = $this->getConfig()['casters'] ?? [];
+
+        return in_array($type, array_keys($casters));
     }
 
     /**
@@ -56,7 +51,8 @@ class SimpleTypeResolver extends AbstractResolver
 
         $transformer
             ->setFromType($from)
-            ->setToType($to);
+            ->setToType($to)
+            ->setCasters($this->getConfig()['casters'] ?? []);
 
         return $transformer;
     }

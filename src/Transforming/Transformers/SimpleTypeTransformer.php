@@ -3,10 +3,6 @@
 namespace Mildberry\Specifications\Transforming\Transformers;
 
 use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\AbstractCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\BooleanCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\FloatCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\IntegerCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -26,12 +22,7 @@ class SimpleTypeTransformer extends AbstractTransformer
     /**
      * @var array|AbstractCaster[]
      */
-    private $casters = [
-        'boolean' => BooleanCaster::class,
-        'number' => FloatCaster::class,
-        'string' => StringCaster::class,
-        'integer' => IntegerCaster::class,
-    ];
+    private $casters = [];
 
     /**
      * @param mixed $from
@@ -98,6 +89,26 @@ class SimpleTypeTransformer extends AbstractTransformer
     public function setToType(string $toType)
     {
         $this->toType = $toType;
+
+        return $this;
+    }
+
+    /**
+     * @return array|AbstractCaster[]
+     */
+    public function getCasters()
+    {
+        return $this->casters;
+    }
+
+    /**
+     * @param array|AbstractCaster[] $casters
+     *
+     * @return $this
+     */
+    public function setCasters($casters)
+    {
+        $this->casters = $casters;
 
         return $this;
     }

@@ -10,6 +10,8 @@ use Mildberry\Specifications\Transforming\Resolvers\SimpleTypeResolver;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\IntegerCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
 use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
@@ -52,8 +54,12 @@ class TransformerFactoryTest extends TestCase
             ], [
                 'class' => CopyResolver::class,
             ], [
-                'class' => SimpleTypeResolver::class
-            ]
+                'class' => SimpleTypeResolver::class,
+                'casters' => [
+                    'string' => StringCaster::class,
+                    'integer' => IntegerCaster::class,
+                ],
+            ],
         ]);
 
         $this->assertInstanceOf($expected, $this->factory->create($from, $to));
@@ -78,8 +84,8 @@ class TransformerFactoryTest extends TestCase
             'simple' => [
                 SimpleTypeTransformer::class,
                 'integer',
-                'string'
-            ]
+                'string',
+            ],
         ];
     }
 

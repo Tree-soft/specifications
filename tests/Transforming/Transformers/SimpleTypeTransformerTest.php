@@ -2,6 +2,10 @@
 
 namespace Mildberry\Tests\Specifications\Transforming\Transformers;
 
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\BooleanCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\FloatCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\IntegerCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
 use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 
 /**
@@ -31,7 +35,13 @@ class SimpleTypeTransformerTest extends TestCase
     {
         $this->transformer
             ->setFromType($fromType)
-            ->setToType($toType);
+            ->setToType($toType)
+            ->setCasters([
+                'boolean' => BooleanCaster::class,
+                'number' => FloatCaster::class,
+                'string' => StringCaster::class,
+                'integer' => IntegerCaster::class,
+            ]);
 
         $this->assertSame($expected, $this->transformer->transform($value));
     }
