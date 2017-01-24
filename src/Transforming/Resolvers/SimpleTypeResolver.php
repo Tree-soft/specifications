@@ -1,9 +1,9 @@
 <?php
 
 namespace Mildberry\Specifications\Transforming\Resolvers;
+
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
-
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -14,7 +14,7 @@ class SimpleTypeResolver extends AbstractResolver
      * @var array|string[]
      */
     private $types = [
-        'boolean', 'number', 'string', 'integer'
+        'boolean', 'number', 'string', 'integer',
     ];
 
     /**
@@ -36,7 +36,8 @@ class SimpleTypeResolver extends AbstractResolver
      *
      * @return bool
      */
-    public function isSimpleType(string $type): bool {
+    public function isSimpleType(string $type): bool
+    {
         return in_array($type, $this->types);
     }
 
@@ -46,15 +47,16 @@ class SimpleTypeResolver extends AbstractResolver
      *
      * @return SimpleTypeTransformer
      */
-    public function createTransformer(string $from, string $to): SimpleTypeTransformer {
+    public function createTransformer(string $from, string $to): SimpleTypeTransformer
+    {
         /**
          * @var SimpleTypeTransformer $transformer
          */
         $transformer = $this->container->make(SimpleTypeTransformer::class);
 
         $transformer
-            ->setFrom($from)
-            ->setTo($to);
+            ->setFromType($from)
+            ->setToType($to);
 
         return $transformer;
     }

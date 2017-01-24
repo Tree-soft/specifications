@@ -2,6 +2,12 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers;
 
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\AbstractCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\BooleanCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\FloatCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\IntegerCaster;
+use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
+
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
@@ -10,12 +16,22 @@ class SimpleTypeTransformer extends AbstractTransformer
     /**
      * @var string
      */
-    private $from;
+    private $fromType;
 
     /**
      * @var string
      */
-    private $to;
+    private $toType;
+
+    /**
+     * @var array|AbstractCaster[]
+     */
+    private $casters = [
+        'boolean' => BooleanCaster::class,
+        'number' => FloatCaster::class,
+        'string' => StringCaster::class,
+        'integer' => IntegerCaster::class,
+    ];
 
     /**
      * @param mixed $from
@@ -25,25 +41,43 @@ class SimpleTypeTransformer extends AbstractTransformer
      */
     public function transform($from, $to = null)
     {
-        return $from;
+        $caster = $this->createCaster();
+
+        return $to ?? $caster->cast($from);
+    }
+
+    /**
+     * @return AbstractCaster
+     */
+    public function createCaster(): AbstractCaster
+    {
+        /**
+         * @var AbstractCaster $caster
+         */
+        $caster = new $this->casters[$this->toType]();
+
+        $caster
+            ->setFromType($this->fromType);
+
+        return $caster;
     }
 
     /**
      * @return string
      */
-    public function getFrom(): string
+    public function getFromType(): string
     {
-        return $this->from;
+        return $this->fromType;
     }
 
     /**
-     * @param string $from
+     * @param string $fromType
      *
      * @return $this
      */
-    public function setFrom(string $from)
+    public function setFromType(string $fromType)
     {
-        $this->from = $from;
+        $this->fromType = $fromType;
 
         return $this;
     }
@@ -51,19 +85,19 @@ class SimpleTypeTransformer extends AbstractTransformer
     /**
      * @return string
      */
-    public function getTo(): string
+    public function getToType(): string
     {
-        return $this->to;
+        return $this->toType;
     }
 
     /**
-     * @param string $to
+     * @param string $toType
      *
      * @return $this
      */
-    public function setTo(string $to)
+    public function setToType(string $toType)
     {
-        $this->to = $to;
+        $this->toType = $toType;
 
         return $this;
     }
