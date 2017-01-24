@@ -1,62 +1,50 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Populator;
-
-use Illuminate\Contracts\Container\Container;
+namespace Mildberry\Specifications\Transforming\Converter;
+use Closure;
 use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Exceptions\PopulatorException;
-use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\LaravelFactory;
-use Exception;
-use Mildberry\Specifications\Transforming\Populator\Fillers\FillerInterface;
-use Illuminate\Contracts\Config\Repository as Config;
-use Mildberry\Specifications\Transforming\Populator\Fillers\SetterFiller;
-use Closure;
-use Mildberry\Specifications\Transforming\Populator\Resolvers\AbstractResolver;
-use Rnr\Resolvers\Interfaces\ConfigAwareInterface;
+use Mildberry\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
-use Rnr\Resolvers\Traits\ConfigAwareTrait;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
+
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class Populator implements ContainerAwareInterface, ConfigAwareInterface
+abstract class Converter implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-    use ConfigAwareTrait;
 
     /**
      * @var LaravelFactory $factory
      */
-    private $factory;
+    protected $factory;
+    /**
+     * @var string
+     */
+    protected $namespace = '\\';
 
     /**
      * @var string
      */
-    private $namespace = '\\';
+    protected $filler;
 
     /**
-     * @var FillerInterface
+     * @var array
      */
-    private $filler;
+    protected $resolvers = [];
 
     /**
      * Populator constructor.
      *
      * @param LaravelFactory $factory
-     * @param Config $config
-     * @param Container $container
      */
-    public function __construct(LaravelFactory $factory, Config $config, Container $container)
+    public function __construct(LaravelFactory $factory)
     {
-        $filler = $config->get('specifications.populate.filler', SetterFiller::class);
-
-        $this->filler = $container->make($filler);
-
         $this->factory = $factory;
     }
-
     /**
      * @param mixed $data
      * @param string|object $schema
@@ -65,17 +53,18 @@ class Populator implements ContainerAwareInterface, ConfigAwareInterface
      *
      * @return mixed
      */
-    public function populate($data, $schema)
+    public function convert($data, $schema)
     {
         $schema = $this->factory->schema($schema);
+
+        $resolvers = $this->createResolvers($schema, $data);
+        $filler = $this->container->make($this->filler);
 
         $entity = $this->createEntity($schema, $data);
 
         $pipeline = new Pipeline();
 
-        $resolvers = $this->createResolvers($schema, $data);
-
-        foreach (array_keys((array) $schema->properties) as $property) {
+        foreach (array_keys((array)$schema->properties) as $property) {
             try {
                 $value = $pipeline
                     ->send($property)
@@ -86,7 +75,7 @@ class Populator implements ContainerAwareInterface, ConfigAwareInterface
                         throw $e;
                     });
 
-                $this->filler->fill($entity, $property, $value);
+                $filler->fill($entity, $property, $value);
             } catch (PopulatorException $e) {
                 $parts = array_filter([$property, $e->getField()], function ($part) {
                     return !is_null($part);
@@ -107,42 +96,9 @@ class Populator implements ContainerAwareInterface, ConfigAwareInterface
      * @param mixed $data
      * @param object $schema
      *
-     * @throws Exception
-     *
      * @return mixed
      */
-    public function createEntity($schema, $data)
-    {
-        $typeExtractor = new TypeExtractor();
-
-        $typeExtractor
-            ->setNamespace($this->namespace);
-
-        $types = $typeExtractor->extract($schema);
-
-        if (!is_array($types)) {
-            $class = $types;
-        } else {
-            throw new Exception('Polymorphic types is not implemented.');
-        }
-
-        return new $class();
-    }
-
-    /**
-     * @param object $schema
-     * @param object $data
-     *
-     * @return array
-     */
-    protected function createResolvers($schema, $data): array
-    {
-        $resolvers = $this->config->get('specifications.populate.resolvers', []);
-
-        return array_map(function ($config) use ($schema, $data) {
-            return $this->wrapResolver($config, $schema, $data);
-        }, $resolvers);
-    }
+    abstract public function createEntity($schema, $data);
 
     /**
      * @return string
@@ -165,6 +121,21 @@ class Populator implements ContainerAwareInterface, ConfigAwareInterface
     }
 
     /**
+     * @param object $schema
+     * @param object $data
+     *
+     * @return array
+     */
+    protected function createResolvers($schema, $data): array
+    {
+        $resolvers = $this->resolvers;
+
+        return array_map(function ($config) use ($schema, $data) {
+            return $this->wrapResolver($config, $schema, $data);
+        }, $resolvers);
+    }
+
+    /**
      * @param array $config
      * @param object $schema
      * @param $data
@@ -182,10 +153,48 @@ class Populator implements ContainerAwareInterface, ConfigAwareInterface
             ->setConfig($config)
             ->setSchema($schema)
             ->setData($data)
-            ->setPopulator($this);
+            ->setConverter($this);
 
         return function ($property, $next) use ($resolver) {
             return $resolver->resolve($property, $next);
         };
+    }
+
+    /**
+     * @return string
+     */
+    public function getFiller(): string
+    {
+        return $this->filler;
+    }
+
+    /**
+     * @param string $filler
+     * @return $this
+     */
+    public function setFiller(string $filler)
+    {
+        $this->filler = $filler;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getResolvers(): array
+    {
+        return $this->resolvers;
+    }
+
+    /**
+     * @param array $resolvers
+     * @return $this
+     */
+    public function setResolvers(array $resolvers)
+    {
+        $this->resolvers = $resolvers;
+
+        return $this;
     }
 }

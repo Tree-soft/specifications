@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Populator;
+namespace Mildberry\Tests\Specifications\Transforming\Converter;
 
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Populator\Populator;
+use Mildberry\Specifications\Transforming\Converter\Populator;
 use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
 use Mildberry\Tests\Specifications\Fixtures\Entities\Company;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
@@ -36,7 +36,7 @@ class PopulatorTest extends TestCase
         /**
          * @var Client $actual
          */
-        $actual = $this->populator->populate($preparator->prepare($data), 'schema://entities/client');
+        $actual = $this->populator->convert($preparator->prepare($data), 'schema://entities/client');
 
         $this->assertInstanceOf(Client::class, $actual);
 
@@ -65,7 +65,7 @@ class PopulatorTest extends TestCase
         /**
          * @var Client $actual
          */
-        $actual = $this->populator->populate($preparator->prepare($data), 'schema://entities/client');
+        $actual = $this->populator->convert($preparator->prepare($data), 'schema://entities/client');
 
         $this->assertInstanceOf(Client::class, $actual);
 

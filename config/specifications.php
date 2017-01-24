@@ -5,8 +5,9 @@
 use Mildberry\Specifications\Transforming\Resolvers;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
-use Mildberry\Specifications\Transforming\Populator\Fillers\SetterFiller;
-use Mildberry\Specifications\Transforming\Populator\Resolvers as PopulatorResolvers;
+use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator as PopulatorResolvers;
+use Mildberry\Specifications\Transforming\Converter\Resolvers\Extractor as ExtractorResolvers;
+use Mildberry\Specifications\Transforming\Converter\Fillers;
 
 return [
     'path' => dirname(__DIR__) . '/resources/schema',
@@ -39,7 +40,7 @@ return [
         ],
     ],
     'populate' => [
-        'filler' => SetterFiller::class,
+        'filler' => Fillers\SetterFiller::class,
         'resolvers' => [
             'nullable' => [
                 'class' => PopulatorResolvers\NullableResolver::class,
@@ -49,6 +50,20 @@ return [
             ],
             'object' => [
                 'class' => PopulatorResolvers\ObjectResolver::class,
+            ],
+        ],
+    ],
+    'extract' => [
+        'filler' => Fillers\ObjectFiller::class,
+        'resolvers' => [
+            'nullable' => [
+                'class' => ExtractorResolvers\NullableResolver::class,
+            ],
+            'simple' => [
+                'class' => ExtractorResolvers\SimpleResolver::class,
+            ],
+            'object' => [
+                'class' => ExtractorResolvers\ObjectResolver::class,
             ],
         ],
     ],

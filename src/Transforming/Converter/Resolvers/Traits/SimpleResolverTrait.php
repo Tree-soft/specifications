@@ -1,13 +1,15 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Populator\Resolvers;
+namespace Mildberry\Specifications\Transforming\Converter\Resolvers\Traits;
 
 use Mildberry\Specifications\Generators\TypeExtractor;
+use Mildberry\Specifications\Transforming\Converter\Converter;
+
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class SimpleResolver extends AbstractResolver
+trait SimpleResolverTrait
 {
     /**
      * @param string $property
@@ -28,12 +30,12 @@ class SimpleResolver extends AbstractResolver
      */
     public function isSimpleType(string $property): bool
     {
-        $schema = $this->schema->properties->{$property};
+        $schema = $this->getSchema()->properties->{$property};
 
         $extractor = new TypeExtractor();
 
         $extractor
-            ->setNamespace($this->populator->getNamespace());
+            ->setNamespace($this->getConverter()->getNamespace());
 
         $type = $extractor->extract($schema);
 
@@ -45,8 +47,15 @@ class SimpleResolver extends AbstractResolver
      *
      * @return mixed
      */
-    public function getValue($property)
-    {
-        return $this->data->{$property};
-    }
+    abstract public function getValue($property);
+
+    /**
+     * @return Converter
+     */
+    abstract public function getConverter(): Converter;
+
+    /**
+     * @return object
+     */
+    abstract public function getSchema();
 }

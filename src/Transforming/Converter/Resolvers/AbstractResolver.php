@@ -1,8 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Populator\Resolvers;
+namespace Mildberry\Specifications\Transforming\Converter\Resolvers;
 
-use Mildberry\Specifications\Transforming\Populator\Populator;
+use Mildberry\Specifications\Transforming\Converter\Converter;
+
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
@@ -14,9 +15,9 @@ abstract class AbstractResolver implements ContainerAwareInterface
     use ContainerAwareTrait;
 
     /**
-     * @var Populator
+     * @var Converter
      */
-    protected $populator;
+    protected $converter;
 
     /**
      * @var array
@@ -102,21 +103,21 @@ abstract class AbstractResolver implements ContainerAwareInterface
     }
 
     /**
-     * @return Populator
+     * @return Converter
      */
-    public function getPopulator(): Populator
+    public function getConverter(): Converter
     {
-        return $this->populator;
+        return $this->converter;
     }
 
     /**
-     * @param Populator $populator
+     * @param Converter $converter
      *
      * @return $this
      */
-    public function setPopulator(Populator $populator)
+    public function setConverter(Converter $converter)
     {
-        $this->populator = $populator;
+        $this->converter = $converter;
 
         return $this;
     }

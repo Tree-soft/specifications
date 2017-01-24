@@ -3,7 +3,7 @@
 namespace Mildberry\Specifications\Http\Transformers;
 
 use Mildberry\Specifications\Http\Requests\Request;
-use Mildberry\Specifications\Transforming\Populator\Populator;
+use Mildberry\Specifications\Transforming\Converter\Populator;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
@@ -61,7 +61,7 @@ class EntityTransformer implements ContainerAwareInterface
 
         $data = $transformer->transform($request->getData());
 
-        return $populator->populate($data, $schema);
+        return $populator->convert($data, $schema);
     }
 
     /**
