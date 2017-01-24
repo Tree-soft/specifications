@@ -5,6 +5,8 @@
 use Mildberry\Specifications\Transforming\Resolvers;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
+use Mildberry\Specifications\Transforming\Populator\Fillers\SetterFiller;
+use Mildberry\Specifications\Transforming\Populator\Resolvers as PopulatorResolvers;
 
 return [
     'path' => dirname(__DIR__) . '/resources/schema',
@@ -33,6 +35,17 @@ return [
                     'string' => Casters\StringCaster::class,
                     'integer' => Casters\IntegerCaster::class,
                 ],
+            ],
+        ],
+    ],
+    'populate' => [
+        'filler' => SetterFiller::class,
+        'resolvers' => [
+            'simple' => [
+                'class' => PopulatorResolvers\SimpleResolver::class,
+            ],
+            'object' => [
+                'class' => PopulatorResolvers\ObjectResolver::class,
             ],
         ],
     ],

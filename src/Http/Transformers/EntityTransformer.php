@@ -48,13 +48,13 @@ class EntityTransformer
      */
     public function populateFromRequest(Request $request)
     {
-        $transformer = $this->factory->create(
-            $request->getDataSchema(), $this->getSchema($this->class)
-        );
+        $schema = $this->getSchema($this->class);
+
+        $transformer = $this->factory->create($request->getDataSchema(), $schema);
 
         $data = $transformer->transform($request->getData());
 
-        return $this->populator->populate($data, $this->class);
+        return $this->populator->populate($data, $schema);
     }
 
     /**

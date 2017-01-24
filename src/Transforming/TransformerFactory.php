@@ -21,7 +21,7 @@ class TransformerFactory implements ConfigAwareInterface, ContainerAwareInterfac
     use ContainerAwareTrait;
 
     /**
-     * @var array
+     * @var array|callable[]
      */
     private $resolvers;
 
