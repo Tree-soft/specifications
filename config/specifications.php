@@ -16,9 +16,8 @@ return [
                 'class' => Resolvers\JsonSchemaResolver::class,
                 'rules' => [
                     'ignore' => Rules\IgnoreRule::class,
-                    'remove' => Rules\RemoveRule::class,
-                    'const' => Rules\ConstRuleTo::class,
-                    'shiftFrom' => Rules\ShiftFromRuleTo::class,
+                    'const' => Rules\ConstRule::class,
+                    'shiftFrom' => Rules\ShiftFromRule::class,
                     'shiftTo' => Rules\ShiftToRule::class,
                 ],
                 'schema' => 'transform://transformations',
