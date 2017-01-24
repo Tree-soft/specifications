@@ -3,7 +3,8 @@
 namespace Mildberry\Tests\Specifications\Providers;
 
 use Mildberry\Specifications\Generators\OutputInterface;
-use Mildberry\Specifications\Providers\JsonSchemaProvider;
+use Mildberry\Specifications\Http\Transformers\EntityTransformer;
+use Mildberry\Specifications\Providers\SpecificationsProvider;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\EntityChecker;
@@ -17,16 +18,16 @@ use Rnr\Resolvers\Providers\ResolversProvider;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class JsonSchemaProviderTest extends TestCase
+class SpecificationsProviderTest extends TestCase
 {
     use PublishedDataAssertionTrait;
 
     public function testLoading()
     {
         /**
-         * @var JsonSchemaProvider $provider
+         * @var SpecificationsProvider $provider
          */
-        $provider = $this->app->getProvider(JsonSchemaProvider::class);
+        $provider = $this->app->getProvider(SpecificationsProvider::class);
 
         $this->assertPublishData($provider);
 
@@ -61,5 +62,15 @@ class JsonSchemaProviderTest extends TestCase
         $output = $this->app->make(OutputInterface::class);
 
         $this->assertInstanceOf(FileWriter::class, $output);
+
+        /**
+         * @var EntityTransformer $transformer
+         */
+        $transformer = $this->app->make(EntityTransformer::class);
+
+        $this->assertEquals(
+            ltrim($config->get('specifications.namespace'), '\\'),
+            $transformer->getNamespace()
+        );
     }
 }

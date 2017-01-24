@@ -5,6 +5,7 @@ namespace Mildberry\Specifications\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Mildberry\Specifications\Generators\OutputInterface;
+use Mildberry\Specifications\Http\Transformers\EntityTransformer;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\AbstractChecker;
@@ -17,7 +18,7 @@ use Rnr\Resolvers\Providers\ResolversProvider;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
+class SpecificationsProvider extends ServiceProvider implements PublisherInterface
 {
     /**
      * @var Application
@@ -78,6 +79,15 @@ class JsonSchemaProvider extends ServiceProvider implements PublisherInterface
             $factory = $this->app->make(LaravelFactory::class);
 
             $specification->setFactory($factory);
+        });
+
+        $this->app->afterResolving(function (EntityTransformer $transformer) {
+            /**
+             * @var Config $config
+             */
+            $config = $this->app->make(Config::class);
+
+            $transformer->setNamespace($config->get('specifications.namespace', '\\'));
         });
     }
 

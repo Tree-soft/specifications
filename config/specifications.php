@@ -10,7 +10,7 @@ use Mildberry\Specifications\Transforming\Populator\Resolvers as PopulatorResolv
 
 return [
     'path' => dirname(__DIR__) . '/resources/schema',
-    'namespace' => '',
+    'namespace' => '\Core',
     'transform' => [
         'path' => dirname(__DIR__) . '/resources/transform',
         'resolvers' => [

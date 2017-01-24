@@ -3,7 +3,7 @@
 namespace Mildberry\Tests\Specifications;
 
 use Illuminate\Foundation\Application;
-use Mildberry\Specifications\Providers\JsonSchemaProvider;
+use Mildberry\Specifications\Providers\SpecificationsProvider;
 use Orchestra\Testbench\TestCase as ParentTestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 
@@ -19,7 +19,7 @@ class TestCase extends ParentTestCase
      */
     protected function getPackageProviders($app)
     {
-        return [JsonSchemaProvider::class];
+        return [SpecificationsProvider::class];
     }
 
     /**
