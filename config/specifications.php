@@ -17,8 +17,8 @@ return [
                 'rules' => [
                     'ignore' => Rules\IgnoreRule::class,
                     'remove' => Rules\RemoveRule::class,
-                    'const' => Rules\ConstRule::class,
-                    'shiftFrom' => Rules\ShiftFromRule::class,
+                    'const' => Rules\ConstRuleTo::class,
+                    'shiftFrom' => Rules\ShiftFromRuleTo::class,
                     'shiftTo' => Rules\ShiftToRule::class,
                 ],
                 'schema' => 'transform://transformations',

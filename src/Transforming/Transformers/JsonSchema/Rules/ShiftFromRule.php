@@ -2,20 +2,23 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
-use Mildberry\Specifications\Support\DeepCopy\Filters\ConstantPropertyFilter;
-
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class ShiftFromRule extends AbstractRule implements PostRuleInterface
+class ShiftFromRule extends AbstractRuleTo
 {
-    use PostRuleTrait;
-
-    public function configure()
+    /**
+     * @param string $property
+     * @param object $object
+     *
+     * @return object
+     */
+    protected function innerApply(string $property, $object)
     {
-        $this->filter = new ConstantPropertyFilter();
+        $fromProperty = $this->spec[0];
 
-        $this->filter
-            ->setValue($this->from->{$this->spec[0]});
+        $object->{$property} = $this->from->{$fromProperty};
+
+        return $object;
     }
 }

@@ -2,18 +2,23 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
-use Mildberry\Specifications\Support\DeepCopy\Filters\ShiftPropertyFilter;
-
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class ShiftToRule extends AbstractRule
+class ShiftToRule extends AbstractRuleFrom
 {
-    public function configure()
+    /**
+     * @param string $property
+     * @param object $object
+     *
+     * @return object
+     */
+    protected function innerApply(string $property, $object)
     {
-        $this->filter = new ShiftPropertyFilter();
+        $toProperty = $this->spec[0];
 
-        $this->filter
-            ->setTo($this->spec[0]);
+        $object->{$toProperty} = $this->from->{$property};
+
+        return $object;
     }
 }

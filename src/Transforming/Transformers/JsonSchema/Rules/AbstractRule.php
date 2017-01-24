@@ -2,15 +2,17 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 
-use DeepCopy\DeepCopy;
-use DeepCopy\Filter\Filter;
-use DeepCopy\Matcher\Matcher;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher\MatcherInterface;
+use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
+use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-abstract class AbstractRule
+abstract class AbstractRule implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @var mixed
      */
@@ -22,14 +24,14 @@ abstract class AbstractRule
     protected $to;
 
     /**
-     * @var Matcher
+     * @var object|mixed
      */
-    protected $matcher;
+    protected $fromSchema;
 
     /**
-     * @var Filter
+     * @var object|mixed
      */
-    protected $filter;
+    protected $toSchema;
 
     /**
      * @var array
@@ -37,14 +39,32 @@ abstract class AbstractRule
     protected $spec;
 
     /**
-     * @param DeepCopy $copier
+     * @var MatcherInterface
      */
-    public function apply(DeepCopy $copier)
+    protected $matcher;
+
+    /**
+     * @param string $property
+     * @param mixed $object
+     *
+     * @return mixed
+     */
+    public function apply(string $property, $object)
     {
-        $copier->addFilter($this->filter, $this->matcher);
+        if ($this->matcher->match($property)) {
+            return $this->innerApply($property, $object);
+        }
+
+        return $object;
     }
 
-    abstract public function configure();
+    /**
+     * @param string $property
+     * @param object $object
+     *
+     * @return object
+     */
+    abstract protected function innerApply(string $property, $object);
 
     /**
      * @return mixed
@@ -87,26 +107,6 @@ abstract class AbstractRule
     }
 
     /**
-     * @return Matcher
-     */
-    public function getMatcher(): Matcher
-    {
-        return $this->matcher;
-    }
-
-    /**
-     * @param Matcher $matcher
-     *
-     * @return $this
-     */
-    public function setMatcher(Matcher $matcher)
-    {
-        $this->matcher = $matcher;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getSpec(): array
@@ -127,21 +127,61 @@ abstract class AbstractRule
     }
 
     /**
-     * @return Filter
+     * @return MatcherInterface
      */
-    public function getFilter(): Filter
+    public function getMatcher(): MatcherInterface
     {
-        return $this->filter;
+        return $this->matcher;
     }
 
     /**
-     * @param Filter $filter
+     * @param MatcherInterface $matcher
      *
      * @return $this
      */
-    public function setFilter(Filter $filter)
+    public function setMatcher(MatcherInterface $matcher)
     {
-        $this->filter = $filter;
+        $this->matcher = $matcher;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed|object
+     */
+    public function getFromSchema()
+    {
+        return $this->fromSchema;
+    }
+
+    /**
+     * @param mixed|object $fromSchema
+     *
+     * @return $this
+     */
+    public function setFromSchema($fromSchema)
+    {
+        $this->fromSchema = $fromSchema;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed|object
+     */
+    public function getToSchema()
+    {
+        return $this->toSchema;
+    }
+
+    /**
+     * @param mixed|object $toSchema
+     *
+     * @return $this
+     */
+    public function setToSchema($toSchema)
+    {
+        $this->toSchema = $toSchema;
 
         return $this;
     }
