@@ -3,6 +3,7 @@
 namespace Mildberry\Specifications\Http\Transformers;
 
 use Mildberry\Specifications\Http\Requests\Request;
+use Mildberry\Specifications\Transforming\Converter\Extractor;
 use Mildberry\Specifications\Transforming\Converter\Populator;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
@@ -65,10 +66,25 @@ class EntityTransformer implements ContainerAwareInterface
     }
 
     /**
-     * @param $entity
+     * @param mixed $entity
+     * @param string|object $responseSchema
+     *
+     * @return mixed
      */
-    public function extractToResponse($entity)
+    public function extractToResponse($entity, $responseSchema)
     {
+        $schema = $this->getSchema($this->class);
+
+        /**
+         * @var Extractor $extractor
+         */
+        $extractor = $this->container->make(Extractor::class);
+
+        $data = $extractor->convert($entity, $schema);
+
+        $transformer = $this->factory->create($schema, $responseSchema);
+
+        return $transformer->transform($data);
     }
 
     /**

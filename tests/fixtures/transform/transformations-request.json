@@ -2,9 +2,13 @@
     "$schema": "schema://transformations",
     "id": "transform://transformations",
     "transformations": {
-        "request-2-client": {
+        "request-client": {
             "from": "schema://entities/simple-client",
             "to": "schema://entities/client"
+        },
+        "client-response": {
+            "from": "schema://entities/client",
+            "to": "schema://entities/simple-client"
         }
     }
 }

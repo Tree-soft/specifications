@@ -10,6 +10,7 @@ use Mildberry\Specifications\Transforming\Resolvers\JsonSchemaResolver;
 use Mildberry\Specifications\Transforming\Resolvers\SimpleTypeResolver;
 use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
 use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
+use Mildberry\Tests\Specifications\Fixtures\Entities\Company;
 use Mildberry\Tests\Specifications\Http\TestCase;
 use Illuminate\Config\Repository as Config;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
@@ -110,6 +111,52 @@ class EntityTransformerTest extends TestCase
         $client = $this->transformer->populateFromRequest($request);
 
         $this->assertInstanceOf(Client::class, $client);
+    }
+
+    public function testExtractToResponse()
+    {
+        /**
+         * @var Config $config
+         */
+        $config = $this->app->make(Config::class);
+
+        $config->set('specifications.transform.resolvers', [
+            [
+                'class' => JsonSchemaResolver::class,
+                'schema' => 'transform://transformations-request',
+            ], [
+                'class' => CopyResolver::class,
+            ], [
+                'class' => SimpleTypeResolver::class,
+                'casters' => [
+                    'string' => StringCaster::class,
+                ],
+            ],
+        ]);
+
+        $this->transformer
+            ->setNamespace('\Mildberry\Tests\Specifications\Fixtures')
+            ->setClass(Client::class);
+
+        $entity = new Client();
+
+        $company = new Company();
+
+        $company
+            ->setId(1)
+            ->setName('Company name');
+
+        $entity
+            ->setName('Company name')
+            ->setPhone('+71234567890')
+            ->setCompany($company);
+
+        $data = $this->transformer->extractToResponse($entity, 'schema://entities/simple-client');
+
+        $this->assertEquals((object) [
+            'name' => $entity->getName(),
+            'phone' => $entity->getPhone(),
+        ], $data);
     }
 
     protected function setUp()
