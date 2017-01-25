@@ -22,8 +22,8 @@ class ClassGeneratorCommand extends Command implements ConfigAwareInterface
      */
     protected $signature =
         'specification:class-generate
-        {--output=. : Directory to write new classes}
-        {--namespace=\ : Root namespace for classes}
+        {--output=. : Directory for saving new classes}
+        {--namespace= : Root namespace for classes}
         {schema* : Uri of schema files of entities that should be generated.}';
 
     /**

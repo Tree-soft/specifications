@@ -11,22 +11,22 @@ use Mildberry\Specifications\Http\Requests\Request;
 class RequestGenerator extends AbstractTemplateGenerator
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $headerSchema;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $querySchema;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $dataSchema;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $routeSchema;
 
@@ -105,19 +105,19 @@ class RequestGenerator extends AbstractTemplateGenerator
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHeaderSchema(): string
+    public function getHeaderSchema()
     {
         return $this->headerSchema;
     }
 
     /**
-     * @param string $headerSchema
+     * @param string|null $headerSchema
      *
      * @return $this
      */
-    public function setHeaderSchema(string $headerSchema)
+    public function setHeaderSchema($headerSchema)
     {
         $this->headerSchema = $headerSchema;
 
@@ -125,19 +125,19 @@ class RequestGenerator extends AbstractTemplateGenerator
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getQuerySchema(): string
+    public function getQuerySchema()
     {
         return $this->querySchema;
     }
 
     /**
-     * @param string $querySchema
+     * @param string|null $querySchema
      *
      * @return $this
      */
-    public function setQuerySchema(string $querySchema)
+    public function setQuerySchema($querySchema)
     {
         $this->querySchema = $querySchema;
 
@@ -145,19 +145,19 @@ class RequestGenerator extends AbstractTemplateGenerator
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDataSchema(): string
+    public function getDataSchema()
     {
         return $this->dataSchema;
     }
 
     /**
-     * @param string $dataSchema
+     * @param string|null $dataSchema
      *
      * @return $this
      */
-    public function setDataSchema(string $dataSchema)
+    public function setDataSchema($dataSchema)
     {
         $this->dataSchema = $dataSchema;
 
@@ -165,19 +165,19 @@ class RequestGenerator extends AbstractTemplateGenerator
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRouteSchema(): string
+    public function getRouteSchema()
     {
         return $this->routeSchema;
     }
 
     /**
-     * @param string $routeSchema
+     * @param string|null $routeSchema
      *
      * @return $this
      */
-    public function setRouteSchema(string $routeSchema)
+    public function setRouteSchema($routeSchema)
     {
         $this->routeSchema = $routeSchema;
 
