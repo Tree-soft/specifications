@@ -81,7 +81,7 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
             $specification->setFactory($factory);
         });
 
-        $this->app->afterResolving(function (EntityTransformer $transformer) {
+        $this->app->afterResolving(EntityTransformer::class, function (EntityTransformer $transformer) {
             /**
              * @var Config $config
              */
