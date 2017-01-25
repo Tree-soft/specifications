@@ -41,6 +41,10 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
                 "{$root}/resources/schema" =>
                     $this->app->resourcePath() . '/schema',
             ],
+            'transform' => [
+                "{$root}/resources/transform" =>
+                    $this->app->resourcePath() . '/transform',
+            ],
         ];
     }
 
