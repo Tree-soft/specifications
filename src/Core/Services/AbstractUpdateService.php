@@ -9,12 +9,14 @@ use Throwable;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-abstract class AbstractUpdateService extends AbstractService
+abstract class AbstractUpdateService extends AbstractDatabaseService
 {
     use TransactionTrait;
 
     public function afterResolving()
     {
+        parent::afterResolving();
+
         $this->transaction = $this->container->make(TransactionInterface::class);
     }
 

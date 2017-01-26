@@ -18,6 +18,10 @@ abstract class AbstractService implements ContainerAwareInterface
      */
     abstract protected function innerExecute();
 
+    public function afterResolving()
+    {
+    }
+
     /**
      * @throws Throwable
      *

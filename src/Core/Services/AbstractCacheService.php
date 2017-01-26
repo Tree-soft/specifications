@@ -20,6 +20,8 @@ abstract class AbstractCacheService extends AbstractService
 
     public function afterResolving()
     {
+        parent::afterResolving();
+
         $this->cacher = $this->container->make(CacheInterface::class);
     }
 
