@@ -11,7 +11,7 @@ use Mildberry\Specifications\Transforming\Converter\Fillers;
 
 return [
     'path' => dirname(__DIR__) . '/resources/schema',
-    'namespace' => '\Core',
+    'namespace' => '\App\Core',
     'transform' => [
         'path' => dirname(__DIR__) . '/resources/transform',
         'resolvers' => [
