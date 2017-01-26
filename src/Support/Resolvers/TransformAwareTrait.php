@@ -7,7 +7,7 @@ use Mildberry\Specifications\Http\Transformers\EntityTransformerFactory;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class TransformAwareTrait
+trait TransformAwareTrait
 {
     /**
      * @var EntityTransformerFactory
