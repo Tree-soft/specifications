@@ -20,15 +20,13 @@ trait TransactionTrait
     }
 
     /**
-     * @param $executionCallback
-     *
      * @return mixed
      */
-    protected function wrapTransactionExecution($executionCallback)
+    protected function executeInTransaction()
     {
         $this->transaction->start();
 
-        $result = parent::wrapExecution($executionCallback);
+        $result = parent::execute();
 
         $this->transaction->commit();
 

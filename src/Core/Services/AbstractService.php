@@ -29,27 +29,13 @@ abstract class AbstractService implements ContainerAwareInterface
      */
     public function execute()
     {
-        return $this->wrapExecution(function () {
-            try {
-                $result = $this->innerExecute();
-            } catch (Throwable $e) {
-                $result = $this->afterFailedExecution($e);
-            }
+        try {
+            $result = $this->innerExecute();
+        } catch (Throwable $e) {
+            $result = $this->afterFailedExecution($e);
+        }
 
-            return $result;
-        });
-    }
-
-    /**
-     * @param callable $executionCallback
-     *
-     * @throws Throwable
-     *
-     * @return mixed
-     */
-    protected function wrapExecution($executionCallback)
-    {
-        return $executionCallback();
+        return $result;
     }
 
     /**

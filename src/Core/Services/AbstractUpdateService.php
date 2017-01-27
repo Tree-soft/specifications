@@ -29,16 +29,14 @@ abstract class AbstractUpdateService extends AbstractDatabaseService
     {
         $this->rollbackTransaction();
 
-        return $this->afterFailedExecution($e);
+        return parent::afterFailedExecution($e);
     }
 
     /**
-     * @param $executionCallback
-     *
      * @return mixed
      */
-    protected function wrapExecution($executionCallback)
+    public function execute()
     {
-        return $this->wrapTransactionExecution($executionCallback);
+        return $this->executeInTransaction();
     }
 }

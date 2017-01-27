@@ -9,7 +9,7 @@ interface CacheInterface
 {
     /**
      * @param string $key
-     * @param $data
+     * @param mixed $data
      */
     public function set(string $key, $data);
 

@@ -26,14 +26,12 @@ abstract class AbstractCacheService extends AbstractService
     }
 
     /**
-     * @param callable $executionCallback
-     *
      * @throws Throwable
      *
      * @return mixed
      */
-    protected function wrapExecution($executionCallback)
+    public function execute()
     {
-        return $this->cacheExecution($executionCallback);
+        return $this->executeWithCaching();
     }
 }

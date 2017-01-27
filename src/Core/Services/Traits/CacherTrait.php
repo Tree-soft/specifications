@@ -21,24 +21,33 @@ trait CacherTrait
     abstract public function getKey(): string;
 
     /**
-     * @param callable $executionCallback
-     *
      * @throws Throwable
      *
      * @return mixed
      */
-    protected function cacheExecution($executionCallback)
+    protected function executeWithCaching()
     {
-        $key = sha1(get_class($this) . $this->getKey());
+        $key = $this->keyByObject($this, $this->getKey());
 
         if ($this->cacher->has($key)) {
             return $this->cacher->get($key);
         }
 
-        $result = parent::wrapExecution($executionCallback);
+        $result = parent::execute();
 
         $this->cacher->set($key, $result);
 
         return $result;
+    }
+
+    /**
+     * @param mixed $object
+     * @param string $key
+     *
+     * @return string
+     */
+    public function keyByObject($object, string $key): string
+    {
+        return sha1(get_class($object) . $key);
     }
 }

@@ -26,7 +26,14 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function save($entity);
+    public function insert($entity);
+
+    /**
+     * @param mixed $entity
+     *
+     * @return mixed
+     */
+    public function update($entity);
 
     /**
      * @param mixed $queryObject
