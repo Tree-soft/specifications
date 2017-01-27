@@ -23,17 +23,19 @@ interface RepositoryInterface
 
     /**
      * @param mixed $entity
+     * @param mixed|null $queryOptions
      *
      * @return mixed
      */
-    public function insert($entity);
+    public function insert($entity, $queryOptions = null);
 
     /**
      * @param mixed $entity
+     * @param mixed|null $queryOptions
      *
      * @return mixed
      */
-    public function update($entity);
+    public function update($entity, $queryOptions = null);
 
     /**
      * @param mixed $queryOptions
