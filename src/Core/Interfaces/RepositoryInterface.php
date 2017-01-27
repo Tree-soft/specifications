@@ -36,9 +36,9 @@ interface RepositoryInterface
     public function update($entity);
 
     /**
-     * @param mixed $queryObject
+     * @param mixed $queryOptions
      */
-    public function updateBy($queryObject);
+    public function updateBy($queryOptions);
 
     /**
      * @param mixed $entity
@@ -46,7 +46,7 @@ interface RepositoryInterface
     public function delete($entity);
 
     /**
-     * @param mixed $queryObject
+     * @param mixed $queryOptions
      */
-    public function deleteBy($queryObject);
+    public function deleteBy($queryOptions);
 }
