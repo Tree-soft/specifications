@@ -2,6 +2,7 @@
 
 namespace Mildberry\Specifications\Generators;
 
+use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Engines\CompilerEngine;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
@@ -45,6 +46,15 @@ abstract class AbstractTemplateGenerator implements ContainerAwareInterface
         $shared = [
             '__env' => $viewFactory,
         ];
+
+        /**
+         * @var BladeCompiler $blade
+         */
+        $blade = $engine->getCompiler();
+
+        $blade->directive('type', function ($expression) {
+            return "<?php echo (is_array({$expression})) ? (implode('|', {$expression})) : ({$expression}) ?>";
+        });
 
         return $engine->get("{$this->path}/{$file}.{$this->ext}", array_merge($shared, $data));
     }

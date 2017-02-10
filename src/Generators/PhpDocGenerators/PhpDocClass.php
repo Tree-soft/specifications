@@ -10,7 +10,7 @@ class PhpDocClass extends AbstractGenerator
     /**
      * @return string
      */
-    public function __toString()
+    public function compile(): string
     {
         return $this->loadTemplate('class');
     }

@@ -55,19 +55,25 @@ class ClassGeneratorTest extends TestCase
         return [
             'one-file' => [
                 [
-                    'Entities/Company.php' => file_get_contents($this->getFixturePath('entities/Company.php')),
+                    'Entities/Company.php' => file_get_contents($this->getFixturePath('Entities/Company.php')),
                 ], 'schema://entities/company',
             ],
             'class' => [
                 [
-                    'Entities/ClientFull.php' => file_get_contents($this->getFixturePath('entities/ClientFull.php')),
+                    'Entities/ClientFull.php' => file_get_contents($this->getFixturePath('Entities/ClientFull.php')),
                 ], 'schema://entities/clientFull',
             ],
             'derived-class' => [
                 [
                     'Entities/Derived/Client.php' =>
-                        file_get_contents($this->getFixturePath('entities/Derived/Client.php')),
+                        file_get_contents($this->getFixturePath('Entities/Derived/Client.php')),
                 ], 'schema://entities/derived/client',
+            ],
+            'nullable' => [
+                [
+                    'Entities/Nullable.php' =>
+                        file_get_contents($this->getFixturePath('Entities/Nullable.php')),
+                ], 'schema://entities/nullable',
             ],
         ];
     }
@@ -138,6 +144,8 @@ class ClassGeneratorTest extends TestCase
             'entities/client' => $this->getFixturePath('schema/client.json'),
             'entities/clientFull' => $this->getFixturePath('schema/clientFull.json'),
             'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
+            'entities/nullable' => $this->getFixturePath('schema/nullable.json'),
+            'common/id' => $this->getResourcePath('schema/common/id.json'),
         ]));
 
         $this->factory = $this->app->make(LaravelFactory::class);

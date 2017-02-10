@@ -23,6 +23,12 @@ class TypeExtractor
     {
         $schema = $this->extendSchema($schema);
 
+        if (isset($schema->oneOf)) {
+            return array_map(function ($schema) {
+                return $this->extract($schema);
+            }, $schema->oneOf);
+        }
+
         return
             $this->extractClass($schema) ??
             $this->extractSimple($schema);

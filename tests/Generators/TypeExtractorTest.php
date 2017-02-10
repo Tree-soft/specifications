@@ -87,20 +87,18 @@ class TypeExtractorTest extends TestCase
                     ],
                 ],
             ],
+            'multiple-one-of' => [
+                ['string', 'null'], (object) [
+                    'oneOf' => [
+                        (object) ['type' => 'string'],
+                        (object) ['type' => 'null'],
+                    ],
+                ],
+            ],
 //            'multiple-any-of' => [
 //                ['string', 'null'], (object) [
 //                    'type' => (object) [
 //                        'anyOf' => [
-//                            (object) ['type' => 'string'],
-//                            (object) ['type' => 'null'],
-//                        ],
-//                    ],
-//                ],
-//            ],
-//            'multiple-one-of' => [
-//                ['string', 'null'], (object) [
-//                    'type' => (object) [
-//                        'oneOf' => [
 //                            (object) ['type' => 'string'],
 //                            (object) ['type' => 'null'],
 //                        ],

@@ -7,8 +7,13 @@ use Mildberry\Specifications\Generators\AbstractTemplateGenerator;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class AbstractGenerator extends AbstractTemplateGenerator
+abstract class AbstractGenerator extends AbstractTemplateGenerator
 {
+    /**
+     * @return string
+     */
+    abstract public function compile(): string;
+
     /**
      * AbstractGenerator constructor.
      */

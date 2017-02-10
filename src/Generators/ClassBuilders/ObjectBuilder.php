@@ -116,7 +116,7 @@ class ObjectBuilder extends AbstractBuilder
 
         $classStmt = $this->factory
             ->class($class)
-            ->setDocComment((string) $phpDoc);
+            ->setDocComment($phpDoc->compile());
 
         $baseClass = $this->getBaseClass();
 
@@ -205,7 +205,7 @@ class ObjectBuilder extends AbstractBuilder
         return $this->factory
             ->property($name)
             ->makePrivate()
-            ->setDocComment((string) $phpDoc);
+            ->setDocComment($phpDoc->compile());
     }
 
     /**
@@ -228,12 +228,20 @@ class ObjectBuilder extends AbstractBuilder
 
         $return = new Return_(new PropertyFetch(new Expr\Variable('this'), $name));
 
-        return $this->factory
+        $getterStatement = $this->factory
             ->method('get' . ucfirst($name))
             ->makePublic()
-            ->setReturnType($phpDoc->getReturnType())
-            ->setDocComment((string) $phpDoc)
+            ->setDocComment($phpDoc->compile())
             ->addStmt($return);
+
+        $returnType = $phpDoc->getReturnType();
+
+        if ($this->isSimpleType($returnType)) {
+            $getterStatement
+                ->setReturnType($returnType);
+        }
+
+        return $getterStatement;
     }
 
     /**
@@ -258,8 +266,14 @@ class ObjectBuilder extends AbstractBuilder
             ->setReturnType('$this');
 
         $param = $this->factory
-            ->param($name)
-            ->setTypeHint($phpDoc->getParams()[$name]);
+            ->param($name);
+
+        $typeHint = $phpDoc->getParams()[$name];
+
+        if ($this->isSimpleType($typeHint)) {
+            $param
+                ->setTypeHint($phpDoc->getParams()[$name]);
+        }
 
         $body = [
             new Expr\Assign(
@@ -273,7 +287,7 @@ class ObjectBuilder extends AbstractBuilder
             ->method('set' . ucfirst($name))
             ->makePublic()
             ->addParam($param)
-            ->setDocComment((string) $phpDoc)
+            ->setDocComment($phpDoc->compile())
             ->addStmts($body);
     }
 
@@ -334,5 +348,15 @@ class ObjectBuilder extends AbstractBuilder
         }
 
         return $class;
+    }
+
+    /**
+     * @param string|null|array $type
+     *
+     * @return bool
+     */
+    protected function isSimpleType($type): bool
+    {
+        return isset($type) && !is_array($type);
     }
 }

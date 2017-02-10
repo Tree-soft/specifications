@@ -13,14 +13,14 @@ class PhpDocFunction extends AbstractGenerator
     private $params = [];
 
     /**
-     * @var string
+     * @var string|array
      */
     private $returnType;
 
     /**
      * @return string
      */
-    public function __toString()
+    public function compile(): string
     {
         return $this->loadTemplate('function', [
             'params' => $this->params,
@@ -49,15 +49,15 @@ class PhpDocFunction extends AbstractGenerator
     }
 
     /**
-     * @return string
+     * @return string|array
      */
-    public function getReturnType(): string
+    public function getReturnType()
     {
         return $this->returnType;
     }
 
     /**
-     * @param string $returnType
+     * @param string|array $returnType
      *
      * @return $this
      */

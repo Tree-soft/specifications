@@ -1,0 +1,8 @@
+{
+    "$schema": "schema://schema",
+    "id": "schema://common/id",
+    "oneOf": [
+        { "type": "integer", "minimum": 1 },
+        { "type": "null" }
+    ]
+}
