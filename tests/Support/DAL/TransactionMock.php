@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks;
+namespace Mildberry\Tests\Specifications\Support\DAL;
 
 use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
 use PHPUnit\Framework\TestCase;

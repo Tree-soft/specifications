@@ -9,7 +9,7 @@ use Mildberry\Specifications\Core\Services\AbstractService;
 use Mildberry\Specifications\Core\Services\AbstractUpdateService;
 use Mildberry\Tests\Specifications\Core\TestCase;
 use Exception;
-use Mildberry\Tests\Specifications\Mocks\TransactionMock;
+use Mildberry\Tests\Specifications\Support\DAL\TransactionMock;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
