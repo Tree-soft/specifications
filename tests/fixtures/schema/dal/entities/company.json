@@ -1,0 +1,9 @@
+{
+    "id": "schema://dal/entities/company",
+    "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" }
+    },
+    "required": ["id", "name"],
+    "type": "object"
+}

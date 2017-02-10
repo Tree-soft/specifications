@@ -4,6 +4,7 @@ namespace Mildberry\Tests\Specifications;
 
 use Illuminate\Foundation\Application;
 use Mildberry\Specifications\Providers\SpecificationsProvider;
+use Mildberry\Tests\Specifications\Support\FixtureLoaderTrait;
 use Orchestra\Testbench\TestCase as ParentTestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 
@@ -12,6 +13,8 @@ use Illuminate\Contracts\Config\Repository as Config;
  */
 class TestCase extends ParentTestCase
 {
+    use FixtureLoaderTrait;
+
     /**
      * @param Application $app
      *
@@ -63,5 +66,15 @@ class TestCase extends ParentTestCase
     protected function getResourcePath(string $path = '')
     {
         return rtrim(dirname(__DIR__) . "/resources/{$path}", '/');
+    }
+
+    /**
+     * @param string $fn
+     *
+     * @return string
+     */
+    protected function getFixtureFilename(string $fn): string
+    {
+        return implode(DIRECTORY_SEPARATOR, [__DIR__, 'fixtures', 'data', $fn]);
     }
 }

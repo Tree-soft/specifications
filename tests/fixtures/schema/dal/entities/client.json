@@ -1,0 +1,15 @@
+{
+    "id": "schema://dal/entities/client",
+    "definitions": {
+        "company": {
+            "$ref": "schema://dal/entities/company"
+        }
+    },
+    "type": "object",
+    "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" },
+        "company": { "$ref": "#/definitions/company" }
+    },
+    "required": ["name", "company"]
+}

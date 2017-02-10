@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Http\Transformers;
+namespace Mildberry\Specifications\DAL\Transformers;
 
 use Mildberry\Specifications\Support\Transformers\FactoryCreatorTrait;
 use Rnr\Resolvers\Interfaces\ConfigAwareInterface;
@@ -13,8 +13,8 @@ use Rnr\Resolvers\Traits\ContainerAwareTrait;
  */
 class EntityTransformerFactory implements ConfigAwareInterface, ContainerAwareInterface
 {
-    use ConfigAwareTrait;
     use ContainerAwareTrait;
+    use ConfigAwareTrait;
     use FactoryCreatorTrait;
 
     /**
