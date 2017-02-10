@@ -1,0 +1,10 @@
+Mildberry\Tests\Specifications\Fixtures\Entities\Company:
+  company:
+    id: 1
+    name: '<name()>'
+
+Mildberry\Tests\Specifications\Fixtures\Entities\Client:
+  client:
+    name: '<name()>'
+    phone: '<e164PhoneNumber()>'
+    company: '@company'

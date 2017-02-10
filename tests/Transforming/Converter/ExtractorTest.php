@@ -5,7 +5,6 @@ namespace Mildberry\Tests\Specifications\Transforming\Converter;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Transforming\Converter\Extractor;
 use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
-use Mildberry\Tests\Specifications\Fixtures\Entities\Company;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
 
@@ -21,18 +20,14 @@ class ExtractorTest extends TestCase
 
     public function testExtract()
     {
-        $entity = new Client();
+        $objects = $this->loadEntities('client-extract.yml');
 
-        $company = new Company();
+        /**
+         * @var Client $entity
+         */
+        $entity = $objects['client'];
 
-        $company
-            ->setId(1)
-            ->setName('Company name');
-
-        $entity
-            ->setName('Company name')
-            ->setPhone('+71234567890')
-            ->setCompany($company);
+        $company = $entity->getCompany();
 
         $data = $this->extractor->convert($entity, 'schema://entities/client');
 
