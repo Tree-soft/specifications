@@ -36,6 +36,8 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
             'config' => [
                 "{$root}/config/specifications.php" =>
                     $this->app->configPath() . '/specifications.php',
+                "{$root}/config/dal.php" =>
+                    $this->app->configPath() . '/dal.php',
             ],
             'schema' => [
                 "{$root}/resources/schema" =>
