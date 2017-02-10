@@ -3,6 +3,8 @@
 namespace Mildberry\Tests\Specifications\Providers;
 
 use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
+use Mildberry\Specifications\DAL\Eloquent\TransactionManager;
 use Mildberry\Specifications\DAL\Factories\DefaultFactory;
 use Mildberry\Specifications\Generators\OutputInterface;
 use Mildberry\Specifications\Http\Transformers\EntityTransformer;
@@ -102,5 +104,12 @@ class SpecificationsProviderTest extends TestCase
         $factory = $this->app->make(RepositoryFactoryInterface::class);
 
         $this->assertInstanceOf(DefaultFactory::class, $factory);
+    }
+
+    public function testDALBindings()
+    {
+        $transaction = $this->app->make(TransactionInterface::class);
+
+        $this->assertInstanceOf(TransactionManager::class, $transaction);
     }
 }

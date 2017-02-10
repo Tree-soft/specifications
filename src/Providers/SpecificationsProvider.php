@@ -5,6 +5,7 @@ namespace Mildberry\Specifications\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
 use Mildberry\Specifications\Generators\OutputInterface;
 use Mildberry\Specifications\Support\Transformers\EntityTransformer;
 use Mildberry\Specifications\Schema\LaravelFactory;
@@ -59,8 +60,9 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
 
         $this->app->alias(FileWriter::class, OutputInterface::class);
 
-        $this->registerLoaders();
+        $this->registerSchema();
         $this->registerResolvers();
+        $this->registerDAL();
     }
 
     protected function publishData()
@@ -70,9 +72,9 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
         }
     }
 
-    protected function registerLoaders()
+    protected function registerSchema()
     {
-        $singletons = [
+        $this->registerSingletons([
             Loader::class => function (Application $app) {
                 $config = $app->make(Config::class);
 
@@ -91,20 +93,7 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
 
                 return $loader;
             },
-            RepositoryFactoryInterface::class => function (Application $app) {
-                $config = $app->make(Config::class);
-
-                $class = $config->get('dal.factory');
-
-                assert(is_a($class, RepositoryFactoryInterface::class, true));
-
-                return $app->make($class);
-            },
-        ];
-
-        foreach ($singletons as $abstract => $callback) {
-            $this->app->singleton($abstract, $callback);
-        }
+        ]);
     }
 
     protected function registerResolvers()
@@ -130,6 +119,40 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
 
         foreach ($resolvings as $abstract => $callback) {
             $this->app->afterResolving($abstract, $callback);
+        }
+    }
+
+    protected function registerDAL()
+    {
+        $this->registerSingletons([
+            RepositoryFactoryInterface::class => function (Application $app) {
+                $config = $app->make(Config::class);
+
+                $class = $config->get('dal.factory');
+
+                assert(is_a($class, RepositoryFactoryInterface::class, true));
+
+                return $app->make($class);
+            },
+            TransactionInterface::class => function (Application $app) {
+                $config = $app->make(Config::class);
+
+                $class = $config->get('dal.transaction');
+
+                assert(is_a($class, TransactionInterface::class, true));
+
+                return $app->make($class);
+            },
+        ]);
+    }
+
+    /**
+     * @param array|callable[] $singletons
+     */
+    protected function registerSingletons(array $singletons)
+    {
+        foreach ($singletons as $abstract => $callback) {
+            $this->app->singleton($abstract, $callback);
         }
     }
 }

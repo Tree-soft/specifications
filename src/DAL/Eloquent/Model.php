@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\DAL\EloquentMapper;
+namespace Mildberry\Specifications\DAL\Eloquent;
 
 use Illuminate\Database\Eloquent\Model as ParentModel;
 

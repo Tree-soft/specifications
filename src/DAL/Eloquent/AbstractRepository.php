@@ -1,9 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\DAL\Repositories;
+namespace Mildberry\Specifications\DAL\Eloquent;
 
 use Mildberry\Specifications\Core\Interfaces\RepositoryInterface;
-use Mildberry\Specifications\DAL\EloquentMapper\Model;
 use Mildberry\Specifications\DAL\Transformers\EntityTransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
@@ -11,7 +10,7 @@ use Rnr\Resolvers\Traits\ContainerAwareTrait;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-abstract class AbstractEloquentRepository implements RepositoryInterface, ContainerAwareInterface
+abstract class AbstractRepository implements RepositoryInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
 

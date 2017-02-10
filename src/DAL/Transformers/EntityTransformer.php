@@ -2,7 +2,7 @@
 
 namespace Mildberry\Specifications\DAL\Transformers;
 
-use Mildberry\Specifications\DAL\EloquentMapper\Model;
+use Mildberry\Specifications\DAL\Eloquent\Model;
 use Mildberry\Specifications\Support\Transformers\EntityTransformer as ParentTransformer;
 use Mildberry\Specifications\Transforming\Converter\Extractor;
 use Mildberry\Specifications\Transforming\Converter\Populator;

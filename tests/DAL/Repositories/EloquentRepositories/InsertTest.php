@@ -2,8 +2,8 @@
 
 namespace Mildberry\Tests\Specifications\DAL\Repositories\EloquentRepositories;
 
-use Mildberry\Specifications\DAL\EloquentMapper\Model;
-use Mildberry\Specifications\DAL\Repositories\AbstractEloquentRepository;
+use Mildberry\Specifications\DAL\Eloquent\Model;
+use Mildberry\Specifications\DAL\Eloquent\AbstractRepository;
 use Mildberry\Specifications\DAL\Transformers\EntityTransformer;
 use Mildberry\Specifications\DAL\Transformers\EntityTransformerFactory;
 use Mildberry\Tests\Specifications\Mocks\CallsTrait;
@@ -77,9 +77,9 @@ class InsertTest extends TestCase
         $factory = $this->app->make(EntityTransformerFactory::class);
 
         /**
-         * @var AbstractEloquentRepository $repository
+         * @var AbstractRepository $repository
          */
-        $repository = new class($factory) extends AbstractEloquentRepository {
+        $repository = new class($factory) extends AbstractRepository {
             /**
              * @var string
              */

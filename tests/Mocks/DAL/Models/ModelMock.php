@@ -2,7 +2,7 @@
 
 namespace Mildberry\Tests\Specifications\Mocks\DAL\Models;
 
-use Mildberry\Specifications\DAL\EloquentMapper\Model;
+use Mildberry\Specifications\DAL\Eloquent\Model;
 use Mildberry\Tests\Specifications\Mocks\CallsTrait;
 
 /**
