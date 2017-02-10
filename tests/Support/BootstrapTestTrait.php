@@ -12,7 +12,6 @@ trait BootstrapTestTrait
 {
     protected function setUp()
     {
-        /** @noinspection PhpUndefinedClassInspection */
         parent::setUp();
 
         $reflection = new ReflectionClass($this);

@@ -4,6 +4,7 @@ namespace Mildberry\Tests\Specifications;
 
 use Illuminate\Foundation\Application;
 use Mildberry\Specifications\Providers\SpecificationsProvider;
+use Mildberry\Tests\Specifications\Support\BootstrapTestTrait;
 use Mildberry\Tests\Specifications\Support\FixtureLoaderTrait;
 use Orchestra\Testbench\TestCase as ParentTestCase;
 use Illuminate\Contracts\Config\Repository as Config;
@@ -14,6 +15,7 @@ use Illuminate\Contracts\Config\Repository as Config;
 class TestCase extends ParentTestCase
 {
     use FixtureLoaderTrait;
+    use BootstrapTestTrait;
 
     /**
      * @param Application $app
