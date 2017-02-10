@@ -41,6 +41,10 @@ class TestCase extends ParentTestCase
             'specifications', require dirname(__DIR__) . '/config/specifications.php'
         );
 
+        $config->set(
+            'dal', require dirname(__DIR__) . '/config/dal.php'
+        );
+
         $config->set('specifications.transform.path', $this->getFixturePath('transform'));
 
         $config->set(

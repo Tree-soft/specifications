@@ -19,10 +19,7 @@ trait FactoryCreatorTrait
      */
     public function fillTransformer(string $class, EntityTransformer $transformer)
     {
-        $namespace = $this->config->get('specifications.namespace', '');
-
         $transformer
-            ->setNamespace($namespace)
             ->setClass($class);
 
         return $transformer;

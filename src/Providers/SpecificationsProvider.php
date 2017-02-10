@@ -4,8 +4,9 @@ namespace Mildberry\Specifications\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
 use Mildberry\Specifications\Generators\OutputInterface;
-use Mildberry\Specifications\Http\Transformers\EntityTransformer;
+use Mildberry\Specifications\Support\Transformers\EntityTransformer;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\AbstractChecker;
@@ -56,51 +57,79 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
 
         $this->app->register(ResolversProvider::class);
 
-        $this->app->singleton(Loader::class, function (Application $app) {
-            $config = $app->make(Config::class);
-
-            $loader = new Loader();
-
-            $loader->setPath($config->get('specifications.path'));
-
-            return $loader;
-        });
-
-        $this->app->singleton(TransformerLoader::class, function (Application $app) {
-            $config = $app->make(Config::class);
-
-            $loader = new TransformerLoader();
-
-            $loader->setPath($config->get('specifications.transform.path'));
-
-            return $loader;
-        });
-
         $this->app->alias(FileWriter::class, OutputInterface::class);
 
-        $this->app->afterResolving(AbstractChecker::class, function (AbstractChecker $specification) {
-            /**
-             * @var LaravelFactory $factory
-             */
-            $factory = $this->app->make(LaravelFactory::class);
-
-            $specification->setFactory($factory);
-        });
-
-        $this->app->afterResolving(EntityTransformer::class, function (EntityTransformer $transformer) {
-            /**
-             * @var Config $config
-             */
-            $config = $this->app->make(Config::class);
-
-            $transformer->setNamespace($config->get('specifications.namespace', '\\'));
-        });
+        $this->registerLoaders();
+        $this->registerResolvers();
     }
 
     protected function publishData()
     {
         foreach ($this->getPublishingData() as $tag => $data) {
             $this->publishes($data, $tag);
+        }
+    }
+
+    protected function registerLoaders()
+    {
+        $singletons = [
+            Loader::class => function (Application $app) {
+                $config = $app->make(Config::class);
+
+                $loader = new Loader();
+
+                $loader->setPath($config->get('specifications.path'));
+
+                return $loader;
+            },
+            TransformerLoader::class => function (Application $app) {
+                $config = $app->make(Config::class);
+
+                $loader = new TransformerLoader();
+
+                $loader->setPath($config->get('specifications.transform.path'));
+
+                return $loader;
+            },
+            RepositoryFactoryInterface::class => function (Application $app) {
+                $config = $app->make(Config::class);
+
+                $class = $config->get('dal.factory');
+
+                assert(is_a($class, RepositoryFactoryInterface::class, true));
+
+                return $app->make($class);
+            },
+        ];
+
+        foreach ($singletons as $abstract => $callback) {
+            $this->app->singleton($abstract, $callback);
+        }
+    }
+
+    protected function registerResolvers()
+    {
+        $resolvings = [
+            AbstractChecker::class => function (AbstractChecker $specification) {
+                /**
+                 * @var LaravelFactory $factory
+                 */
+                $factory = $this->app->make(LaravelFactory::class);
+
+                $specification->setFactory($factory);
+            },
+            EntityTransformer::class => function (EntityTransformer $transformer) {
+                /**
+                 * @var Config $config
+                 */
+                $config = $this->app->make(Config::class);
+
+                $transformer->setNamespace($config->get('specifications.namespace', '\\'));
+            },
+        ];
+
+        foreach ($resolvings as $abstract => $callback) {
+            $this->app->afterResolving($abstract, $callback);
         }
     }
 }

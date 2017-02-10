@@ -35,15 +35,17 @@ class ClassGeneratorCommand extends Command implements ConfigAwareInterface
      * @param ClassGenerator $generator
      * @param FileWriter $output
      * @param LaravelFactory $factory
+     * @param TypeExtractor $extractor
      */
-    public function handle(ClassGenerator $generator, FileWriter $output, LaravelFactory $factory)
+    public function handle(
+        ClassGenerator $generator, FileWriter $output,
+        LaravelFactory $factory, TypeExtractor $extractor)
     {
-        $extractor = new TypeExtractor();
+        $namespace = $this->option('namespace');
 
-        $extractor->setNamespace(
-            $this->option('namespace') ??
-            $this->config->get('specifications.namespace')
-        );
+        if (isset($namespace)) {
+            $extractor->setNamespace($namespace);
+        }
 
         $output->setPath($this->option('output'));
 
