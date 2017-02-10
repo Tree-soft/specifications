@@ -27,10 +27,11 @@ class LaravelFactoryTest extends TestCase
          */
         $config = $this->app->make(Config::class);
 
+        $loaderManager = $dereferencer->getLoaderManager();
         /**
          * @var Loader $loader
          */
-        $loader = $dereferencer->getLoader('schema');
+        $loader = $loaderManager->getLoader('schema');
 
         $this->assertInstanceOf(Loader::class, $loader);
         $this->assertEquals($config->get('specifications.path'), $loader->getPath());
@@ -38,7 +39,7 @@ class LaravelFactoryTest extends TestCase
         /**
          * @var Loader $loader
          */
-        $loader = $dereferencer->getLoader('transform');
+        $loader = $loaderManager->getLoader('transform');
 
         $this->assertInstanceOf(TransformerLoader::class, $loader);
         $this->assertEquals($config->get('specifications.transform.path'), $loader->getPath());

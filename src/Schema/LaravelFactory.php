@@ -20,12 +20,14 @@ class LaravelFactory extends Factory implements ContainerAwareInterface
     {
         $dereferencer = parent::dereferencer();
 
-        $dereferencer->registerLoader(
-            $this->container->make(Loader::class), 'schema'
+        $loaderManager = $dereferencer->getLoaderManager();
+
+        $loaderManager->registerLoader(
+            'schema', $this->container->make(Loader::class)
         );
 
-        $dereferencer->registerLoader(
-            $this->container->make(TransformerLoader::class), 'transform'
+        $loaderManager->registerLoader(
+            'transform', $this->container->make(TransformerLoader::class)
         );
 
         return $dereferencer;
