@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace Mildberry\Specifications\Support\Testing;
 
 use ReflectionClass;
 use ReflectionMethod;

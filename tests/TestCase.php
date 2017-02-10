@@ -4,8 +4,8 @@ namespace Mildberry\Tests\Specifications;
 
 use Illuminate\Foundation\Application;
 use Mildberry\Specifications\Providers\SpecificationsProvider;
-use Mildberry\Tests\Specifications\Support\BootstrapTestTrait;
-use Mildberry\Tests\Specifications\Support\FixtureLoaderTrait;
+use Mildberry\Specifications\Support\Testing\BootstrapTestTrait;
+use Mildberry\Specifications\Support\Testing\FixtureLoaderTrait;
 use Orchestra\Testbench\TestCase as ParentTestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 

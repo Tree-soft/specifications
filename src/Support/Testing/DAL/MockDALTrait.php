@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support\DAL;
+namespace Mildberry\Specifications\Support\Testing\DAL;
 
 use Illuminate\Container\Container;
 use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace Mildberry\Specifications\Support\Testing;
 
 use Mildberry\Specifications\Support\DataPreparator;
 use Nelmio\Alice\Loader\NativeLoader;
