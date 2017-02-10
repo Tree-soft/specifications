@@ -10,10 +10,8 @@ use ReflectionMethod;
  */
 trait BootstrapTestTrait
 {
-    protected function setUp()
+    protected function boot()
     {
-        parent::setUp();
-
         $reflection = new ReflectionClass($this);
 
         /**

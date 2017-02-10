@@ -4,18 +4,12 @@ namespace Mildberry\Specifications\Generators;
 
 use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
 use Mildberry\Specifications\Generators\ClassBuilders\Factory;
-use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
 class ClassGenerator extends AbstractGenerator
 {
-    /**
-     * @var TypeExtractor
-     */
-    private $extractor;
-
     /**
      * @param object $schema
      *
@@ -27,32 +21,6 @@ class ClassGenerator extends AbstractGenerator
             $this->getFilename($schema),
             $this->getContent($schema)
         );
-    }
-
-    /**
-     * @param object $schema
-     *
-     * @return string
-     */
-    public function getFilename($schema): string
-    {
-        return
-            $schema->classGenerator->filename ??
-            $this->getFileNameByClass($schema);
-    }
-
-    /**
-     * @param object $schema
-     *
-     * @return string|null
-     */
-    protected function getFileNameByClass($schema)
-    {
-        $class = $this->extractor->getShortName(
-            $this->extractor->extract($schema)
-        );
-
-        return str_replace('\\', DIRECTORY_SEPARATOR, ltrim($class, '\\')) . '.php';
     }
 
     /**
@@ -83,22 +51,14 @@ class ClassGenerator extends AbstractGenerator
     }
 
     /**
-     * @return TypeExtractor
-     */
-    public function getExtractor(): TypeExtractor
-    {
-        return $this->extractor;
-    }
-
-    /**
-     * @param TypeExtractor $extractor
+     * @param object $schema
      *
-     * @return $this
+     * @return string
      */
-    public function setExtractor(TypeExtractor $extractor)
+    public function getFilename($schema): string
     {
-        $this->extractor = $extractor;
-
-        return $this;
+        return
+            $schema->classGenerator->filename ??
+            parent::getFilename($schema);
     }
 }

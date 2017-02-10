@@ -83,4 +83,11 @@ class TestCase extends ParentTestCase
     {
         return implode(DIRECTORY_SEPARATOR, [__DIR__, 'fixtures', 'data', $fn]);
     }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->boot();
+    }
 }

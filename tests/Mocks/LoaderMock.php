@@ -36,4 +36,24 @@ class LoaderMock implements LoaderInterface
             file_get_contents($this->schemaMap[$path])
         );
     }
+
+    /**
+     * @return array
+     */
+    public function getSchemaMap(): array
+    {
+        return $this->schemaMap;
+    }
+
+    /**
+     * @param array $schemaMap
+     *
+     * @return $this
+     */
+    public function setSchemaMap(array $schemaMap)
+    {
+        $this->schemaMap = $schemaMap;
+
+        return $this;
+    }
 }

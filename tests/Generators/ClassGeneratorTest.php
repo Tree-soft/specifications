@@ -4,12 +4,9 @@ namespace Mildberry\Tests\Specifications\Generators;
 
 use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
 use Mildberry\Specifications\Generators\ClassGenerator;
-use Mildberry\Specifications\Schema\Factory;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\Mocks\OutputMock;
-use Mildberry\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -19,17 +16,12 @@ class ClassGeneratorTest extends TestCase
     /**
      * @var ClassGenerator
      */
-    private $generator;
+    protected $generator;
 
     /**
-     * @var Factory
+     * @var string
      */
-    private $factory;
-
-    /**
-     * @var OutputMock
-     */
-    private $output;
+    protected $classGenerator = ClassGenerator::class;
 
     /**
      * @dataProvider filesProvider
@@ -132,12 +124,8 @@ class ClassGeneratorTest extends TestCase
     {
         parent::setUp();
 
-        $this->output = $this->app->make(OutputMock::class);
-
-        $this->generator = $this->app->make(ClassGenerator::class);
         $this->generator
-            ->setOutput($this->output)
-            ->setExtractor(new TypeExtractor());
+            ->setExtractor($this->app->make(TypeExtractor::class));
 
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/company' => $this->getFixturePath('schema/company.json'),
