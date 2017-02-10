@@ -16,7 +16,7 @@ trait MockDALTrait
     /**
      * @var object
      */
-    protected $mocks = (object) [];
+    protected $mocks;
 
     /**
      * @var RepositoryFactoryMock
@@ -30,6 +30,10 @@ trait MockDALTrait
 
         $factory = $this->app->make(RepositoryFactoryMock::class);
         $this->app->instance(RepositoryFactoryInterface::class, $factory);
+
+        if (empty($this->mocks)) {
+            $this->mocks = (object) [];
+        }
 
         $this->mocks->dal = (object) [
             'transaction' => $transaction,
