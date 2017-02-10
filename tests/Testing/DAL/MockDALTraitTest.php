@@ -18,12 +18,12 @@ class MockDALTraitTest extends TestCase
 
     public function testDump()
     {
-        $this->assertInstanceOf(
-            RepositoryFactoryMock::class, $this->app->make(RepositoryFactoryInterface::class)
-        );
+        $factory = $this->app->make(RepositoryFactoryInterface::class);
+        $this->assertInstanceOf(RepositoryFactoryMock::class, $factory);
+        $this->assertSame($this->mocksDAL->factory, $factory);
 
-        $this->assertInstanceOf(
-            TransactionMock::class, $this->app->make(TransactionInterface::class)
-        );
+        $transaction = $this->app->make(TransactionInterface::class);
+        $this->assertInstanceOf(TransactionMock::class, $transaction);
+        $this->assertSame($this->mocksDAL->transaction, $transaction);
     }
 }
