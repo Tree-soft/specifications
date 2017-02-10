@@ -33,20 +33,18 @@ trait MockServiceTrait
      *
      * @return AbstractService
      */
-    public function createServiceMock($result, string $class = null): AbstractService
+    public function mockService(string $class, $result): AbstractService
     {
         /**
          * @var AbstractService|PHPUnit_Framework_MockObject_MockObject $service
          */
-        $service = $this->createMock($class ?? AbstractService::class);
+        $service = $this->createMock($class);
 
         $service->method('execute')->willReturnCallback(function () use ($result) {
             return value($result);
         });
 
-        if (isset($class)) {
-            $this->app->instance($class, $service);
-        }
+        $this->app->instance($class, $service);
 
         return $service;
     }
