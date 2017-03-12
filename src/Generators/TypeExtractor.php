@@ -15,6 +15,11 @@ class TypeExtractor
     private $namespace = '\\';
 
     /**
+     * @var array
+     */
+    private $bindings = [];
+
+    /**
      * @param object $schema
      *
      * @return string|string[]
@@ -81,6 +86,17 @@ class TypeExtractor
             return null;
         }
 
+        return $this->bindings[$schema->id] ??
+            $this->getSchemaByParts($schema);
+    }
+
+    /**
+     * @param mixed $schema
+     *
+     * @return string
+     */
+    protected function getSchemaByParts($schema): string
+    {
         $parts = $this->getSchemaIdParts($schema);
 
         $namespace = implode('\\', $parts);
@@ -193,5 +209,25 @@ class TypeExtractor
         }
 
         return (object) $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBindings(): array
+    {
+        return $this->bindings;
+    }
+
+    /**
+     * @param array $bindings
+     *
+     * @return $this
+     */
+    public function setBindings(array $bindings)
+    {
+        $this->bindings = $bindings;
+
+        return $this;
     }
 }

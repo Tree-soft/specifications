@@ -3,6 +3,10 @@
 namespace Mildberry\Tests\Specifications\Generators;
 
 use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
+use Mildberry\Specifications\Schema\LaravelFactory;
+use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
+use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
 
 /**
@@ -125,10 +129,35 @@ class TypeExtractorTest extends TestCase
         ];
     }
 
+    public function testBindings()
+    {
+        $schema = 'schema://dal/models/client';
+
+        $this->extractor
+            ->setBindings([
+                $schema => Client::class,
+            ]);
+
+        /**
+         * @var LaravelFactory $factory
+         */
+        $factory = $this->app->make(LaravelFactory::class);
+
+        $this->assertEquals(
+            Client::class, $this->extractor->extract(
+                $factory->schema($schema)
+            )
+        );
+    }
+
     protected function setUp()
     {
         parent::setUp();
 
-        $this->extractor = new TypeExtractor();
+        $this->extractor = $this->app->make(TypeExtractor::class);
+
+        $this->app->instance(Loader::class, new LoaderMock([
+            'dal/models/client' => $this->getFixturePath('schema/dal/models/client.json'),
+        ]));
     }
 }

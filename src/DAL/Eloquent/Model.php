@@ -25,4 +25,12 @@ class Model extends ParentModel
 
         parent::__construct($attributes);
     }
+
+    /**
+     * @return string
+     */
+    public function getSchema(): string
+    {
+        return $this->schema;
+    }
 }

@@ -3,6 +3,7 @@
 namespace Mildberry\Tests\Specifications\DAL\Transformers;
 
 use Mildberry\Specifications\DAL\Transformers\EntityTransformer;
+use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
@@ -56,7 +57,10 @@ class EntityTransformerTest extends TestCase
             }
         };
 
-        $transformer->data = $this->extract($client, 'schema://dal/models/client');
+        $transformer->data = $this->extract(
+            $client, 'schema://dal/models/client',
+            $this->transformer->getNamespace()
+        );
 
         $this->factory
             ->setFrom($this->transformer->getSchema(get_class($client)))
@@ -106,7 +110,11 @@ class EntityTransformerTest extends TestCase
             }
         };
 
-        $expected = $this->extract($client, 'schema://dal/entities/client');
+        $expected = $this->extract(
+            $client, 'schema://dal/entities/client',
+            $this->transformer->getNamespace()
+        );
+
         $expected->id = $attributes['id'];
 
         $transformer->data = (object) $attributes;
@@ -127,7 +135,10 @@ class EntityTransformerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->extract($actual, 'schema://dal/entities/client')
+            $this->extract(
+                $actual, 'schema://dal/entities/client',
+                $this->transformer->getNamespace()
+            )
         );
     }
 
@@ -146,5 +157,17 @@ class EntityTransformerTest extends TestCase
             'dal/entities/company' => $this->getFixturePath('schema/dal/entities/company.json'),
             'dal/models/client' => $this->getFixturePath('schema/dal/models/client.json'),
         ]));
+
+        /**
+         * @var TypeExtractor $extractor
+         */
+        $extractor = $this->app->make(TypeExtractor::class);
+
+        $extractor
+            ->setBindings([
+                'schema://dal/models/client' => Client::class,
+            ]);
+
+        $this->app->instance(TypeExtractor::class, $extractor);
     }
 }
