@@ -1,14 +1,15 @@
 <?php
 
 namespace Mildberry\Specifications\Transforming\Converter;
+
 use Closure;
 use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Exceptions\PopulatorException;
+use Mildberry\Specifications\Exceptions\PopulatorObjectException;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
-
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -27,11 +28,6 @@ abstract class Converter implements ContainerAwareInterface
     protected $namespace = '\\';
 
     /**
-     * @var string
-     */
-    protected $filler;
-
-    /**
      * @var array
      */
     protected $resolvers = [];
@@ -45,11 +41,12 @@ abstract class Converter implements ContainerAwareInterface
     {
         $this->factory = $factory;
     }
+
     /**
      * @param mixed $data
      * @param string|object $schema
      *
-     * @throws PopulatorException
+     * @throws PopulatorObjectException
      *
      * @return mixed
      */
@@ -57,48 +54,21 @@ abstract class Converter implements ContainerAwareInterface
     {
         $schema = $this->factory->schema($schema);
 
-        $resolvers = $this->createResolvers($schema, $data);
-        $filler = $this->container->make($this->filler);
-
-        $entity = $this->createEntity($schema, $data);
+        $resolvers = $this->createResolvers($schema);
 
         $pipeline = new Pipeline();
 
-        foreach (array_keys((array)$schema->properties) as $property) {
-            try {
-                $value = $pipeline
-                    ->send($property)
-                    ->through($resolvers)
-                    ->then(function () use ($property) {
-                        $e = new PopulatorException('Cannot populate object');
+        return $pipeline
+            ->send($data)
+            ->through($resolvers)
+            ->then(function () use ($data) {
+                $e = new PopulatorException('Cannot populate data');
 
-                        throw $e;
-                    });
-
-                $filler->fill($entity, $property, $value);
-            } catch (PopulatorException $e) {
-                $parts = array_filter([$property, $e->getField()], function ($part) {
-                    return !is_null($part);
-                });
-
-                $e
-                    ->setField(implode('.', $parts))
-                    ->setData($data);
+                $e->setData($data);
 
                 throw $e;
-            }
-        }
-
-        return $entity;
+            });
     }
-
-    /**
-     * @param mixed $data
-     * @param object $schema
-     *
-     * @return mixed
-     */
-    abstract public function createEntity($schema, $data);
 
     /**
      * @return string
@@ -122,27 +92,25 @@ abstract class Converter implements ContainerAwareInterface
 
     /**
      * @param object $schema
-     * @param object $data
      *
      * @return array
      */
-    protected function createResolvers($schema, $data): array
+    protected function createResolvers($schema): array
     {
         $resolvers = $this->resolvers;
 
-        return array_map(function ($config) use ($schema, $data) {
-            return $this->wrapResolver($config, $schema, $data);
+        return array_map(function ($config) use ($schema) {
+            return $this->wrapResolver($config, $schema);
         }, $resolvers);
     }
 
     /**
      * @param array $config
      * @param object $schema
-     * @param $data
      *
      * @return Closure
      */
-    protected function wrapResolver(array $config, $schema, $data): Closure
+    protected function wrapResolver(array $config, $schema): Closure
     {
         /**
          * @var AbstractResolver $resolver
@@ -152,31 +120,11 @@ abstract class Converter implements ContainerAwareInterface
         $resolver
             ->setConfig($config)
             ->setSchema($schema)
-            ->setData($data)
             ->setConverter($this);
 
-        return function ($property, $next) use ($resolver) {
-            return $resolver->resolve($property, $next);
+        return function ($data, $next) use ($resolver) {
+            return $resolver->resolve($data, $next);
         };
-    }
-
-    /**
-     * @return string
-     */
-    public function getFiller(): string
-    {
-        return $this->filler;
-    }
-
-    /**
-     * @param string $filler
-     * @return $this
-     */
-    public function setFiller(string $filler)
-    {
-        $this->filler = $filler;
-
-        return $this;
     }
 
     /**
@@ -189,6 +137,7 @@ abstract class Converter implements ContainerAwareInterface
 
     /**
      * @param array $resolvers
+     *
      * @return $this
      */
     public function setResolvers(array $resolvers)

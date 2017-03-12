@@ -20,7 +20,7 @@ class PopulatorTest extends TestCase
      */
     private $populator;
 
-    public function testPopulate()
+    public function testPopulateSimple()
     {
         $preparator = new DataPreparator();
 

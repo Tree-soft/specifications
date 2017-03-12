@@ -50,6 +50,8 @@ class EntityTransformer extends ParentTransformer
          * @var Extractor $extractor
          */
         $extractor = $this->container->make(Extractor::class);
+        $extractor
+            ->setNamespace($this->getNamespace());
 
         $data = $extractor->convert($entity, $schema);
 

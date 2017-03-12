@@ -1,0 +1,14 @@
+{
+    "$schema": "schema://schema",
+    "id": "schema://entities/complexType",
+    "properties": {
+        "id": { "$ref": "schema://common/id" },
+        "object": {
+            "oneOf": [
+                { "type": "null" },
+                { "$ref": "schema://entities/objectMock" }
+            ]
+        }
+    },
+    "type": "object"
+}

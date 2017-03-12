@@ -2,34 +2,32 @@
 
 namespace Mildberry\Specifications\Exceptions;
 
-use Exception;
-
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class PopulatorException extends Exception
+class PopulatorObjectException extends PopulatorException
 {
     /**
-     * @var mixed
+     * @var string
      */
-    protected $data;
+    private $field;
 
     /**
      * @return mixed
      */
-    public function getData()
+    public function getField()
     {
-        return $this->data;
+        return $this->field;
     }
 
     /**
-     * @param mixed $data
+     * @param mixed $field
      *
      * @return $this
      */
-    public function setData($data)
+    public function setField($field)
     {
-        $this->data = $data;
+        $this->field = $field;
 
         $this->message = (string) $this;
 
@@ -41,8 +39,6 @@ class PopulatorException extends Exception
      */
     public function __toString()
     {
-        $data = var_export($this->data, true);
-
-        return "Cannot populate '{$data}'";
+        return "Cannot populate field '{$this->field}' in object";
     }
 }

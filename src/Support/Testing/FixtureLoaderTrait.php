@@ -4,7 +4,6 @@ namespace Mildberry\Specifications\Support\Testing;
 
 use Mildberry\Specifications\Support\DataPreparator;
 use Nelmio\Alice\Loader\NativeLoader;
-use Nelmio\Alice\ObjectSet;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -46,13 +45,13 @@ trait FixtureLoaderTrait
         $loader = new NativeLoader();
 
         /**
-         * @var ObjectSet $objects
+         * @var array $objects
          */
         $objects = array_reduce((is_array($fn)) ? ($fn) : ([$fn]), function ($entities, string $fn) use ($loader) {
-            return $loader->loadFile($this->getFixtureFilename($fn), [], $entities);
+            return $loader->loadFile($this->getFixtureFilename($fn), [], $entities)->getObjects();
         }, []);
 
-        return $objects->getObjects();
+        return $objects;
     }
 
     /**

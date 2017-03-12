@@ -3,7 +3,6 @@
 namespace Mildberry\Specifications\Transforming\Converter\Resolvers;
 
 use Mildberry\Specifications\Transforming\Converter\Converter;
-
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
@@ -35,12 +34,12 @@ abstract class AbstractResolver implements ContainerAwareInterface
     protected $data;
 
     /**
-     * @param string $property
+     * @param mixed $data
      * @param callable $next
      *
      * @return mixed
      */
-    abstract public function resolve(string $property, $next);
+    abstract public function resolve($data, $next);
 
     /**
      * @return array

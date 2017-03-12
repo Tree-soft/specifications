@@ -5,9 +5,7 @@
 use Mildberry\Specifications\Transforming\Resolvers;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator as PopulatorResolvers;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\Extractor as ExtractorResolvers;
-use Mildberry\Specifications\Transforming\Converter\Fillers;
+use Mildberry\Specifications\Transforming\Converter\Resolvers as ConverterResolvers;
 
 return [
     'path' => dirname(__DIR__) . '/resources/schema',
@@ -40,30 +38,31 @@ return [
         ],
     ],
     'populate' => [
-        'filler' => Fillers\SetterFiller::class,
         'resolvers' => [
             'nullable' => [
-                'class' => PopulatorResolvers\NullableResolver::class,
+                'class' => ConverterResolvers\NullableResolver::class,
             ],
             'simple' => [
-                'class' => PopulatorResolvers\SimpleResolver::class,
+                'class' => ConverterResolvers\SimpleResolver::class,
             ],
             'object' => [
-                'class' => PopulatorResolvers\ObjectResolver::class,
+                'class' => ConverterResolvers\Populator\ObjectResolver::class,
             ],
         ],
     ],
     'extract' => [
-        'filler' => Fillers\ObjectFiller::class,
         'resolvers' => [
             'nullable' => [
-                'class' => ExtractorResolvers\NullableResolver::class,
+                'class' => ConverterResolvers\NullableResolver::class,
             ],
             'simple' => [
-                'class' => ExtractorResolvers\SimpleResolver::class,
+                'class' => ConverterResolvers\SimpleResolver::class,
             ],
             'object' => [
-                'class' => ExtractorResolvers\ObjectResolver::class,
+                'class' => ConverterResolvers\Extractor\ObjectResolver::class,
+            ],
+            'complex' => [
+                'class' => ConverterResolvers\ComplexResolver::class,
             ],
         ],
     ],
