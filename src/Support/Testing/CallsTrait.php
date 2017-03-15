@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks;
+namespace Mildberry\Specifications\Support\Testing;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

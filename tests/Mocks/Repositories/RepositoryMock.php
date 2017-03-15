@@ -3,15 +3,13 @@
 namespace Mildberry\Tests\Specifications\Mocks\Repositories;
 
 use Mildberry\Specifications\Core\Interfaces\RepositoryInterface;
-use Mildberry\Tests\Specifications\Mocks\CallsTrait;
-
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
 class RepositoryMock implements RepositoryInterface
 {
-    use CallsTrait;
+    use Mildberry\Specifications\Support\Testing\CallsTrait;
 
     /**
      * @param mixed $queryOptions

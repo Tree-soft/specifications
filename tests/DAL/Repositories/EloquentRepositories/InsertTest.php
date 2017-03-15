@@ -6,7 +6,7 @@ use Mildberry\Specifications\DAL\Eloquent\Model;
 use Mildberry\Specifications\DAL\Eloquent\AbstractRepository;
 use Mildberry\Specifications\DAL\Transformers\EntityTransformer;
 use Mildberry\Specifications\DAL\Transformers\EntityTransformerFactory;
-use Mildberry\Tests\Specifications\Mocks\CallsTrait;
+use Mildberry\Specifications\Support\Testing\CallsTrait;
 use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
 use Mildberry\Tests\Specifications\Mocks\DAL\Models\ModelMock;
 

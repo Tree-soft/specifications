@@ -3,6 +3,7 @@
 namespace Mildberry\Tests\Specifications\Mocks;
 
 use Mildberry\Specifications\Core\Interfaces\CacheInterface;
+use Mildberry\Specifications\Support\Testing\CallsTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

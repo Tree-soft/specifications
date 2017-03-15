@@ -3,14 +3,13 @@
 namespace Mildberry\Tests\Specifications\Mocks\DAL\Models;
 
 use Mildberry\Specifications\DAL\Eloquent\Model;
-use Mildberry\Tests\Specifications\Mocks\CallsTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
 class ModelMock extends Model
 {
-    use CallsTrait;
+    use Mildberry\Specifications\Support\Testing\CallsTrait;
 
     /**
      * @var bool

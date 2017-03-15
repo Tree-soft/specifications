@@ -8,7 +8,6 @@ use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Tests\Specifications\DAL\Repositories\EloquentRepositories\TestCase;
-use Mildberry\Tests\Specifications\Mocks\CallsTrait;
 use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
 use Mildberry\Tests\Specifications\Mocks\DAL\Models\ModelMock;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
@@ -89,7 +88,7 @@ class EntityTransformerTest extends TestCase
             ->setNamespace('\Mildberry\Tests\Specifications\Mocks');
 
         $transformer = new class() extends AbstractTransformer {
-            use CallsTrait;
+            use Mildberry\Specifications\Support\Testing\CallsTrait;
 
             /**
              * @var array

@@ -1,0 +1,5 @@
+{
+  "$schema": "schema://schema",
+  "id": "schema://common/datetime",
+  "type": "string"
+}
