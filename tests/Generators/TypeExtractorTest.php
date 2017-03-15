@@ -150,6 +150,36 @@ class TypeExtractorTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider shortNamesProvider
+     *
+     * @param string $expected
+     * @param string $namespace
+     * @param string $class
+     */
+    public function testShortName(string $expected, string $namespace, string $class)
+    {
+        $this->extractor
+            ->setNamespace($namespace);
+
+        $this->assertEquals($expected, $this->extractor->getShortName($class));
+    }
+
+    public function shortNamesProvider()
+    {
+        return [
+            'simple' => [
+                'Entities\Test', '\TestApp\Core', '\TestApp\Core\Entities\Test',
+            ],
+            'rtrim' => [
+                'Entities\Test', '\TestApp\Core\\', '\TestApp\Core\Entities\Test',
+            ],
+            'root' => [
+                'TestApp\Core\Entities\Test', '\\', '\TestApp\Core\Entities\Test',
+            ],
+        ];
+    }
+
     protected function setUp()
     {
         parent::setUp();

@@ -187,9 +187,10 @@ class TypeExtractor
      */
     public function getShortName(string $class): string
     {
-        $namespace = trim($this->namespace);
+        $namespace = rtrim($this->namespace, '\\');
+        $regexp = preg_quote("{$namespace}\\");
 
-        return str_replace("{$namespace}\\", '', $class);
+        return preg_replace("#^{$regexp}#", '', $class);
     }
 
     /**
