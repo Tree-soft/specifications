@@ -229,7 +229,7 @@ class ObjectBuilder extends AbstractBuilder
         $return = new Return_(new PropertyFetch(new Expr\Variable('this'), $name));
 
         $getterStatement = $this->factory
-            ->method('get' . ucfirst($name))
+            ->method($this->getterName($name))
             ->makePublic()
             ->setDocComment($phpDoc->compile())
             ->addStmt($return);
@@ -284,11 +284,31 @@ class ObjectBuilder extends AbstractBuilder
         ];
 
         return $this->factory
-            ->method('set' . ucfirst($name))
+            ->method($this->setterName($name))
             ->makePublic()
             ->addParam($param)
             ->setDocComment($phpDoc->compile())
             ->addStmts($body);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    public function getterName(string $name): string
+    {
+        return 'get' . ucfirst(camel_case($name));
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    public function setterName(string $name): string
+    {
+        return 'set' . ucfirst(camel_case($name));
     }
 
     /**

@@ -1,0 +1,13 @@
+{
+    "id": "schema://entities/underscore-client",
+    "definitions": {
+        "company": {
+            "$ref": "schema://entities/underscore-company"
+        }
+    },
+    "type": "object",
+    "properties": {
+        "first_name": { "type": "string" },
+        "company": { "$ref": "#/definitions/company" }
+    }
+}

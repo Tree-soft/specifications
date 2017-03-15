@@ -67,6 +67,12 @@ class ClassGeneratorTest extends TestCase
                         file_get_contents($this->getFixturePath('Entities/Nullable.php')),
                 ], 'schema://entities/nullable',
             ],
+            'underscore' => [
+                [
+                    'Entities/UnderscoreClient.php' =>
+                        file_get_contents($this->getFixturePath('Entities/UnderscoreClient.php')),
+                ], 'schema://entities/underscore-client',
+            ],
         ];
     }
 
@@ -134,6 +140,8 @@ class ClassGeneratorTest extends TestCase
             'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
             'entities/nullable' => $this->getFixturePath('schema/nullable.json'),
             'common/id' => $this->getResourcePath('schema/common/id.json'),
+            'entities/underscore-client' => $this->getFixturePath('schema/underscore/client.json'),
+            'entities/underscore-company' => $this->getFixturePath('schema/underscore/company.json'),
         ]));
 
         $this->factory = $this->app->make(LaravelFactory::class);

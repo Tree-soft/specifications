@@ -1,0 +1,9 @@
+{
+    "id": "schema://entities/underscore-company",
+    "properties": {
+        "id": { "type": "integer" },
+        "owner_name": { "type": "string" }
+    },
+    "required": ["id", "name"],
+    "type": "object"
+}
