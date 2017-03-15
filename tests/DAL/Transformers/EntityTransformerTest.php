@@ -5,6 +5,7 @@ namespace Mildberry\Tests\Specifications\DAL\Transformers;
 use Mildberry\Specifications\DAL\Transformers\EntityTransformer;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Support\Testing\CallsTrait;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Tests\Specifications\DAL\Repositories\EloquentRepositories\TestCase;
@@ -88,7 +89,7 @@ class EntityTransformerTest extends TestCase
             ->setNamespace('\Mildberry\Tests\Specifications\Mocks');
 
         $transformer = new class() extends AbstractTransformer {
-            use Mildberry\Specifications\Support\Testing\CallsTrait;
+            use CallsTrait;
 
             /**
              * @var array

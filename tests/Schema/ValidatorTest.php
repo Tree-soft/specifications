@@ -34,7 +34,7 @@ class ValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $fixture = dirname(__DIR__) . '/fixtures/schema';
+        $fixture = dirname(__DIR__) . '/Fixtures/schema';
 
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/client' => "{$fixture}/client.json",

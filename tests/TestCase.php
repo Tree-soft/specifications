@@ -61,7 +61,7 @@ class TestCase extends ParentTestCase
      */
     protected function getFixturePath(string $path = '')
     {
-        return rtrim(__DIR__ . "/fixtures/{$path}", '/');
+        return rtrim(__DIR__ . "/Fixtures/{$path}", '/');
     }
 
     /**
@@ -81,7 +81,7 @@ class TestCase extends ParentTestCase
      */
     protected function getFixtureFilename(string $fn): string
     {
-        return implode(DIRECTORY_SEPARATOR, [__DIR__, 'fixtures', 'data', $fn]);
+        return implode(DIRECTORY_SEPARATOR, [__DIR__, 'Fixtures', 'data', $fn]);
     }
 
     protected function setUp()
