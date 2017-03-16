@@ -9,6 +9,10 @@ use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
  */
 class TypeExtractor
 {
+    const BOOL = 'bool';
+    const INT = 'int';
+    const OBJECT = 'object';
+
     /**
      * @var string
      */
@@ -67,8 +71,8 @@ class TypeExtractor
         $type = $schema->type;
 
         return [
-            'integer' => 'int',
-            'boolean' => 'bool',
+            'integer' => self::INT,
+            'boolean' => self::BOOL,
         ][$type] ?? $type;
     }
 
@@ -80,7 +84,7 @@ class TypeExtractor
     protected function extractClass($schema)
     {
         if (
-            ($this->extractSimple($schema) != 'object') ||
+            ($this->extractSimple($schema) != self::OBJECT) ||
             empty($schema->id)
         ) {
             return null;
