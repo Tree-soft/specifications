@@ -12,6 +12,7 @@ class TypeExtractor
     const BOOL = 'bool';
     const INT = 'int';
     const OBJECT = 'object';
+    const ARRAY = 'array';
 
     /**
      * @var string
