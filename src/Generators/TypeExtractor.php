@@ -11,6 +11,7 @@ class TypeExtractor
 {
     const BOOL = 'bool';
     const INT = 'int';
+    const STRING = 'string';
     const OBJECT = 'object';
     const ARRAY = 'array';
 
