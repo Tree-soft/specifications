@@ -1,0 +1,8 @@
+tests/Fixtures/Entities/Client.php -crlf
+tests/Fixtures/Entities/ClientFull.php -crlf
+tests/Fixtures/Entities/Company.php -crlf
+tests/Fixtures/Entities/Derived/Client.php -crlf
+tests/Fixtures/Entities/Nullable.php -crlf
+tests/Fixtures/Entities/UnderscoreClient.php -crlf
+tests/Fixtures/Requests/ExampleRequest.php -crlf
+tests/Fixtures/Requests/Request.php -crlf

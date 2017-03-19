@@ -48,6 +48,9 @@ return [
             'object' => [
                 'class' => ConverterResolvers\Populator\ObjectResolver::class,
             ],
+            'complex' => [
+                'class' => ConverterResolvers\ComplexResolver::class,
+            ],
         ],
     ],
     'extract' => [
