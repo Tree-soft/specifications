@@ -48,10 +48,6 @@ class TestCase extends ParentTestCase
         );
 
         $config->set('specifications.transform.path', $this->getFixturePath('transform'));
-
-        $config->set(
-            'container', require dirname(__DIR__) . '/vendor/rnr/resolver-provider/config/container.php'
-        );
     }
 
     /**
