@@ -841,16 +841,16 @@
         },
         {
             "name": "rnr/resolver-provider",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodnover55/laravel-resolvers.git",
-                "reference": "712bfc899733ec62abcbc39153678ff7fe131fc8"
+                "reference": "b7522ca63cf43fe30c33ef1a04fc59bd4f55be98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodnover55/laravel-resolvers/zipball/712bfc899733ec62abcbc39153678ff7fe131fc8",
-                "reference": "712bfc899733ec62abcbc39153678ff7fe131fc8",
+                "url": "https://api.github.com/repos/rodnover55/laravel-resolvers/zipball/b7522ca63cf43fe30c33ef1a04fc59bd4f55be98",
+                "reference": "b7522ca63cf43fe30c33ef1a04fc59bd4f55be98",
                 "shasum": ""
             },
             "require": {
@@ -873,7 +873,7 @@
                     "email": "me@rnr.name"
                 }
             ],
-            "time": "2017-03-20 13:37:32"
+            "time": "2017-03-20 15:14:01"
         },
         {
             "name": "sabre/uri",
