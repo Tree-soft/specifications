@@ -9,6 +9,7 @@ use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
 use Mildberry\Tests\Specifications\Fixtures\Entities\Company;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
+use Illuminate\Contracts\Config\Repository as Config;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -81,10 +82,14 @@ class PopulatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->populator = $this->app->make(Populator::class);
+        /**
+         * @var Config $config
+         */
+        $config = $this->app->make(Config::class);
 
-        $this->populator
-            ->setNamespace('\Mildberry\Tests\Specifications\Fixtures');
+        $config->set('specifications.namespace', '\Mildberry\Tests\Specifications\Fixtures');
+
+        $this->populator = $this->app->make(Populator::class);
 
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/client' => $this->getFixturePath('schema/client.json'),

@@ -31,10 +31,10 @@ class SimpleResolver extends AbstractResolver
             return false;
         }
 
-        $extractor = new TypeExtractor();
-
-        $extractor
-            ->setNamespace($this->getConverter()->getNamespace());
+        /**
+         * @var TypeExtractor $extractor
+         */
+        $extractor = $this->container->make(TypeExtractor::class);
 
         $type = $extractor->extract($schema);
 

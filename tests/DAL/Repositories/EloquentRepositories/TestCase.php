@@ -26,11 +26,10 @@ class TestCase extends ParentTestCase
     /**
      * @param object $object
      * @param string $schema
-     * @param string $namespace
      *
      * @return object
      */
-    public function extract($object, $schema, string $namespace = null)
+    public function extract($object, $schema)
     {
         /**
          * @var LaravelFactory $factory
@@ -41,11 +40,6 @@ class TestCase extends ParentTestCase
          * @var Extractor $extractor
          */
         $extractor = $this->app->make(Extractor::class);
-
-        if (isset($namespace)) {
-            $extractor
-                ->setNamespace($namespace);
-        }
 
         return $extractor->convert($object, $factory->schema($schema));
     }

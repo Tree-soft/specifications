@@ -30,10 +30,10 @@ class ComplexResolver extends AbstractResolver
     {
         $schema = $this->getSchema();
 
-        $extractor = new TypeExtractor();
-
-        $extractor
-            ->setNamespace($this->getConverter()->getNamespace());
+        /**
+         * @var TypeExtractor $extractor
+         */
+        $extractor = $this->container->make(TypeExtractor::class);
 
         $types = $extractor->extract($schema);
 

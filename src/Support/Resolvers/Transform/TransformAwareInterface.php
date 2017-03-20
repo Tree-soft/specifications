@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Resolvers;
+namespace Mildberry\Specifications\Support\Resolvers\Transform;
 
 use Mildberry\Specifications\Http\Transformers\EntityTransformerFactory;
 

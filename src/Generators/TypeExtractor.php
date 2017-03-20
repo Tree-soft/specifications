@@ -3,22 +3,21 @@
 namespace Mildberry\Specifications\Generators;
 
 use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class TypeExtractor
+class TypeExtractor implements NamespaceAwareInterface
 {
+    use NamespaceAwareTrait;
+
     const BOOL = 'bool';
     const INT = 'int';
     const STRING = 'string';
     const OBJECT = 'object';
     const ARRAY = 'array';
-
-    /**
-     * @var string
-     */
-    private $namespace = '\\';
 
     /**
      * @var array
@@ -164,26 +163,6 @@ class TypeExtractor
                 }
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getNamespace(): string
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * @param string $namespace
-     *
-     * @return $this
-     */
-    public function setNamespace(string $namespace)
-    {
-        $this->namespace = $namespace;
-
-        return $this;
     }
 
     /**

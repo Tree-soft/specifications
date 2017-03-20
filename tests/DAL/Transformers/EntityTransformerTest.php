@@ -13,6 +13,7 @@ use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
 use Mildberry\Tests\Specifications\Mocks\DAL\Models\ModelMock;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\Mocks\TransformerFactoryMock;
+use Illuminate\Contracts\Config\Repository as Config;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -57,10 +58,7 @@ class EntityTransformerTest extends TestCase
             }
         };
 
-        $transformer->data = $this->extract(
-            $client, 'schema://dal/models/client',
-            $this->transformer->getNamespace()
-        );
+        $transformer->data = $this->extract($client, 'schema://dal/models/client');
 
         $this->factory
             ->setFrom($this->transformer->getSchema(get_class($client)))
@@ -110,10 +108,7 @@ class EntityTransformerTest extends TestCase
             }
         };
 
-        $expected = $this->extract(
-            $client, 'schema://dal/entities/client',
-            $this->transformer->getNamespace()
-        );
+        $expected = $this->extract($client, 'schema://dal/entities/client');
 
         $expected->id = $attributes['id'];
 
@@ -135,16 +130,20 @@ class EntityTransformerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->extract(
-                $actual, 'schema://dal/entities/client',
-                $this->transformer->getNamespace()
-            )
+            $this->extract($actual, 'schema://dal/entities/client')
         );
     }
 
     protected function setUp()
     {
         parent::setUp();
+
+        /**
+         * @var Config $config
+         */
+        $config = $this->app->make(Config::class);
+
+        $config->set('specifications.namespace', '\Mildberry\Tests\Specifications\Mocks');
 
         $this->factory = $this->app->make(TransformerFactoryMock::class);
 

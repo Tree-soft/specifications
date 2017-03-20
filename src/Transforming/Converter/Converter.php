@@ -7,6 +7,8 @@ use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Exceptions\PopulatorException;
 use Mildberry\Specifications\Exceptions\PopulatorObjectException;
 use Mildberry\Specifications\Schema\LaravelFactory;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
 use Mildberry\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
@@ -14,18 +16,15 @@ use Rnr\Resolvers\Traits\ContainerAwareTrait;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-abstract class Converter implements ContainerAwareInterface
+abstract class Converter implements ContainerAwareInterface, NamespaceAwareInterface
 {
     use ContainerAwareTrait;
+    use NamespaceAwareTrait;
 
     /**
      * @var LaravelFactory $factory
      */
     protected $factory;
-    /**
-     * @var string
-     */
-    protected $namespace = '\\';
 
     /**
      * @var array
@@ -68,26 +67,6 @@ abstract class Converter implements ContainerAwareInterface
 
                 throw $e;
             });
-    }
-
-    /**
-     * @return string
-     */
-    public function getNamespace(): string
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * @param string $namespace
-     *
-     * @return $this
-     */
-    public function setNamespace(string $namespace)
-    {
-        $this->namespace = $namespace;
-
-        return $this;
     }
 
     /**

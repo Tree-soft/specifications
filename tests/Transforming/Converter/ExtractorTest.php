@@ -8,6 +8,7 @@ use Mildberry\Specifications\Transforming\Converter\Extractor;
 use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
+use Illuminate\Contracts\Config\Repository as Config;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -27,8 +28,17 @@ class ExtractorTest extends TestCase
      * @param string $schema
      * @param string $namespace
      */
-    public function testExtract($expected, $entity, string $schema, string $namespace = null)
-    {
+    public function testExtract(
+        $expected, $entity, string $schema,
+        string $namespace = '\Mildberry\Tests\Specifications\Fixtures'
+    ) {
+        /**
+         * @var Config $config
+         */
+        $config = $this->app->make(Config::class);
+
+        $config->set('specifications.namespace', $namespace);
+
         $this->extractor
             ->setNamespace($namespace ?? '\Mildberry\Tests\Specifications\Fixtures');
 

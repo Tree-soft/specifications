@@ -7,7 +7,10 @@ use Illuminate\Support\ServiceProvider;
 use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
 use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
 use Mildberry\Specifications\Generators\OutputInterface;
-use Mildberry\Specifications\Support\Transformers\EntityTransformer;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceResolver;
+use Mildberry\Specifications\Support\Resolvers\Transform\TransformAwareInterface;
+use Mildberry\Specifications\Support\Resolvers\Transform\TransformResolver;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Checkers\AbstractChecker;
@@ -15,6 +18,7 @@ use Mildberry\Specifications\Schema\TransformerLoader;
 use Mildberry\Specifications\Support\FileWriter;
 use Mildberry\Specifications\Support\PublisherInterface;
 use Illuminate\Contracts\Config\Repository as Config;
+use Rnr\Resolvers\Manage\ResolverConfigurator;
 use Rnr\Resolvers\Providers\ResolversProvider;
 
 /**
@@ -98,6 +102,15 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
 
     protected function registerResolvers()
     {
+        /**
+         * @var ResolverConfigurator $configurator
+         */
+        $configurator = $this->app->make(ResolverConfigurator::class);
+
+        $configurator
+            ->setResolver(TransformAwareInterface::class, TransformResolver::class)
+            ->setResolver(NamespaceAwareInterface::class, NamespaceResolver::class);
+
         $resolvings = [
             AbstractChecker::class => function (AbstractChecker $specification) {
                 /**
@@ -106,14 +119,6 @@ class SpecificationsProvider extends ServiceProvider implements PublisherInterfa
                 $factory = $this->app->make(LaravelFactory::class);
 
                 $specification->setFactory($factory);
-            },
-            EntityTransformer::class => function (EntityTransformer $transformer) {
-                /**
-                 * @var Config $config
-                 */
-                $config = $this->app->make(Config::class);
-
-                $transformer->setNamespace($config->get('specifications.namespace', '\\'));
             },
         ];
 

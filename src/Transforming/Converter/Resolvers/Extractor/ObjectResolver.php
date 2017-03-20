@@ -70,9 +70,6 @@ class ObjectResolver extends ParentObjectResolver
          */
         $extractor = $this->container->make(TypeExtractor::class);
 
-        $extractor
-            ->setNamespace($this->getConverter()->getNamespace());
-
         $schema = $this->getSchema();
 
         $types = $extractor->extract($schema);

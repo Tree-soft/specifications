@@ -4,12 +4,16 @@ namespace Mildberry\Specifications\Generators\Request;
 
 use Mildberry\Specifications\Generators\AbstractTemplateGenerator;
 use Mildberry\Specifications\Http\Requests\Request;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class RequestGenerator extends AbstractTemplateGenerator
+class RequestGenerator extends AbstractTemplateGenerator implements NamespaceAwareInterface
 {
+    use NamespaceAwareTrait;
+
     /**
      * @var string|null
      */
@@ -39,11 +43,6 @@ class RequestGenerator extends AbstractTemplateGenerator
      * @var string
      */
     private $class;
-
-    /**
-     * @var string
-     */
-    private $namespace;
 
     /**
      * RequestGenerator constructor.
@@ -220,26 +219,6 @@ class RequestGenerator extends AbstractTemplateGenerator
     public function setClass(string $class)
     {
         $this->class = $class;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNamespace(): string
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * @param string $namespace
-     *
-     * @return $this
-     */
-    public function setNamespace(string $namespace)
-    {
-        $this->namespace = $namespace;
 
         return $this;
     }

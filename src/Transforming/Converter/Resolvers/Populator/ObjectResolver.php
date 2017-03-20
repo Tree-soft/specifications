@@ -22,10 +22,10 @@ class ObjectResolver extends ParentObjectResolver
      */
     public function createEntity($schema, $data)
     {
-        $typeExtractor = new TypeExtractor();
-
-        $typeExtractor
-            ->setNamespace($this->getConverter()->getNamespace());
+        /**
+         * @var TypeExtractor $typeExtractor
+         */
+        $typeExtractor = $this->container->make(TypeExtractor::class);
 
         $types = $typeExtractor->extract($schema);
 

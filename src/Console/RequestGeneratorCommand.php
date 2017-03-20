@@ -46,8 +46,13 @@ class RequestGeneratorCommand extends Command implements ConfigAwareInterface
             ->setQuerySchema($this->option('query'))
             ->setDataSchema($this->option('data'))
             ->setRouteSchema($this->option('route'))
-            ->setClass($class)
-            ->setNamespace($this->option('namespace'));
+            ->setClass($class);
+
+        $namespace = $this->option('namespace');
+
+        if (isset($namespace)) {
+            $generator->setNamespace($namespace);
+        }
 
         $baseClass = $this->option('base');
 

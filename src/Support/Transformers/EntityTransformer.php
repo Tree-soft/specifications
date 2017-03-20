@@ -2,6 +2,8 @@
 
 namespace Mildberry\Specifications\Support\Transformers;
 
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
@@ -9,18 +11,16 @@ use Rnr\Resolvers\Traits\ContainerAwareTrait;
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class EntityTransformer implements ContainerAwareInterface
+class EntityTransformer implements ContainerAwareInterface, NamespaceAwareInterface
 {
     use ContainerAwareTrait;
+    use NamespaceAwareTrait;
 
     /**
      * @var TransformerFactory
      */
     protected $factory;
-    /**
-     * @var string
-     */
-    protected $namespace = '';
+
     /**
      * @var string
      */
@@ -43,7 +43,7 @@ class EntityTransformer implements ContainerAwareInterface
      */
     public function getSchema(string $class): string
     {
-        $relativeName = str_replace($this->namespace, '', ltrim($class));
+        $relativeName = str_replace(trim($this->namespace, '\\'), '', ltrim($class));
 
         $parts = array_map(function ($part) {
             return ($this->isUpperString($part)) ? (strtolower($part)) : (lcfirst($part));
@@ -62,26 +62,6 @@ class EntityTransformer implements ContainerAwareInterface
     public function isUpperString(string $text): bool
     {
         return ctype_upper(preg_replace('/\d/', '', $text));
-    }
-
-    /**
-     * @return string
-     */
-    public function getNamespace(): string
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * @param string $namespace
-     *
-     * @return EntityTransformer
-     */
-    public function setNamespace(string $namespace)
-    {
-        $this->namespace = trim($namespace, '\\');
-
-        return $this;
     }
 
     /**

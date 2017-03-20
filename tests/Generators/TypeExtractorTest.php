@@ -8,6 +8,7 @@ use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
+use Illuminate\Contracts\Config\Repository as Config;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -196,6 +197,13 @@ class TypeExtractorTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
+
+        /**
+         * @var Config $config
+         */
+        $config = $this->app->make(Config::class);
+
+        $config->set('specifications.namespace', '\\');
 
         $this->extractor = $this->app->make(TypeExtractor::class);
 

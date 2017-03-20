@@ -32,11 +32,16 @@ class EntityTransformerTest extends TestCase
      * @param string $class
      * @param string|null $namespace
      */
-    public function testGetSchema(string $expected, string $class, $namespace = null)
+    public function testGetSchema(string $expected, string $class, $namespace = '\\')
     {
-        if (isset($namespace)) {
-            $this->transformer->setNamespace($namespace);
-        }
+        /**
+         * @var Config $config
+         */
+        $config = $this->app->make(Config::class);
+
+        $config->set('specifications.namespace', $namespace);
+
+        $this->transformer->setNamespace($namespace);
 
         $this->assertEquals($expected, $this->transformer->getSchema($class));
     }
@@ -60,10 +65,13 @@ class EntityTransformerTest extends TestCase
          */
         $config = $this->app->make(Config::class);
 
+        $namespace = '\Mildberry\Tests\Specifications\Fixtures';
+
         $config->set('specifications.transform.resolvers.json-schema.schema', 'transform://transformations-request');
+        $config->set('specifications.namespace', $namespace);
 
         $this->transformer
-            ->setNamespace('\Mildberry\Tests\Specifications\Fixtures')
+            ->setNamespace($namespace)
             ->setClass(Client::class);
 
         $request = new class() extends Request {
@@ -122,8 +130,11 @@ class EntityTransformerTest extends TestCase
             ],
         ]);
 
+        $namespace = '\Mildberry\Tests\Specifications\Fixtures';
+        $config->set('specifications.namespace', $namespace);
+
         $this->transformer
-            ->setNamespace('\Mildberry\Tests\Specifications\Fixtures')
+            ->setNamespace($namespace)
             ->setClass(Client::class);
 
         $entity = new Client();

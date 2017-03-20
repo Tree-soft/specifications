@@ -7,7 +7,6 @@ use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
 use Mildberry\Specifications\DAL\Eloquent\TransactionManager;
 use Mildberry\Specifications\DAL\Factories\DefaultFactory;
 use Mildberry\Specifications\Generators\OutputInterface;
-use Mildberry\Specifications\Http\Transformers\EntityTransformer;
 use Mildberry\Specifications\Providers\SpecificationsProvider;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Schema\Loader;
@@ -84,19 +83,6 @@ class SpecificationsProviderTest extends TestCase
         $output = $this->app->make(OutputInterface::class);
 
         $this->assertInstanceOf(FileWriter::class, $output);
-    }
-
-    public function testTransformer()
-    {
-        /**
-         * @var EntityTransformer $transformer
-         */
-        $transformer = $this->app->make(EntityTransformer::class);
-
-        $this->assertEquals(
-            ltrim($this->config->get('specifications.namespace'), '\\'),
-            $transformer->getNamespace()
-        );
     }
 
     public function testRepositoryFactory()

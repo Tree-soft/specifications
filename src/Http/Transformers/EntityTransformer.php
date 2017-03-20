@@ -26,9 +26,6 @@ class EntityTransformer extends ParentTransformer
          */
         $populator = $this->container->make(Populator::class);
 
-        $populator
-            ->setNamespace($this->namespace);
-
         $transformer = $this->factory->create($request->getDataSchema(), $schema);
 
         $data = $transformer->transform($request->getData());
@@ -50,8 +47,6 @@ class EntityTransformer extends ParentTransformer
          * @var Extractor $extractor
          */
         $extractor = $this->container->make(Extractor::class);
-        $extractor
-            ->setNamespace($this->getNamespace());
 
         $data = $extractor->convert($entity, $schema);
 
