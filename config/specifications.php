@@ -35,6 +35,9 @@ return [
                     'integer' => Casters\IntegerCaster::class,
                 ],
             ],
+            'complex' => [
+                'class' => Resolvers\ComplexSchemaResolver::class,
+            ],
         ],
     ],
     'populate' => [

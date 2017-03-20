@@ -4,18 +4,13 @@ namespace Mildberry\Tests\Specifications\Transforming;
 
 use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
 use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Transforming\Resolvers\CopyResolver;
-use Mildberry\Specifications\Transforming\Resolvers\JsonSchemaResolver;
-use Mildberry\Specifications\Transforming\Resolvers\SimpleTypeResolver;
 use Mildberry\Specifications\Transforming\TransformerFactory;
+use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
 use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\IntegerCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
 use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
-use Illuminate\Config\Repository as Config;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -66,6 +61,11 @@ class TransformerFactoryTest extends TestCase
                 'integer',
                 'string',
             ],
+            'complex' => [
+                ComplexSchemaTransformer::class,
+                'integer',
+                'schema://common/id',
+            ],
         ];
     }
 
@@ -80,6 +80,7 @@ class TransformerFactoryTest extends TestCase
             'entities/client' => $this->getFixturePath('schema/client.json'),
             'entities/company' => $this->getFixturePath('schema/company.json'),
             'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
+            'common/id' => $this->getResourcePath('schema/common/id.json'),
         ]));
     }
 }

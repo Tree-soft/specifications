@@ -200,6 +200,20 @@ class TypeExtractor
     }
 
     /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function isSchema(string $type): bool
+    {
+        $isSchema = preg_match('#\w+://#', $type);
+
+        assert($isSchema === false, 'Some error occurs in preg_match.');
+
+        return (bool) $isSchema;
+    }
+
+    /**
      * @param object $source
      * @param object $schema
      *

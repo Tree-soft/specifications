@@ -165,6 +165,9 @@ class TypeExtractorTest extends TestCase
         $this->assertEquals($expected, $this->extractor->getShortName($class));
     }
 
+    /**
+     * @return array
+     */
     public function shortNamesProvider()
     {
         return [
@@ -178,6 +181,16 @@ class TypeExtractorTest extends TestCase
                 'TestApp\Core\Entities\Test', '\\', '\TestApp\Core\Entities\Test',
             ],
         ];
+    }
+
+    public function testIsSchema()
+    {
+        $this->assertTrue($this->extractor->isSchema('schema://common/id'));
+    }
+
+    public function testIsSchemaWrong()
+    {
+        $this->assertFalse($this->extractor->isSchema('integer'));
     }
 
     protected function setUp()
