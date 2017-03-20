@@ -8,6 +8,11 @@ namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 class ConstRule extends AbstractRuleTo
 {
     /**
+     * @var mixed
+     */
+    private $value;
+
+    /**
      * @param string $property
      * @param object $object
      *
@@ -15,10 +20,15 @@ class ConstRule extends AbstractRuleTo
      */
     protected function innerApply(string $property, $object)
     {
-        $value = $this->spec[0];
-
-        $object->{$property} = $value;
+        $object->{$property} = $this->value;
 
         return $object;
+    }
+
+    public function setSpec(array $spec)
+    {
+        list($this->value) = $spec;
+
+        return parent::setSpec($spec);
     }
 }

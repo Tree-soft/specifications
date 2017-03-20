@@ -8,6 +8,11 @@ namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 class ShiftFromRule extends AbstractRuleTo
 {
     /**
+     * @var string
+     */
+    private $property;
+
+    /**
      * @param string $property
      * @param object $object
      *
@@ -15,10 +20,17 @@ class ShiftFromRule extends AbstractRuleTo
      */
     protected function innerApply(string $property, $object)
     {
-        $fromProperty = $this->spec[0];
+        $fromProperty = $this->property;
 
         $object->{$property} = $this->from->{$fromProperty};
 
         return $object;
+    }
+
+    public function setSpec(array $spec)
+    {
+        list($this->property) = $spec;
+
+        return parent::setSpec($spec);
     }
 }
