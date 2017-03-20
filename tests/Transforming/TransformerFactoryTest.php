@@ -42,26 +42,6 @@ class TransformerFactoryTest extends TestCase
      */
     public function testResolvers($expected, string $from, string $to)
     {
-        /**
-         * @var Config $config
-         */
-        $config = $this->app->make(Config::class);
-
-        $config->set('specifications.transform.resolvers', [
-            [
-                'class' => JsonSchemaResolver::class,
-                'schema' => 'transform://transformations',
-            ], [
-                'class' => CopyResolver::class,
-            ], [
-                'class' => SimpleTypeResolver::class,
-                'casters' => [
-                    'string' => StringCaster::class,
-                    'integer' => IntegerCaster::class,
-                ],
-            ],
-        ]);
-
         $this->assertInstanceOf($expected, $this->factory->create($from, $to));
     }
 

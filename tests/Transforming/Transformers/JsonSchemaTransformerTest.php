@@ -4,6 +4,7 @@ namespace Mildberry\Tests\Specifications\Transforming\Transformers;
 
 use DeepCopy\DeepCopy;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
@@ -42,6 +43,7 @@ class JsonSchemaTransformerTest extends TestCase
                 'const' => Rules\ConstRule::class,
                 'shiftFrom' => Rules\ShiftFromRule::class,
                 'shiftTo' => Rules\ShiftToRule::class,
+                'complex' => Rules\ComplexRule::class
             ]);
 
         $this->assertEquals($expected, $this->transformer->transform($from, $to));
@@ -52,6 +54,8 @@ class JsonSchemaTransformerTest extends TestCase
      */
     public function objectsProvider(): array
     {
+        $preparator = new DataPreparator();
+
         $copier = new DeepCopy();
 
         $client = (object) [
@@ -78,58 +82,58 @@ class JsonSchemaTransformerTest extends TestCase
                 $client,
             ],
             'ignore' => [
-                $client, (object) [
+                $client, $preparator->prepare([
                     'to' => 'schema://entities/derived/simple-client',
                     'from' => 'schema://entities/simple-client',
-                    'rules' => (object) [
+                    'rules' => [
                         'ext' => 'ignore',
                     ],
-                ], $extendedClient,
+                ]), $extendedClient,
             ],
             'ignore-save-old' => [
-                $extendedClient, (object) [
+                $extendedClient, $preparator->prepare([
                     'to' => 'schema://entities/derived/simple-client',
                     'from' => 'schema://entities/simple-client',
-                    'rules' => (object) [
+                    'rules' => [
                         'ext' => 'ignore',
                     ],
-                ], $extendedClient2, $extendedClient,
+                ]), $extendedClient2, $extendedClient,
             ],
             'extend' => [
-                $extendedClient, (object) [
+                $extendedClient, $preparator->prepare([
                     'to' => 'schema://entities/derived/simple-client',
                     'from' => 'schema://entities/simple-client',
-                    'rules' => (object) [
+                    'rules' => [
                         'ext' => 'const:Ext',
                     ],
-                ], $client,
+                ]), $client,
             ],
             'extend-with-old' => [
-                $extendedClient, (object) [
+                $extendedClient, $preparator->prepare([
                     'to' => 'schema://entities/derived/simple-client',
                     'from' => 'schema://entities/simple-client',
-                    'rules' => (object) [
+                    'rules' => [
                         'ext' => 'const:Ext',
                     ],
-                ], $client, $extendedClient2,
+                ]), $client, $extendedClient2,
             ],
             'shiftFrom' => [
-                $extendedClient3, (object) [
+                $extendedClient3, $preparator->prepare([
                     'to' => 'schema://entities/derived/simple-client',
                     'from' => 'schema://entities/simple-client',
                     'rules' => (object) [
                         'ext' => 'shiftFrom:name',
                     ],
-                ], $client,
+                ]), $client,
             ],
             'shiftTo' => [
-                $extendedClient3, (object) [
+                $extendedClient3, $preparator->prepare([
                     'to' => 'schema://entities/derived/client',
                     'from' => 'schema://entities/client',
-                    'rules' => (object) [
+                    'rules' => [
                         'name' => 'shiftTo:ext',
                     ],
-                ], $client,
+                ]), $client,
             ],
         ];
     }

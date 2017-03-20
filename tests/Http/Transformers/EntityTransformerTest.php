@@ -60,19 +60,7 @@ class EntityTransformerTest extends TestCase
          */
         $config = $this->app->make(Config::class);
 
-        $config->set('specifications.transform.resolvers', [
-            [
-                'class' => JsonSchemaResolver::class,
-                'schema' => 'transform://transformations-request',
-            ], [
-                'class' => CopyResolver::class,
-            ], [
-                'class' => SimpleTypeResolver::class,
-                'casters' => [
-                    'string' => StringCaster::class,
-                ],
-            ],
-        ]);
+        $config->set('specifications.transform.resolvers.json-schema.schema', 'transform://transformations-request');
 
         $this->transformer
             ->setNamespace('\Mildberry\Tests\Specifications\Fixtures')
