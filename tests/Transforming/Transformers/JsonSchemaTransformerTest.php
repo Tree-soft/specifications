@@ -98,24 +98,24 @@ class JsonSchemaTransformerTest extends TestCase
                     ],
                 ]), $extendedClient2, $extendedClient,
             ],
-//            'extend' => [
-//                $extendedClient, $preparator->prepare([
-//                    'from' => 'schema://entities/simple-client',
-//                    'to' => 'schema://entities/derived/simple-client',
-//                    'rules' => [
-//                        'const:Ext>ext',
-//                    ],
-//                ]), $client,
-//            ],
-//            'extend-with-old' => [
-//                $extendedClient, $preparator->prepare([
-//                    'from' => 'schema://entities/simple-client',
-//                    'to' => 'schema://entities/derived/simple-client',
-//                    'rules' => [
-//                        'const:Ext>ext',
-//                    ],
-//                ]), $client, $extendedClient2,
-//            ],
+            'extend' => [
+                $extendedClient, $preparator->prepare([
+                    'from' => 'schema://entities/simple-client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'rules' => [
+                        '>const:Ext>ext',
+                    ],
+                ]), $client,
+            ],
+            'extend-with-old' => [
+                $extendedClient2, $preparator->prepare([
+                    'from' => 'schema://entities/simple-client',
+                    'to' => 'schema://entities/derived/simple-client',
+                    'rules' => [
+                        '>const:Ext>ext',
+                    ],
+                ]), $client, $extendedClient2,
+            ],
 //            'shiftFrom' => [
 //                $extendedClient3, $preparator->prepare([
 //                    'to' => 'schema://entities/derived/simple-client',

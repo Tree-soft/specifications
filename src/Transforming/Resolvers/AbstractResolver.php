@@ -48,13 +48,13 @@ abstract class AbstractResolver implements ContainerAwareInterface
     }
 
     /**
-     * @param string $from
-     * @param string $to
+     * @param string|object|mixed $from
+     * @param string|object|mixed $to
      * @param callable $next
      *
      * @return AbstractTransformer
      */
-    public function next(string $from, string $to, $next): AbstractTransformer
+    public function next($from, $to, $next): AbstractTransformer
     {
         return $next([$from, $to]);
     }

@@ -2,6 +2,7 @@
 
 namespace Mildberry\Specifications\Transforming\Resolvers;
 
+use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 
@@ -25,15 +26,22 @@ class SimpleTypeResolver extends AbstractResolver
     }
 
     /**
-     * @param string $type
+     * @param string|object|mixed $schema
      *
      * @return bool
      */
-    public function isSimpleType(string $type): bool
+    public function isSimpleType($schema): bool
     {
+        /**
+         * @var TypeExtractor $extractor
+         */
+        $extractor = $this->container->make(TypeExtractor::class);
+
+        $type = $extractor->extract($schema);
+
         $casters = $this->getConfig()['casters'] ?? [];
 
-        return in_array($type, array_keys($casters));
+        return !is_array($type) && in_array($schema, array_keys($casters));
     }
 
     /**

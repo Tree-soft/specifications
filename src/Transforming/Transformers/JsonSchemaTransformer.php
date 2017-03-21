@@ -4,6 +4,7 @@ namespace Mildberry\Specifications\Transforming\Transformers;
 
 use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Exceptions\TransformationDefinitionException;
+use Mildberry\Specifications\Exceptions\TransformationNotFoundException;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
@@ -149,6 +150,10 @@ class JsonSchemaTransformer extends AbstractTransformer
     {
         return array_map(function ($specification) {
             list($name, $config) = $this->parseSpecification($specification);
+
+            if (!isset($this->transformations[$name])) {
+                throw new TransformationNotFoundException("Transformation '{$name}' not found");
+            }
 
             /**
              * @var AbstractTransformation $transformation

@@ -23,6 +23,13 @@ class ConstTransformation extends AbstractTransformation
      */
     public function apply(ValueDescriptor $from, ValueDescriptor $value, $next): ValueDescriptor
     {
+        $const = new ValueDescriptor();
+
+        $const
+            ->setValue($this->value)
+            ->setSchema((object) ['type' => 'string']);
+
+        return $next($const, $value);
     }
 
     /**

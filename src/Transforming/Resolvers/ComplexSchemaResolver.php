@@ -32,7 +32,7 @@ class ComplexSchemaResolver extends AbstractResolver
      *
      * @return bool
      */
-    public function isComplexType(string $type): bool
+    public function isComplexType($type): bool
     {
         /**
          * @var LaravelFactory $factory
@@ -45,7 +45,7 @@ class ComplexSchemaResolver extends AbstractResolver
         $extractor = $this->container->make(TypeExtractor::class);
 
         return
-            $extractor->isSchema($type) &&
+            (!is_string($type) || $extractor->isSchema($type)) &&
             is_array($extractor->extract($factory->schema($type)));
     }
 

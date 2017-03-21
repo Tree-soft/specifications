@@ -24,9 +24,18 @@ class ValueExtractor extends ValueTransformation
         } elseif (is_object($from)) {
             $extracted = new ValueDescriptor();
 
+            $objectValue = $from->getValue();
+            $objectSchema = $from->getSchema();
+
             $extracted
-                ->setValue($from->getValue()->{$this->field})
-                ->setSchema($from->getSchema()->properties->{$this->field});
+                ->setValue(
+                    (property_exists($objectValue, $this->field)) ?
+                        ($from->getValue()->{$this->field}) : (null)
+                )
+                ->setSchema(
+                    (property_exists($objectSchema->properties, $this->field)) ?
+                        ($objectSchema->properties->{$this->field}) : ((object) ['type' => 'null'])
+                );
         } else {
             throw new RuntimeException('Cannot extract value');
         }
