@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter\Fillers;
+namespace Mildberry\Specifications\Transforming\Fillers;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -19,5 +19,16 @@ class ObjectFiller implements FillerInterface
         }
 
         $object->{$field} = $value;
+    }
+
+    /**
+     * @param mixed $object
+     * @param string $field
+     *
+     * @return mixed
+     */
+    public function extract($object, string $field)
+    {
+        return $object->{$field};
     }
 }

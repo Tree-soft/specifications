@@ -2,14 +2,13 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers;
 
+use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher\PropertyNameMatcher;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Matcher\SuccessMatcher;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\AbstractRule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\CopyRule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\RuleFromInterface;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules\RuleToInterface;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
+use RuntimeException;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -55,11 +54,12 @@ class JsonSchemaTransformer extends AbstractTransformer
      * JsonSchemaTransformer constructor.
      *
      * @param LaravelFactory $factory
+     * @param TypeExtractor $extractor
      */
-    public function __construct(LaravelFactory $factory)
+    public function __construct(LaravelFactory $factory, TypeExtractor $extractor)
     {
         $this->factory = $factory;
-        $this->extractor = new TypeExtractor();
+        $this->extractor = $extractor;
     }
 
     /**
@@ -70,128 +70,152 @@ class JsonSchemaTransformer extends AbstractTransformer
      */
     public function transform($from, $to = null)
     {
-        $to = $to ?? (object) [];
+        if (is_object($from)) {
+            $hash = spl_object_hash($from);
 
-        $hash = spl_object_hash($from);
-
-        if (isset($this->hashMap[$hash])) {
-            return $this->hashMap[$hash];
+            if (isset($this->hashMap[$hash])) {
+                return $this->hashMap[$hash];
+            }
         }
 
-        $rules = $this->createFilters($from, $to);
+        $rulesDefinitions = (array) ($this->transformation->rules ?? []);
 
-        $object = clone $to;
+        $rules = array_map(function (string $definition) {
+            return $this->parseRule($definition);
+        }, $rulesDefinitions);
 
-        $object = $this->applyFilters($rules['from'], (array) $this->fromSchema->properties, $object);
-        $object = $this->applyFilters($rules['to'], (array) $this->toSchema->properties, $object);
+        $rules = $this->fillCopyRule($rules);
 
-        $this->hashMap[$hash] = $object;
+        $value = $this->applyRules($rules, $from, $to);
 
-        return $object;
+        if (is_object($from)) {
+            $hash = spl_object_hash($from);
+
+            $this->hashMap[$hash] = $value;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return Rule
+     */
+    public function parseRule(string $string): Rule
+    {
+        $rule = new Rule();
+
+        $rule
+            ->setFrom(ValueExtractor::RETURN_SELF)
+            ->setTransformations([])
+            ->setTo(null);
+
+        return $rule;
     }
 
     /**
      * @param array $rules
-     * @param array $properties
-     * @param mixed $object
      *
-     * @return mixed
+     * @return array
      */
-    protected function applyFilters(array $rules, array $properties, $object)
+    public function fillCopyRule(array $rules): array
     {
-        foreach ($properties as $property => $spec) {
-            $object = array_reduce($rules,
-                function ($object, AbstractRule $rule) use ($property, $spec) {
-                    return $rule->apply($property, $object);
-                }, $object
-            );
+        if ($this->fromSchema->type !== TypeExtractor::OBJECT) {
+            if (empty($rules)) {
+                $rules[] = new Rule();
+            }
+
+            return $rules;
         }
 
-        return $object;
+        $fieldsInRules = array_unique(
+            array_map(
+                function (Rule $rule) {
+                    return $rule->getFrom();
+                }, $rules
+            )
+        );
+
+        $copyingFields = array_filter(
+            (array) $this->fromSchema->properties,
+            function (string $field) use ($fieldsInRules) {
+                return !in_array($field, $fieldsInRules);
+            }
+        );
+
+        foreach ($copyingFields as $field => $schema) {
+            $rule = new Rule();
+
+//            $rule
+//                ->setFrom($field)
+//                ->setTo($field)
+//                ->setTransformations();
+        }
+
+        return $rules;
     }
 
     /**
+     * @param array|Rule[] $rules
      * @param mixed $from
      * @param mixed $to
      *
-     * @return array|AbstractRule[][]
+     * @return mixed
      */
-    protected function createFilters($from, $to)
+    protected function applyRules(array $rules, $from, $to = null)
     {
-        $rulesDefinitions = (array) ($this->transformation->rules ?? []);
-
-        /**
-         * @var AbstractRule[] $rules
-         */
-        $rules = array_map(
-            [$this, 'createRule'],
-            array_keys($rulesDefinitions),
-            $rulesDefinitions
-        );
-
-        array_unshift($rules, $this->createCopyRule());
-
-        foreach ($rules as $rule) {
-            $rule
-                ->setFrom($from)
-                ->setTo($to)
-                ->setFromSchema($this->fromSchema)
-                ->setToSchema($this->toSchema);
+        if (is_object($from)) {
+            $value = isset($to) ? (clone $to) : ((object) []);
+        } else {
+            $value = $to;
         }
 
-        return [
-            'from' => array_filter($rules, function ($rule) {
-                return $rule instanceof RuleFromInterface;
-            }),
-            'to' => array_filter($rules, function ($rule) {
-                return $rule instanceof  RuleToInterface;
-            }),
-        ];
-    }
+        return array_reduce($rules, function ($value, Rule $rule) use ($from) {
+            $pipeline = new Pipeline();
 
-    /**
-     * @param string $property
-     * @param string $ruleDefinition
-     *
-     * @return AbstractRule
-     */
-    protected function createRule(string $property, string $ruleDefinition): AbstractRule
-    {
-        list($name, $spec) = $this->parseSpecification($ruleDefinition);
+            /**
+             * @var ValueExtractor $valueExtractor
+             */
+            $valueExtractor = $this->container->make(ValueExtractor::class);
 
-        /**
-         * @var AbstractRule $rule
-         */
-        $rule = $this->container->make($this->rules[$name]);
+            $valueExtractor
+                ->setField($rule->getFrom());
 
-        /**
-         * @var PropertyNameMatcher $matcher
-         */
-        $matcher = $this->container->make(PropertyNameMatcher::class);
-        $matcher
-            ->setName($property);
+            /**
+             * @var ValuePopulator $valuePopulator
+             */
+            $valuePopulator = $this->container->make(ValuePopulator::class);
 
-        $rule
-            ->setSpec($spec)
-            ->setMatcher($matcher);
+            $valuePopulator
+                ->setField($rule->getTo());
 
-        return $rule;
-    }
+            $transformations = array_merge([$valueExtractor], $rule->getTransformations(), [$valuePopulator]);
 
-    /**
-     * @return CopyRule
-     */
-    protected function createCopyRule(): CopyRule
-    {
-        /**
-         * @var CopyRule $rule
-         */
-        $rule = $this->container->make(CopyRule::class);
+            $fromDescriptor = new ValueDescriptor();
 
-        $rule
-            ->setMatcher($this->container->make(SuccessMatcher::class));
+            $fromDescriptor
+                ->setValue($from)
+                ->setSchema($this->fromSchema);
 
-        return $rule;
+            $valueDescriptor = new ValueDescriptor();
+
+            $valueDescriptor
+                ->setValue($value)
+                ->setSchema($this->toSchema);
+
+            /**
+             * @var ValueDescriptor $valueDescriptor
+             */
+            $valueDescriptor = $pipeline
+                ->send([$fromDescriptor, $valueDescriptor])
+                ->through($transformations)
+                ->then(function () {
+                    throw new RuntimeException('There code should not be executed');
+                });
+
+            return $valueDescriptor->getValue();
+        }, $value);
     }
 
     /**
@@ -244,17 +268,5 @@ class JsonSchemaTransformer extends AbstractTransformer
     public function getRules(): array
     {
         return $this->rules;
-    }
-
-    /**
-     * @param array $rules
-     *
-     * @return $this
-     */
-    public function setRules(array $rules)
-    {
-        $this->rules = $rules;
-
-        return $this;
     }
 }

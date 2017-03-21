@@ -3,7 +3,6 @@
  * @author Sergei Melnikov <me@rnr.name>
  */
 use Mildberry\Specifications\Transforming\Resolvers;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
 use Mildberry\Specifications\Transforming\Converter\Resolvers as ConverterResolvers;
 
@@ -18,12 +17,7 @@ return [
             ],
             'json-schema' => [
                 'class' => Resolvers\JsonSchemaResolver::class,
-                'rules' => [
-                    'ignore' => Rules\IgnoreRule::class,
-                    'const' => Rules\ConstRule::class,
-                    'shiftFrom' => Rules\ShiftFromRule::class,
-                    'shiftTo' => Rules\ShiftToRule::class,
-                ],
+                'rules' => [],
                 'schema' => 'transform://transformations',
             ],
             'simple' => [

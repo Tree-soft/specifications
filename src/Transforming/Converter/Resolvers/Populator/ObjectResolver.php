@@ -4,8 +4,8 @@ namespace Mildberry\Specifications\Transforming\Converter\Resolvers\Populator;
 
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Transforming\Converter\Converter;
-use Mildberry\Specifications\Transforming\Converter\Fillers\FillerInterface;
-use Mildberry\Specifications\Transforming\Converter\Fillers\SetterFiller;
+use Mildberry\Specifications\Transforming\Fillers\FillerInterface;
+use Mildberry\Specifications\Transforming\Fillers\SetterFiller;
 use Mildberry\Specifications\Transforming\Converter\Populator;
 use Mildberry\Specifications\Transforming\Converter\Resolvers\ObjectResolver as ParentObjectResolver;
 

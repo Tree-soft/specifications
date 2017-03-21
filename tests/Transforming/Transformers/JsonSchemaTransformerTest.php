@@ -9,7 +9,6 @@ use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rules;
 use Mildberry\Tests\Specifications\Support\SuccessException;
 
 /**
@@ -37,14 +36,7 @@ class JsonSchemaTransformerTest extends TestCase
     public function testTransform($expected, $transformation, $from, $to = null)
     {
         $this->transformer
-            ->setTransformation($transformation)
-            ->setRules([
-                'ignore' => Rules\IgnoreRule::class,
-                'const' => Rules\ConstRule::class,
-                'shiftFrom' => Rules\ShiftFromRule::class,
-                'shiftTo' => Rules\ShiftToRule::class,
-                'complex' => Rules\ComplexRule::class
-            ]);
+            ->setTransformation($transformation);
 
         $this->assertEquals($expected, $this->transformer->transform($from, $to));
     }
@@ -74,67 +66,64 @@ class JsonSchemaTransformerTest extends TestCase
 
         return [
             'simple' => [
-                $client, (object) [
-                    'to' => 'schema://entities/simple-client',
-                    'from' => 'schema://entities/derived/simple-client',
-                    'rules' => (object) [],
-                ],
-                $client,
+                1, $preparator->prepare([
+                    'from' => 'schema://types/int',
+                    'to' => 'schema://types/int',
+                ]), 1,
             ],
-            'ignore' => [
-                $client, $preparator->prepare([
-                    'to' => 'schema://entities/derived/simple-client',
-                    'from' => 'schema://entities/simple-client',
-                    'rules' => [
-                        'ext' => 'ignore',
-                    ],
-                ]), $extendedClient,
-            ],
-            'ignore-save-old' => [
-                $extendedClient, $preparator->prepare([
-                    'to' => 'schema://entities/derived/simple-client',
-                    'from' => 'schema://entities/simple-client',
-                    'rules' => [
-                        'ext' => 'ignore',
-                    ],
-                ]), $extendedClient2, $extendedClient,
-            ],
-            'extend' => [
-                $extendedClient, $preparator->prepare([
-                    'to' => 'schema://entities/derived/simple-client',
-                    'from' => 'schema://entities/simple-client',
-                    'rules' => [
-                        'ext' => 'const:Ext',
-                    ],
-                ]), $client,
-            ],
-            'extend-with-old' => [
-                $extendedClient, $preparator->prepare([
-                    'to' => 'schema://entities/derived/simple-client',
-                    'from' => 'schema://entities/simple-client',
-                    'rules' => [
-                        'ext' => 'const:Ext',
-                    ],
-                ]), $client, $extendedClient2,
-            ],
-            'shiftFrom' => [
-                $extendedClient3, $preparator->prepare([
-                    'to' => 'schema://entities/derived/simple-client',
-                    'from' => 'schema://entities/simple-client',
-                    'rules' => (object) [
-                        'ext' => 'shiftFrom:name',
-                    ],
-                ]), $client,
-            ],
-            'shiftTo' => [
-                $extendedClient3, $preparator->prepare([
-                    'to' => 'schema://entities/derived/client',
-                    'from' => 'schema://entities/client',
-                    'rules' => [
-                        'name' => 'shiftTo:ext',
-                    ],
-                ]), $client,
-            ],
+//            'object' => [
+//                $client, (object) [
+//                    'to' => 'schema://entities/simple-client',
+//                    'from' => 'schema://entities/derived/simple-client',
+//                    'rules' => (object) [],
+//                ],
+//                $client,
+//            ],
+//            'ignore' => [
+//                $client, $preparator->prepare([
+//                    'from' => 'schema://entities/derived/simple-client',
+//                    'to' => 'schema://entities/simple-client',
+//                    'rules' => [
+//                        'ext>',
+//                    ],
+//                ]), $extendedClient,
+//            ],
+//            'ignore-save-old' => [
+//                $extendedClient, $preparator->prepare([
+//                    'from' => 'schema://entities/derived/simple-client',
+//                    'to' => 'schema://entities/simple-client',
+//                    'rules' => [
+//                        'ext>',
+//                    ],
+//                ]), $extendedClient2, $extendedClient,
+//            ],
+//            'extend' => [
+//                $extendedClient, $preparator->prepare([
+//                    'from' => 'schema://entities/simple-client',
+//                    'to' => 'schema://entities/derived/simple-client',
+//                    'rules' => [
+//                        'const:Ext>ext',
+//                    ],
+//                ]), $client,
+//            ],
+//            'extend-with-old' => [
+//                $extendedClient, $preparator->prepare([
+//                    'from' => 'schema://entities/simple-client',
+//                    'to' => 'schema://entities/derived/simple-client',
+//                    'rules' => [
+//                        'const:Ext>ext',
+//                    ],
+//                ]), $client, $extendedClient2,
+//            ],
+//            'shiftFrom' => [
+//                $extendedClient3, $preparator->prepare([
+//                    'to' => 'schema://entities/derived/simple-client',
+//                    'from' => 'schema://entities/simple-client',
+//                    'rules' => (object) [
+//                        'name>ext',
+//                    ],
+//                ]), $client,
+//            ],
         ];
     }
 
@@ -195,6 +184,7 @@ class JsonSchemaTransformerTest extends TestCase
             'entities/derived/simple-client' => $this->getFixturePath('schema/derived/simple-client.json'),
             'entities/derived/company' => $this->getFixturePath('schema/derived/company.json'),
             'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
+            'types/int' => $this->getFixturePath('schema/types/int.json'),
         ]));
     }
 }

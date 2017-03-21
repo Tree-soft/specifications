@@ -4,7 +4,7 @@ namespace Mildberry\Specifications\Transforming\Converter\Resolvers;
 
 use Mildberry\Specifications\Exceptions\PopulatorException;
 use Mildberry\Specifications\Exceptions\PopulatorObjectException;
-use Mildberry\Specifications\Transforming\Converter\Fillers\FillerInterface;
+use Mildberry\Specifications\Transforming\Fillers\FillerInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -5,8 +5,8 @@ namespace Mildberry\Specifications\Transforming\Converter\Resolvers\Extractor;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Transforming\Converter\Converter;
 use Mildberry\Specifications\Transforming\Converter\Extractor;
-use Mildberry\Specifications\Transforming\Converter\Fillers\FillerInterface;
-use Mildberry\Specifications\Transforming\Converter\Fillers\ObjectFiller;
+use Mildberry\Specifications\Transforming\Fillers\FillerInterface;
+use Mildberry\Specifications\Transforming\Fillers\ObjectFiller;
 use Mildberry\Specifications\Transforming\Converter\Resolvers\ObjectResolver as ParentObjectResolver;
 
 /**
