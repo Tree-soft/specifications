@@ -29,11 +29,11 @@ class JsonSchemaResolver extends AbstractResolver
 
         $schema = $factory->schema($config['schema']);
 
-        $transformations = (array) $schema->transformations;
+        $specifications = (array) $schema->transformations;
 
-        $key = array_first(array_keys($transformations),
-            function ($key) use ($from, $to, $transformations) {
-                $transformation = $transformations[$key];
+        $key = array_first(array_keys($specifications),
+            function ($key) use ($from, $to, $specifications) {
+                $transformation = $specifications[$key];
 
                 return
                     ($transformation->from == $from) &&
@@ -44,22 +44,23 @@ class JsonSchemaResolver extends AbstractResolver
         return
             (empty($key)) ?
                 ($this->next($from, $to, $next)) :
-                ($this->createTransformer($transformations[$key], $config['rules'] ?? []));
+                ($this->createTransformer($specifications[$key]));
     }
 
     /**
-     * @param object $transformation
-     * @param array $rules
+     * @param object $specification
      *
      * @return JsonSchemaTransformer
      */
-    protected function createTransformer($transformation, array $rules): JsonSchemaTransformer
+    protected function createTransformer($specification): JsonSchemaTransformer
     {
+        /**
+         * @var JsonSchemaTransformer $transformer
+         */
         $transformer = $this->container->make(JsonSchemaTransformer::class);
 
         $transformer
-            ->setTransformation($transformation)
-            ->setRules($rules);
+            ->setSpecification($specification);
 
         return $transformer;
     }

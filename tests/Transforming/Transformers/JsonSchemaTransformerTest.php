@@ -64,6 +64,10 @@ class JsonSchemaTransformerTest extends TestCase
 
         $extendedClient3 = $copier->copy($client);
         $extendedClient3->ext = $extendedClient3->name;
+        unset($extendedClient3->name);
+
+        $extendedClient4 = $copier->copy($client);
+        $extendedClient4->ext = $extendedClient4->name;
 
         return [
             'simple' => [
@@ -116,15 +120,25 @@ class JsonSchemaTransformerTest extends TestCase
                     ],
                 ]), $client, $extendedClient2,
             ],
-//            'shiftFrom' => [
-//                $extendedClient3, $preparator->prepare([
-//                    'to' => 'schema://entities/derived/simple-client',
-//                    'from' => 'schema://entities/simple-client',
-//                    'rules' => (object) [
-//                        'name>ext',
-//                    ],
-//                ]), $client,
-//            ],
+            'shift' => [
+                $extendedClient3, $preparator->prepare([
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
+                    'rules' => (object) [
+                        'name>ext',
+                    ],
+                ]), $client,
+            ],
+            'shift-n-copy' => [
+                $extendedClient4, $preparator->prepare([
+                    'to' => 'schema://entities/derived/simple-client',
+                    'from' => 'schema://entities/simple-client',
+                    'rules' => (object) [
+                        'name>ext',
+                        'name>name',
+                    ],
+                ]), $client,
+            ],
         ];
     }
 

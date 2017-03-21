@@ -2,6 +2,7 @@
 
 namespace Mildberry\Specifications\Transforming\Resolvers;
 
+use Mildberry\Specifications\Exceptions\SchemaExtractionException;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
@@ -37,7 +38,11 @@ class SimpleTypeResolver extends AbstractResolver
          */
         $extractor = $this->container->make(TypeExtractor::class);
 
-        $type = $extractor->extract($schema);
+        try {
+            $type = $extractor->extract($schema);
+        } catch (SchemaExtractionException $e) {
+            $type = $schema;
+        }
 
         $casters = $this->getConfig()['casters'] ?? [];
 

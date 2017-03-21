@@ -2,6 +2,7 @@
 
 namespace Mildberry\Specifications\Generators;
 
+use Mildberry\Specifications\Exceptions\SchemaExtractionException;
 use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
 use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
 use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
@@ -65,10 +66,16 @@ class TypeExtractor implements NamespaceAwareInterface
     /**
      * @param object $schema
      *
-     * @return string|null
+     * @throws SchemaExtractionException
+     *
+     * @return null|string
      */
     protected function extractSimple($schema)
     {
+        if (!is_object($schema)) {
+            throw new SchemaExtractionException('Cannot extract schema');
+        }
+
         $type = $schema->type;
 
         return [
