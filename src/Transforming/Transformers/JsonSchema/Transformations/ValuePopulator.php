@@ -27,7 +27,7 @@ class ValuePopulator extends ValueTransformation
         } elseif (is_object($value)) {
             $objectValue = $value->getValue();
 
-            if (!property_exists($objectValue, $this->field)) {
+            if ((isset($this->field) && $this->field != '') && !property_exists($objectValue, $this->field)) {
                 $objectValue->{$this->field} = $this->convert(
                     $from, $value->getSchema()->properties->{$this->field}
                 )->getValue();

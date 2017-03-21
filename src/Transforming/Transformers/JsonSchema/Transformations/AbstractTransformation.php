@@ -36,4 +36,11 @@ abstract class AbstractTransformation implements ContainerAwareInterface
      * @return mixed
      */
     abstract public function apply(ValueDescriptor $from, ValueDescriptor $value, $next): ValueDescriptor;
+
+    /**
+     * @param array $config
+     */
+    public function configure(array $config)
+    {
+    }
 }

@@ -7,6 +7,7 @@ use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\Support\SuccessException;
@@ -36,7 +37,7 @@ class JsonSchemaTransformerTest extends TestCase
     public function testTransform($expected, $transformation, $from, $to = null)
     {
         $this->transformer
-            ->setTransformation($transformation);
+            ->setSpecification($transformation);
 
         $this->assertEquals($expected, $this->transformer->transform($from, $to));
     }
@@ -79,24 +80,24 @@ class JsonSchemaTransformerTest extends TestCase
                 ],
                 $client,
             ],
-//            'ignore' => [
-//                $client, $preparator->prepare([
-//                    'from' => 'schema://entities/derived/simple-client',
-//                    'to' => 'schema://entities/simple-client',
-//                    'rules' => [
-//                        'ext>',
-//                    ],
-//                ]), $extendedClient,
-//            ],
-//            'ignore-save-old' => [
-//                $extendedClient, $preparator->prepare([
-//                    'from' => 'schema://entities/derived/simple-client',
-//                    'to' => 'schema://entities/simple-client',
-//                    'rules' => [
-//                        'ext>',
-//                    ],
-//                ]), $extendedClient2, $extendedClient,
-//            ],
+            'ignore' => [
+                $client, $preparator->prepare([
+                    'from' => 'schema://entities/derived/simple-client',
+                    'to' => 'schema://entities/simple-client',
+                    'rules' => [
+                        'ext>',
+                    ],
+                ]), $extendedClient,
+            ],
+            'ignore-save-old' => [
+                $extendedClient, $preparator->prepare([
+                    'from' => 'schema://entities/derived/simple-client',
+                    'to' => 'schema://entities/simple-client',
+                    'rules' => [
+                        'ext>',
+                    ],
+                ]), $extendedClient2, $extendedClient,
+            ],
 //            'extend' => [
 //                $extendedClient, $preparator->prepare([
 //                    'from' => 'schema://entities/simple-client',
@@ -153,7 +154,7 @@ class JsonSchemaTransformerTest extends TestCase
         ];
 
         $this->transformer
-            ->setTransformation($transformation);
+            ->setSpecification($transformation);
 
         $from
             = (object) [
@@ -170,6 +171,36 @@ class JsonSchemaTransformerTest extends TestCase
             $this->fail('Factory should be called.');
         } catch (SuccessException $e) {
         }
+    }
+
+    /**
+     * @dataProvider rulesDefinitionsProvider
+     *
+     * @param Rule $expected
+     * @param string $definition
+     */
+    public function testParseRule(Rule $expected, string $definition)
+    {
+        foreach ($expected->getTransformations() as $transformation) {
+            $transformation->setContainer($this->app);
+        }
+
+        $this->assertEquals($expected, $this->transformer->parseRule($definition));
+    }
+
+    /**
+     * @return array
+     */
+    public function rulesDefinitionsProvider()
+    {
+        $data = $this->loadEntities('rules-definitions.yml');
+
+        return [
+            'copy' => [$data['copy'], 'ext>ext2'],
+            'const' => [$data['const'], '>const:expr1>ext'],
+            'ignore' => [$data['ignore'], 'ext>'],
+            'general' => [$data['general'], 'ext>const:expr1|const:expr2|const:expr3>ext2'],
+        ];
     }
 
     protected function setUp()

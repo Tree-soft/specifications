@@ -3,9 +3,12 @@
 namespace Mildberry\Specifications\Transforming\Transformers;
 
 use Illuminate\Pipeline\Pipeline;
+use Mildberry\Specifications\Exceptions\TransformationDefinitionException;
 use Mildberry\Specifications\Generators\TypeExtractor;
 use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
 use RuntimeException;
@@ -18,17 +21,12 @@ class JsonSchemaTransformer extends AbstractTransformer
     /**
      * @var object
      */
-    private $transformation;
+    private $specification;
 
     /**
      * @var array
      */
     private $hashMap = [];
-
-    /**
-     * @var array
-     */
-    private $rules = [];
 
     /**
      * @var LaravelFactory
@@ -49,6 +47,13 @@ class JsonSchemaTransformer extends AbstractTransformer
      * @var object $toSchema
      */
     private $toSchema;
+
+    /**
+     * @var array
+     */
+    private $transformations = [
+        'const' => ConstTransformation::class,
+    ];
 
     /**
      * JsonSchemaTransformer constructor.
@@ -78,7 +83,7 @@ class JsonSchemaTransformer extends AbstractTransformer
             }
         }
 
-        $rulesDefinitions = (array) ($this->transformation->rules ?? []);
+        $rulesDefinitions = (array) ($this->specification->rules ?? []);
 
         $rules = array_map(function (string $definition) {
             return $this->parseRule($definition);
@@ -98,20 +103,63 @@ class JsonSchemaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param string $string
+     * @param string $definition
+     *
+     * @throws TransformationDefinitionException
      *
      * @return Rule
      */
-    public function parseRule(string $string): Rule
+    public function parseRule(string $definition): Rule
     {
+        $parts = explode('>', $definition);
+
+        switch (count($parts)) {
+            case 2:
+                list($from, $to) = $parts;
+
+                $transformations = [];
+
+                break;
+            case 3:
+                list($from, $transformationsDefinition, $to) = $parts;
+
+                $transformations = $this->parseTransformationDefinition($transformationsDefinition);
+
+                break;
+            default:
+                throw new TransformationDefinitionException("Cannot parse definition '{$definition}'");
+        }
+
         $rule = new Rule();
 
         $rule
-            ->setFrom(ValueExtractor::RETURN_SELF)
-            ->setTransformations([])
-            ->setTo(null);
+            ->setFrom($from)
+            ->setTransformations($transformations)
+            ->setTo($to);
 
         return $rule;
+    }
+
+    /**
+     * @param string $definition
+     *
+     * @return array|AbstractTransformation
+     */
+    public function parseTransformationDefinition(string $definition): array
+    {
+        return array_map(function ($specification) {
+            list($name, $config) = $this->parseSpecification($specification);
+
+            /**
+             * @var AbstractTransformation $transformation
+             */
+            $transformation = $this->container->make($this->transformations[$name]);
+
+            $transformation
+                ->configure($config);
+
+            return $transformation;
+        }, explode('|', $definition));
     }
 
     /**
@@ -225,13 +273,13 @@ class JsonSchemaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param string $ruleDefinition
+     * @param string $specification
      *
      * @return array
      */
-    protected function parseSpecification(string $ruleDefinition)
+    protected function parseSpecification(string $specification)
     {
-        $parts = explode(':', $ruleDefinition);
+        $parts = explode(':', $specification);
 
         $name = $parts[0];
 
@@ -243,36 +291,28 @@ class JsonSchemaTransformer extends AbstractTransformer
     /**
      * @return object
      */
-    public function getTransformation()
+    public function getSpecification()
     {
-        return $this->transformation;
+        return $this->specification;
     }
 
     /**
-     * @param object $transformation
+     * @param object $specification
      *
      * @return $this
      */
-    public function setTransformation($transformation)
+    public function setSpecification($specification)
     {
-        $this->transformation = $transformation;
+        $this->specification = $specification;
 
         $this->fromSchema = $this->extractor->extendSchema(
-            $this->factory->schema($this->transformation->from)
+            $this->factory->schema($this->specification->from)
         );
 
         $this->toSchema = $this->extractor->extendSchema(
-            $this->factory->schema($this->transformation->to)
+            $this->factory->schema($this->specification->to)
         );
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
     }
 }
