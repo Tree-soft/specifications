@@ -137,20 +137,26 @@ class JsonSchemaTransformer extends AbstractTransformer
             )
         );
 
+        $fields = array_intersect(
+            array_keys((array) $this->fromSchema->properties),
+            array_keys((array) $this->toSchema->properties)
+        );
+
         $copyingFields = array_filter(
-            (array) $this->fromSchema->properties,
+            $fields,
             function (string $field) use ($fieldsInRules) {
                 return !in_array($field, $fieldsInRules);
             }
         );
 
-        foreach ($copyingFields as $field => $schema) {
+        foreach ($copyingFields as $field) {
             $rule = new Rule();
 
-//            $rule
-//                ->setFrom($field)
-//                ->setTo($field)
-//                ->setTransformations();
+            $rule
+                ->setFrom($field)
+                ->setTo($field);
+
+            $rules[] = $rule;
         }
 
         return $rules;

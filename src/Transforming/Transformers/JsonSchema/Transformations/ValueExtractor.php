@@ -25,7 +25,7 @@ class ValueExtractor extends ValueTransformation
             $extracted = new ValueDescriptor();
 
             $extracted
-                ->setValue($from->{$this->field})
+                ->setValue($from->getValue()->{$this->field})
                 ->setSchema($from->getSchema()->properties->{$this->field});
         } else {
             throw new RuntimeException('Cannot extract value');

@@ -17,7 +17,7 @@ class SimpleTypeResolver extends AbstractResolver
      *
      * @return AbstractTransformer
      */
-    public function resolve(string $from, string $to, $next): AbstractTransformer
+    public function resolve($from, $to, $next): AbstractTransformer
     {
         return
             ($this->isSimpleType($from) && $this->isSimpleType($to)) ?

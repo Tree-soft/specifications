@@ -19,13 +19,13 @@ abstract class AbstractResolver implements ContainerAwareInterface
     private $config;
 
     /**
-     * @param string $from
-     * @param string $to
+     * @param string|object|mixed $from
+     * @param string|object|mixed $to
      * @param callable $next
      *
      * @return AbstractTransformer
      */
-    abstract public function resolve(string $from, string $to, $next): AbstractTransformer;
+    abstract public function resolve($from, $to, $next): AbstractTransformer;
 
     /**
      * @return array

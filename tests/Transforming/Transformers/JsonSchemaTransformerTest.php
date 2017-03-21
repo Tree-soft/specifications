@@ -71,14 +71,14 @@ class JsonSchemaTransformerTest extends TestCase
                     'to' => 'schema://types/int',
                 ]), 1,
             ],
-//            'object' => [
-//                $client, (object) [
-//                    'to' => 'schema://entities/simple-client',
-//                    'from' => 'schema://entities/derived/simple-client',
-//                    'rules' => (object) [],
-//                ],
-//                $client,
-//            ],
+            'object' => [
+                $client, (object) [
+                    'to' => 'schema://entities/simple-client',
+                    'from' => 'schema://entities/derived/simple-client',
+                    'rules' => (object) [],
+                ],
+                $client,
+            ],
 //            'ignore' => [
 //                $client, $preparator->prepare([
 //                    'from' => 'schema://entities/derived/simple-client',
@@ -138,7 +138,7 @@ class JsonSchemaTransformerTest extends TestCase
              *
              * @return AbstractTransformer
              */
-            public function create(string $from, string $to): AbstractTransformer
+            public function create($from, $to): AbstractTransformer
             {
                 throw new SuccessException();
             }

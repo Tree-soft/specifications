@@ -29,8 +29,8 @@ class ValuePopulator extends ValueTransformation
 
             if (!property_exists($objectValue, $this->field)) {
                 $objectValue->{$this->field} = $this->convert(
-                    $from, $value->getSchema()->properies->{$this->field}
-                );
+                    $from, $value->getSchema()->properties->{$this->field}
+                )->getValue();
             }
         } else {
             throw new RuntimeException('Cannot extract value');
@@ -52,7 +52,7 @@ class ValuePopulator extends ValueTransformation
          */
         $factory = $this->container->make(TransformerFactory::class);
 
-        $transformer = $factory->create($from->getSchema()->id, $schema->id);
+        $transformer = $factory->create($from->getSchema(), $schema);
 
         $value = new ValueDescriptor();
 

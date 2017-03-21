@@ -4,6 +4,7 @@ namespace Mildberry\Tests\Specifications\Transforming;
 
 use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
 use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
@@ -35,7 +36,7 @@ class TransformerFactoryTest extends TestCase
      * @param string $from
      * @param string $to
      */
-    public function testResolvers($expected, string $from, string $to)
+    public function testResolvers($expected, $from, $to)
     {
         $this->assertInstanceOf($expected, $this->factory->create($from, $to));
     }
@@ -45,6 +46,8 @@ class TransformerFactoryTest extends TestCase
      */
     public function resolversProvider(): array
     {
+        $preparator = new DataPreparator();
+
         return [
             'equal' => [
                 CopyTransformer::class,
@@ -65,6 +68,11 @@ class TransformerFactoryTest extends TestCase
                 ComplexSchemaTransformer::class,
                 'integer',
                 'schema://common/id',
+            ],
+            'as-object' => [
+                CopyTransformer::class,
+                $preparator->prepare(['type' => 'string']),
+                $preparator->prepare(['type' => 'string']),
             ],
         ];
     }

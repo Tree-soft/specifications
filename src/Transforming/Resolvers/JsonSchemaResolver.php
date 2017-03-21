@@ -18,7 +18,7 @@ class JsonSchemaResolver extends AbstractResolver
      *
      * @return AbstractTransformer
      */
-    public function resolve(string $from, string $to, $next): AbstractTransformer
+    public function resolve($from, $to, $next): AbstractTransformer
     {
         $config = $this->getConfig();
 

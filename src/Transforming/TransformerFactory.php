@@ -33,7 +33,7 @@ class TransformerFactory implements ConfigAwareInterface, ContainerAwareInterfac
      *
      * @throw
      */
-    public function create(string $from, string $to): AbstractTransformer
+    public function create($from, $to): AbstractTransformer
     {
         $pipeline = new Pipeline();
 

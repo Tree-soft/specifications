@@ -32,7 +32,7 @@ class TransformerFactoryMock extends TransformerFactory
      *
      * @return AbstractTransformer
      */
-    public function create(string $from, string $to): AbstractTransformer
+    public function create($from, $to): AbstractTransformer
     {
         if (isset($this->from)) {
             TestCase::assertEquals($this->from, $from);
