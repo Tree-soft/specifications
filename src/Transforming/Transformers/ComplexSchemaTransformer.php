@@ -13,12 +13,12 @@ use Mildberry\Specifications\Transforming\TransformerFactory;
 class ComplexSchemaTransformer extends AbstractTransformer
 {
     /**
-     * @var string
+     * @var string|object|mixed
      */
     private $fromSchema;
 
     /**
-     * @var string
+     * @var string|object|mixed
      */
     private $toSchema;
 
@@ -83,19 +83,19 @@ class ComplexSchemaTransformer extends AbstractTransformer
     }
 
     /**
-     * @return string
+     * @return string|object|mixed
      */
-    public function getFromSchema(): string
+    public function getFromSchema()
     {
         return $this->fromSchema;
     }
 
     /**
-     * @param string $fromSchema
+     * @param string|object|mixed $fromSchema
      *
      * @return $this
      */
-    public function setFromSchema(string $fromSchema)
+    public function setFromSchema($fromSchema)
     {
         $this->fromSchema = $fromSchema;
 
@@ -103,19 +103,19 @@ class ComplexSchemaTransformer extends AbstractTransformer
     }
 
     /**
-     * @return string
+     * @return string|object|mixed
      */
-    public function getToSchema(): string
+    public function getToSchema()
     {
         return $this->toSchema;
     }
 
     /**
-     * @param string $toSchema
+     * @param string|object|mixed $toSchema
      *
      * @return $this
      */
-    public function setToSchema(string $toSchema)
+    public function setToSchema($toSchema)
     {
         $this->toSchema = $toSchema;
 

@@ -66,7 +66,7 @@ class TransformerFactoryTest extends TestCase
             ],
             'complex' => [
                 ComplexSchemaTransformer::class,
-                'integer',
+                $preparator->prepare(['type' => 'integer']),
                 'schema://common/id',
             ],
             'as-object' => [

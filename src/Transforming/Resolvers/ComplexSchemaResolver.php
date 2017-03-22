@@ -50,12 +50,12 @@ class ComplexSchemaResolver extends AbstractResolver
     }
 
     /**
-     * @param string $from
-     * @param string $to
+     * @param string|object|mixed $from
+     * @param string|object|mixed $to
      *
      * @return ComplexSchemaTransformer
      */
-    public function createTransformer(string $from, string $to): ComplexSchemaTransformer
+    public function createTransformer($from, $to): ComplexSchemaTransformer
     {
         /**
          * @var ComplexSchemaTransformer $transformer
