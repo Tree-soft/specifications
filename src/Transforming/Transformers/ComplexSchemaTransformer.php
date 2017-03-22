@@ -59,7 +59,7 @@ class ComplexSchemaTransformer extends AbstractTransformer
      *
      * @return array
      */
-    protected function prepareSchema(string $type): array
+    protected function prepareSchema($type): array
     {
         /**
          * @var LaravelFactory $factory

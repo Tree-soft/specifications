@@ -4,6 +4,7 @@ namespace Mildberry\Tests\Specifications\Transforming\Transformers;
 
 use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
 use Mildberry\Specifications\Schema\Loader;
+use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 
@@ -26,12 +27,12 @@ class ComplexSchemaTransformerTest extends TestCase
      * @dataProvider valuesProvider
      *
      * @param mixed $expected
-     * @param string $fromSchema
+     * @param string|object|mixed $fromSchema
      * @param string $toSchema
      * @param mixed $from
      * @param mixed|null $to
      */
-    public function testTransform($expected, string $fromSchema, string $toSchema, $from, $to = null)
+    public function testTransform($expected, $fromSchema, $toSchema, $from, $to = null)
     {
         $this->transformer
             ->setFromSchema($fromSchema)
@@ -47,9 +48,12 @@ class ComplexSchemaTransformerTest extends TestCase
      */
     public function valuesProvider()
     {
+        $preparator = new DataPreparator();
+
         return [
             'complexLeft' => [
-                1, 'schema://common/id', 'integer', 1,
+                1, $preparator->prepare(['$ref' => 'schema://common/id']),
+                $preparator->prepare(['type' => 'integer']), 1,
             ],
             'complexRight' => [
                 1, 'integer', 'schema://common/id', 1,

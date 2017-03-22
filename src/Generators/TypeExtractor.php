@@ -190,8 +190,12 @@ class TypeExtractor implements NamespaceAwareInterface
      *
      * @return bool
      */
-    public function isSchema(string $type): bool
+    public function isSchema($type): bool
     {
+        if (is_object($type)) {
+            return true;
+        }
+
         $isSchema = preg_match('#\w+://#', $type);
 
         assert($isSchema === false, 'Some error occurs in preg_match.');
