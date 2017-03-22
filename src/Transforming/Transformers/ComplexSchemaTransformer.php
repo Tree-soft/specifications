@@ -12,6 +12,7 @@ use Mildberry\Specifications\Transforming\TransformerFactory;
  */
 class ComplexSchemaTransformer extends AbstractTransformer
 {
+    const UNKNOWN_SCHEMA = 'unknown schema name';
     /**
      * @var string|object|mixed
      */
@@ -49,9 +50,52 @@ class ComplexSchemaTransformer extends AbstractTransformer
             }
         }
 
-        throw new ProhibitedTransformationException(
-            "Transformation '{$this->fromSchema}' to '{$this->toSchema}' is prohibited"
+        $fromSchema = $this->wrapSchemaName(
+            $this->getSchemaName($this->fromSchema)
         );
+
+        $toSchema = $this->wrapSchemaName(
+            $this->getSchemaName($this->toSchema)
+        );
+
+        throw new ProhibitedTransformationException(
+            "Transformation from {$fromSchema} to {$toSchema} is prohibited"
+        );
+    }
+
+    /**
+     * @param string|object|mixed $schema
+     *
+     * @return string|null
+     */
+    public function getSchemaName($schema): ?string
+    {
+        if (is_string($schema)) {
+            return $schema;
+        } elseif (is_object($schema)) {
+            return $schema->id ?? $schema->type ?? null;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param $schema
+     *
+     * @return string
+     */
+    public function wrapSchemaName($schema): string
+    {
+        if (is_null($schema)) {
+            return self::UNKNOWN_SCHEMA;
+        }
+
+        /**
+         * @var TypeExtractor $typeExtractor
+         */
+        $typeExtractor = $this->container->make(TypeExtractor::class);
+
+        return ($typeExtractor->isSchema($schema)) ? ("'{$schema}'") : ("type '{$schema}'");
     }
 
     /**

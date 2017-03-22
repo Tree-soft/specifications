@@ -61,18 +61,43 @@ class ComplexSchemaTransformerTest extends TestCase
         ];
     }
 
-    public function testProhibited()
+    /**
+     * @dataProvider wrongSchemaProvider
+     *
+     * @param string $message
+     * @param mixed $from
+     * @param mixed $to
+     */
+    public function testProhibited(string $message, $from, $to)
     {
         $this->expectException(ProhibitedTransformationException::class);
-        $this->expectExceptionMessage(
-            "Transformation 'schema://common/id' to 'schema://entities/company' is prohibited"
-        );
+        $this->expectExceptionMessage($message);
 
         $this->transformer
-            ->setToSchema('schema://entities/company')
-            ->setFromSchema('schema://common/id');
+            ->setFromSchema($from)
+            ->setToSchema($to);
 
         $this->transformer->transform('1');
+    }
+
+    /**
+     * @return array
+     */
+    public function wrongSchemaProvider()
+    {
+        $preparator = new DataPreparator();
+
+        return [
+            'strings' => [
+                "Transformation from 'schema://entities/company' to 'schema://common/id' is prohibited",
+                'schema://entities/company', 'schema://common/id',
+            ],
+            'objects' => [
+                "Transformation from type 'integer' to 'schema://entities/company' is prohibited",
+                $preparator->prepare(['type' => 'integer']),
+                $preparator->prepare(['$ref' => 'schema://entities/company']),
+            ],
+        ];
     }
 
     protected function setUp()
