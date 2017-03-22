@@ -26,7 +26,7 @@ return [
                     'boolean' => Casters\BooleanCaster::class,
                     'number' => Casters\FloatCaster::class,
                     'string' => Casters\StringCaster::class,
-                    'integer' => Casters\IntegerCaster::class,
+                    'int' => Casters\IntegerCaster::class,
                 ],
             ],
             'complex' => [

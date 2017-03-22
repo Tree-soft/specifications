@@ -76,12 +76,20 @@ class TypeExtractor implements NamespaceAwareInterface
             throw new SchemaExtractionException('Cannot extract schema');
         }
 
-        $type = $schema->type;
+        return $this->mapType($schema->type);
+    }
 
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
+    public function mapType(string $type): string
+    {
         return [
-            'integer' => self::INT,
-            'boolean' => self::BOOL,
-        ][$type] ?? $type;
+                'integer' => self::INT,
+                'boolean' => self::BOOL,
+            ][$type] ?? $type;
     }
 
     /**

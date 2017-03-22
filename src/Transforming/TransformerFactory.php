@@ -41,7 +41,16 @@ class TransformerFactory implements ConfigAwareInterface, ContainerAwareInterfac
             ->send([$from, $to])
             ->through($this->getResolvers())
             ->then(function () use ($from, $to) {
-                throw new ProhibitedTransformationException("Transformation '{$from}' to '{$to}' is prohibited");
+                /**
+                 * @var ProhibitedTransformationException $exception
+                 */
+                $exception = $this->container->make(ProhibitedTransformationException::class);
+
+                $exception
+                    ->setFrom($from)
+                    ->setTo($to);
+
+                throw $exception;
             });
     }
 

@@ -23,10 +23,38 @@ class TransformerFactoryTest extends TestCase
      */
     private $factory;
 
-    public function testWrong()
+    /**
+     * @dataProvider wrongTypesResolver
+     *
+     * @param string $message
+     * @param mixed $from
+     * @param mixed $to
+     */
+    public function testWrong(string $message, $from, $to)
     {
         $this->expectException(ProhibitedTransformationException::class);
-        $this->factory->create('111', '222');
+        $this->expectExceptionMessage($message);
+        $this->factory->create($from, $to);
+    }
+
+    /**
+     * @return array
+     */
+    public function wrongTypesResolver()
+    {
+        $preparator = new DataPreparator();
+
+        return [
+            'strings' => [
+                "Transformation from type '111' to type '222' is prohibited",
+                '111', '222',
+            ],
+            'objects' => [
+                '',
+                $preparator->prepare(['type' => 'string']),
+                $preparator->prepare(['$ref' => 'schema://entities/company']),
+            ],
+        ];
     }
 
     /**
@@ -89,6 +117,7 @@ class TransformerFactoryTest extends TestCase
             'entities/company' => $this->getFixturePath('schema/company.json'),
             'entities/derived/client' => $this->getFixturePath('schema/derived/client.json'),
             'common/id' => $this->getResourcePath('schema/common/id.json'),
+            'common/datetime' => $this->getResourcePath('schema/common/datetime.json'),
         ]));
     }
 }

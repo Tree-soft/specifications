@@ -45,7 +45,7 @@ class ComplexSchemaResolver extends AbstractResolver
         $extractor = $this->container->make(TypeExtractor::class);
 
         return
-            (!is_string($type) || $extractor->isSchema($type)) &&
+            $extractor->isSchema($type) &&
             is_array($extractor->extract($factory->schema($type)));
     }
 
