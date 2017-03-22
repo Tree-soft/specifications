@@ -3,11 +3,13 @@
 namespace Mildberry\Tests\Specifications\Transforming\Transformers;
 
 use DeepCopy\DeepCopy;
+use Mildberry\Specifications\Exceptions\TransformationNotFoundException;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\Support\SuccessException;
@@ -215,6 +217,22 @@ class JsonSchemaTransformerTest extends TestCase
             'ignore' => [$data['ignore'], 'ext>'],
             'general' => [$data['general'], 'ext>const:expr1|const:expr2|const:expr3>ext2'],
         ];
+    }
+
+    public function testRegisterTransformation()
+    {
+        $this->transformer->registerTransformation('copy', ConstTransformation::class);
+
+        $this->assertInstanceOf(ConstTransformation::class, $this->transformer->getTransformation('copy'));
+    }
+
+    public function testUnregisterTransformation()
+    {
+        $this->expectException(TransformationNotFoundException::class);
+        $this->expectExceptionMessage("Transformation 'const' not found");
+
+        $this->transformer->removeTransformation('const');
+        $this->transformer->getTransformation('const');
     }
 
     protected function setUp()

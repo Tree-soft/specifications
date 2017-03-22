@@ -151,20 +151,54 @@ class JsonSchemaTransformer extends AbstractTransformer
         return array_map(function ($specification) {
             list($name, $config) = $this->parseSpecification($specification);
 
-            if (!isset($this->transformations[$name])) {
-                throw new TransformationNotFoundException("Transformation '{$name}' not found");
-            }
-
-            /**
-             * @var AbstractTransformation $transformation
-             */
-            $transformation = $this->container->make($this->transformations[$name]);
+            $transformation = $this->getTransformation($name);
 
             $transformation
                 ->configure($config);
 
             return $transformation;
         }, explode('|', $definition));
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws TransformationNotFoundException
+     *
+     * @return AbstractTransformation
+     */
+    public function getTransformation($name): AbstractTransformation
+    {
+        if (!isset($this->transformations[$name])) {
+            throw new TransformationNotFoundException("Transformation '{$name}' not found");
+        }
+
+        return $this->container->make($this->transformations[$name]);
+    }
+
+    /**
+     * @param string $name
+     * @param string $class
+     *
+     * @return $this
+     */
+    public function registerTransformation(string $name, string $class)
+    {
+        $this->transformations[$name] = $class;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function removeTransformation(string $name)
+    {
+        unset($this->transformations[$name]);
+
+        return $this;
     }
 
     /**
