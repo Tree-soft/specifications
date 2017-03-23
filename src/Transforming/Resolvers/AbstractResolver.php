@@ -19,6 +19,23 @@ abstract class AbstractResolver implements ContainerAwareInterface
     private $config;
 
     /**
+     * @param array $passable
+     * @param callable $next
+     *
+     * @return AbstractTransformer
+     */
+    public function handle($passable, $next): AbstractTransformer
+    {
+        list($from, $to) = $passable;
+
+        return $this->resolve(
+            $from, $to, function ($from, $to) use ($next): AbstractTransformer {
+                return $next([$from, $to]);
+            }
+        );
+    }
+
+    /**
      * @param string|object|mixed $from
      * @param string|object|mixed $to
      * @param callable $next

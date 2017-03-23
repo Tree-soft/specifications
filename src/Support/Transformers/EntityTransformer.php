@@ -83,4 +83,12 @@ class EntityTransformer implements ContainerAwareInterface, NamespaceAwareInterf
 
         return $this;
     }
+
+    /**
+     * @return TransformerFactory
+     */
+    public function getFactory(): TransformerFactory
+    {
+        return $this->factory;
+    }
 }

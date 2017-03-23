@@ -43,7 +43,7 @@ class JsonSchemaResolver extends AbstractResolver
 
         return
             (empty($key)) ?
-                ($this->next($from, $to, $next)) :
+                ($next($from, $to)) :
                 ($this->createTransformer($specifications[$key]));
     }
 

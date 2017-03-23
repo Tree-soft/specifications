@@ -5,12 +5,8 @@ namespace Mildberry\Tests\Specifications\Http\Transformers;
 use Mildberry\Specifications\Http\Requests\Request;
 use Mildberry\Specifications\Http\Transformers\EntityTransformer;
 use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Transforming\Resolvers\CopyResolver;
 use Mildberry\Specifications\Transforming\Resolvers\JsonSchemaResolver;
-use Mildberry\Specifications\Transforming\Resolvers\SimpleTypeResolver;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
 use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
-use Mildberry\Tests\Specifications\Fixtures\Entities\Company;
 use Mildberry\Tests\Specifications\Http\TestCase;
 use Illuminate\Config\Repository as Config;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
@@ -67,7 +63,6 @@ class EntityTransformerTest extends TestCase
 
         $namespace = '\Mildberry\Tests\Specifications\Fixtures';
 
-        $config->set('specifications.transform.resolvers.json-schema.schema', 'transform://transformations-request');
         $config->set('specifications.namespace', $namespace);
 
         $this->transformer
@@ -111,24 +106,9 @@ class EntityTransformerTest extends TestCase
 
     public function testExtractToResponse()
     {
-        /**
-         * @var Config $config
-         */
-        $config = $this->app->make(Config::class);
+        $objects = $this->loadEntities('client-extract.yml');
 
-        $config->set('specifications.transform.resolvers', [
-            [
-                'class' => JsonSchemaResolver::class,
-                'schema' => 'transform://transformations-request',
-            ], [
-                'class' => CopyResolver::class,
-            ], [
-                'class' => SimpleTypeResolver::class,
-                'casters' => [
-                    'string' => StringCaster::class,
-                ],
-            ],
-        ]);
+        $config = $this->app->make(Config::class);
 
         $namespace = '\Mildberry\Tests\Specifications\Fixtures';
         $config->set('specifications.namespace', $namespace);
@@ -137,24 +117,16 @@ class EntityTransformerTest extends TestCase
             ->setNamespace($namespace)
             ->setClass(Client::class);
 
-        $entity = new Client();
+        /**
+         * @var Client $client
+         */
+        $client = $objects['client'];
 
-        $company = new Company();
-
-        $company
-            ->setId(1)
-            ->setName('Company name');
-
-        $entity
-            ->setName('Company name')
-            ->setPhone('+71234567890')
-            ->setCompany($company);
-
-        $data = $this->transformer->extractToResponse($entity, 'schema://entities/simple-client');
+        $data = $this->transformer->extractToResponse($client, 'schema://entities/simple-client');
 
         $this->assertEquals((object) [
-            'name' => $entity->getName(),
-            'phone' => $entity->getPhone(),
+            'name' => $client->getName(),
+            'phone' => $client->getPhone(),
         ], $data);
     }
 
@@ -163,6 +135,17 @@ class EntityTransformerTest extends TestCase
         parent::setUp();
 
         $this->transformer = $this->app->make(EntityTransformer::class);
+
+        /**
+         * @var JsonSchemaResolver $jsonResolver
+         */
+        $jsonResolver = $this->transformer->getFactory()->getResolver('json');
+
+        $resolverConfig = $jsonResolver->getConfig();
+
+        $resolverConfig['schema'] = 'transform://transformations-request';
+
+        $jsonResolver->setConfig($resolverConfig);
 
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/client' => $this->getFixturePath('schema/client.json'),

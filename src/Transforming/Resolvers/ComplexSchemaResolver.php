@@ -24,7 +24,7 @@ class ComplexSchemaResolver extends AbstractResolver
         return
             ($this->isComplexType($from) || $this->isComplexType($to)) ?
                 ($this->createTransformer($from, $to)) :
-                ($this->next($from, $to, $next));
+                ($next($from, $to));
     }
 
     /**

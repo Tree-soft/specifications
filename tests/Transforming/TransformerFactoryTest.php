@@ -3,8 +3,10 @@
 namespace Mildberry\Tests\Specifications\Transforming;
 
 use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
+use Mildberry\Specifications\Exceptions\ResolverNotFoundException;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Support\DataPreparator;
+use Mildberry\Specifications\Transforming\Resolvers\JsonSchemaResolver;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
 use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
@@ -58,7 +60,7 @@ class TransformerFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider resolversProvider
+     * @dataProvider schemasProvider
      *
      * @param mixed $expected
      * @param string $from
@@ -72,7 +74,7 @@ class TransformerFactoryTest extends TestCase
     /**
      * @return array
      */
-    public function resolversProvider(): array
+    public function schemasProvider(): array
     {
         $preparator = new DataPreparator();
 
@@ -103,6 +105,51 @@ class TransformerFactoryTest extends TestCase
                 $preparator->prepare(['type' => 'string']),
             ],
         ];
+    }
+
+    /**
+     * @dataProvider resolversProvider
+     *
+     * @param array $expected
+     * @param string $name
+     * @param string $class
+     * @param string|null $after
+     */
+    public function testRegister(array $expected, string $name, string $class, string $after = null)
+    {
+        $this->factory->registerResolver($name, $this->app->make($class), $after);
+
+        $this->assertEquals($expected, $this->factory->getCallbacks());
+    }
+
+    /**
+     * @return array
+     */
+    public function resolversProvider()
+    {
+        return [
+            'last' => [
+                ['equal', 'json', 'simple', 'complex', 'json2'],
+                'json2', JsonSchemaResolver::class, 'complex',
+            ],
+            'after' => [
+                ['equal', 'json', 'json2', 'simple', 'complex'],
+                'json2', JsonSchemaResolver::class, 'json',
+            ],
+            'first' => [
+                ['json2', 'equal', 'json', 'simple', 'complex'],
+                'json2', JsonSchemaResolver::class,
+            ],
+        ];
+    }
+
+    public function testRemoveResolver()
+    {
+        $this->expectException(ResolverNotFoundException::class);
+        $this->expectExceptionMessage("Resolver 'json' not found");
+
+        $this->factory->removeResolver('json');
+        $this->factory->getResolver('json');
     }
 
     protected function setUp()

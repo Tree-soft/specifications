@@ -146,7 +146,9 @@ class JsonSchemaTransformerTest extends TestCase
 
     public function testNested()
     {
-        $factory = new class() extends TransformerFactory {
+        $container = $this->app;
+
+        $factory = new class($container) extends TransformerFactory {
             /**
              * @param string $from
              * @param string $to

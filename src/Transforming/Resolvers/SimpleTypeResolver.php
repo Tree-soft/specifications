@@ -28,7 +28,7 @@ class SimpleTypeResolver extends AbstractResolver
         return
             (isset($fromType) && isset($toType) && ($this->isSimpleType($fromType) && $this->isSimpleType($toType))) ?
                 ($this->createTransformer($fromType, $toType)) :
-                ($this->next($from, $to, $next));
+                ($next($from, $to));
     }
 
     /**

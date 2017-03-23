@@ -22,7 +22,7 @@ class CopyResolver extends AbstractResolver
         return
             ($this->isEqualSchema($from, $to)) ?
                 ($this->container->make(CopyTransformer::class)) :
-                ($this->next($from, $to, $next));
+                ($next($from, $to));
     }
 
     /**
