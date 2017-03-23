@@ -90,7 +90,7 @@ class JsonSchemaTransformer extends AbstractTransformer
 
         $rulesDefinitions = (array) ($this->specification->rules ?? []);
 
-        $rules = array_map(function (string $definition) {
+        $rules = array_map(function ($definition) {
             return $this->parseRule($definition);
         }, $rulesDefinitions);
 
