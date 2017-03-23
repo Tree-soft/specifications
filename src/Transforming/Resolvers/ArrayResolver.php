@@ -67,7 +67,7 @@ class ArrayResolver extends AbstractResolver
 
         $transformer
             ->setFromSchema($from->items ?? null)
-            ->setToSchema($to ?? null);
+            ->setToSchema($to->items ?? null);
 
         return $transformer;
     }
