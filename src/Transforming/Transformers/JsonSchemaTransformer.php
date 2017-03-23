@@ -19,6 +19,10 @@ use RuntimeException;
  */
 class JsonSchemaTransformer extends AbstractTransformer
 {
+    const EXTRACT_OPERATOR = '<';
+    const POPULATE_OPERATOR = '>';
+    const STREAM_OPERATOR = '>';
+
     /**
      * @var object
      */
@@ -104,15 +108,28 @@ class JsonSchemaTransformer extends AbstractTransformer
     }
 
     /**
+     * @param string|array $definitions
+     *
+     * @return Rule
+     */
+    public function parseRule($definitions): Rule
+    {
+        return
+            (is_string($definitions)) ?
+                ($this->parseRuleFromString($definitions)) :
+                ($this->parseRuleFromArray($definitions));
+    }
+
+    /**
      * @param string $definition
      *
      * @throws TransformationDefinitionException
      *
      * @return Rule
      */
-    public function parseRule(string $definition): Rule
+    protected function parseRuleFromString(string $definition): Rule
     {
-        $parts = explode('>', $definition);
+        $parts = explode(self::STREAM_OPERATOR, $definition);
 
         switch (count($parts)) {
             case 2:
@@ -130,6 +147,62 @@ class JsonSchemaTransformer extends AbstractTransformer
             default:
                 throw new TransformationDefinitionException("Cannot parse definition '{$definition}'");
         }
+
+        $rule = new Rule();
+
+        $rule
+            ->setFrom($from)
+            ->setTransformations($transformations)
+            ->setTo($to);
+
+        return $rule;
+    }
+
+    /**
+     * @param array $definitions
+     *
+     * @throws TransformationDefinitionException
+     *
+     * @return Rule
+     */
+    protected function parseRuleFromArray(array $definitions): Rule
+    {
+        $countDefinitions = count($definitions);
+
+        if (
+            ($countDefinitions == 0) || (
+                ($definitions[0][0] != self::EXTRACT_OPERATOR) &&
+                ($definitions[$countDefinitions - 1][0] != self::POPULATE_OPERATOR)
+            )
+        ) {
+            throw new TransformationDefinitionException('Cannot parse definition from array');
+        }
+
+        $from = '';
+        $to = '';
+
+        if ($definitions[0][0] == self::EXTRACT_OPERATOR) {
+            $definition = array_shift($definitions);
+
+            $from = $definition[1];
+        }
+
+        if ($definitions[count($definitions) - 1][0] == self::POPULATE_OPERATOR) {
+            $definition = array_pop($definitions);
+
+            $to = $definition[1];
+        }
+
+        $transformations = array_map(function (array $config) {
+            $name = array_shift($config);
+
+            $transformation = $this->getTransformation($name);
+
+            $transformation
+                ->configure($config);
+
+            return $transformation;
+        }, $definitions);
 
         $rule = new Rule();
 

@@ -197,7 +197,7 @@ class JsonSchemaTransformerTest extends TestCase
      * @param Rule $expected
      * @param string $definition
      */
-    public function testParseRule(Rule $expected, string $definition)
+    public function testParseRule(Rule $expected, $definition)
     {
         foreach ($expected->getTransformations() as $transformation) {
             $transformation->setContainer($this->app);
@@ -218,6 +218,15 @@ class JsonSchemaTransformerTest extends TestCase
             'const' => [$data['const'], '>const:expr1>ext'],
             'ignore' => [$data['ignore'], 'ext>'],
             'general' => [$data['general'], 'ext>const:expr1|const:expr2|const:expr3>ext2'],
+            'as-array' => [
+                $data['general'], [
+                    ['<', 'ext'],
+                    ['const', 'expr1'],
+                    ['const', 'expr2'],
+                    ['const', 'expr3'],
+                    ['>', 'ext2'],
+                ],
+            ],
         ];
     }
 
