@@ -82,14 +82,6 @@ class TransformerFactoryTest extends TestCase
                 'schema://entity/client',
                 'schema://entity/client',
             ],
-            'equal-with-additions' => [
-                CopyTransformer::class,
-                $preparator->prepare(['type' => 'integer']),
-                $preparator->prepare([
-                    'type' => 'integer',
-                    'minimum' => 1,
-                ]),
-            ],
             'json-schema' => [
                 JsonSchemaTransformer::class,
                 'schema://entities/client',
