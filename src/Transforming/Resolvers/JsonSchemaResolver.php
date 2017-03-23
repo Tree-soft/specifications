@@ -12,8 +12,8 @@ use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
 class JsonSchemaResolver extends AbstractResolver
 {
     /**
-     * @param string $from
-     * @param string $to
+     * @param string|object|mixed $from
+     * @param string|object|mixed $to
      * @param callable $next
      *
      * @return AbstractTransformer
@@ -36,8 +36,8 @@ class JsonSchemaResolver extends AbstractResolver
                 $transformation = $specifications[$key];
 
                 return
-                    ($transformation->from == $from) &&
-                    ($transformation->to == $to);
+                    $this->isEqual($transformation->from, $from) &&
+                    $this->isEqual($transformation->to, $to);
             }
         );
 
@@ -45,6 +45,20 @@ class JsonSchemaResolver extends AbstractResolver
             (empty($key)) ?
                 ($next($from, $to)) :
                 ($this->createTransformer($specifications[$key]));
+    }
+
+    /**
+     * @param mixed $lhs
+     * @param mixed $rhs
+     *
+     * @return bool
+     */
+    public function isEqual($lhs, $rhs): bool
+    {
+        $rhsId = (is_string($rhs)) ? ($rhs) : ($rhs->id ?? null);
+        $lhsId = (is_string($lhs)) ? ($lhs) : ($lhs->id ?? null);
+
+        return isset($rhsId) && isset($lhsId) && ($rhsId == $lhsId);
     }
 
     /**

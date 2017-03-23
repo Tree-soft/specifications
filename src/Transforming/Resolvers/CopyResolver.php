@@ -46,6 +46,7 @@ class CopyResolver extends AbstractResolver
                 'id' => null,
             ];
         }
+
         $from = $this->sanitize($from);
         $to = $this->sanitize($to);
 
