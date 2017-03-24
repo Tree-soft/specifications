@@ -10,7 +10,6 @@ use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\IdTransformation;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
 use RuntimeException;
@@ -59,7 +58,6 @@ class JsonSchemaTransformer extends AbstractTransformer
      */
     private $transformations = [
         'const' => ConstTransformation::class,
-        'id' => IdTransformation::class,
     ];
 
     /**
@@ -283,7 +281,7 @@ class JsonSchemaTransformer extends AbstractTransformer
      */
     public function fillCopyRule(array $rules): array
     {
-        if ($this->fromSchema->type !== TypeExtractor::OBJECT) {
+        if (!isset($this->fromSchema->type) || $this->fromSchema->type !== TypeExtractor::OBJECT) {
             if (empty($rules)) {
                 $rules[] = new Rule();
             }

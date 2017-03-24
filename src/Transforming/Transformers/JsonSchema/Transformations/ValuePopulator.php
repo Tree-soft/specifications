@@ -4,7 +4,6 @@ namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transfor
 
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\ValueDescriptor;
-use RuntimeException;
 
 /**
  * Class ValuePopulator.
@@ -24,16 +23,14 @@ class ValuePopulator extends ValueTransformation
             $simpleValue = $value->getValue();
 
             $value = isset($simpleValue) ? ($value) : ($this->convert($from, $value->getSchema()));
-        } elseif (is_object($value)) {
-            $objectValue = $value->getValue();
+        } else {
+            $objectValue = $value->getValue() ?? (object) [];
 
             if ((isset($this->field) && $this->field != '') && !property_exists($objectValue, $this->field)) {
                 $objectValue->{$this->field} = $this->convert(
                     $from, $value->getSchema()->properties->{$this->field}
                 )->getValue();
             }
-        } else {
-            throw new RuntimeException('Cannot extract value');
         }
 
         return $value;
