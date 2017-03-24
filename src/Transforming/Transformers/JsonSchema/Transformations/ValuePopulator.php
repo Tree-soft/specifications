@@ -31,6 +31,8 @@ class ValuePopulator extends ValueTransformation
                     $from, $value->getSchema()->properties->{$this->field}
                 )->getValue();
             }
+
+            $value->setValue($objectValue);
         }
 
         return $value;
