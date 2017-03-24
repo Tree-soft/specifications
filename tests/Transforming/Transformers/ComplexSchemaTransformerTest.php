@@ -89,13 +89,13 @@ class ComplexSchemaTransformerTest extends TestCase
 
         return [
             'strings' => [
-                "Transformation from 'schema://entities/company' to 'schema://common/id' is prohibited",
-                'schema://entities/company', 'schema://common/id',
+                "Transformation from 'schema://entities/company' to 'schema://types/int-string' is prohibited",
+                'schema://entities/company', 'schema://types/int-string',
             ],
             'objects' => [
-                "Transformation from type 'integer' to 'schema://entities/company' is prohibited",
-                $preparator->prepare(['type' => 'integer']),
+                "Transformation from 'schema://entities/company' to 'schema://types/int-string' is prohibited",
                 $preparator->prepare(['$ref' => 'schema://entities/company']),
+                $preparator->prepare(['$ref' => 'schema://types/int-string']),
             ],
         ];
     }
@@ -106,6 +106,7 @@ class ComplexSchemaTransformerTest extends TestCase
 
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/company' => $this->getFixturePath('schema/company.json'),
+            'types/int-string' => $this->getFixturePath('schema/types/int-string.json'),
             'common/id' => $this->getResourcePath('schema/common/id.json'),
         ]));
     }

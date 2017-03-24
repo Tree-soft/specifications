@@ -12,6 +12,7 @@ use Mildberry\Specifications\Transforming\Transformers\ArrayTransformer;
 use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
 use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
+use Mildberry\Specifications\Transforming\Transformers\NullTransformer;
 use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
@@ -116,6 +117,11 @@ class TransformerFactoryTest extends TestCase
                     'items' => ['type' => 'integer'],
                 ]),
             ],
+            'null' => [
+                NullTransformer::class,
+                $preparator->prepare(['type' => 'string']),
+                $preparator->prepare(['type' => 'null']),
+            ],
         ];
     }
 
@@ -141,15 +147,15 @@ class TransformerFactoryTest extends TestCase
     {
         return [
             'last' => [
-                ['equal', 'json', 'simple', 'complex', 'array', 'json2'],
+                ['equal', 'json', 'simple', 'null', 'complex', 'array', 'json2'],
                 'json2', JsonSchemaResolver::class, 'array',
             ],
             'after' => [
-                ['equal', 'json', 'json2', 'simple', 'complex', 'array'],
+                ['equal', 'json', 'json2', 'simple', 'null', 'complex', 'array'],
                 'json2', JsonSchemaResolver::class, 'json',
             ],
             'first' => [
-                ['json2', 'equal', 'json', 'simple', 'complex', 'array'],
+                ['json2', 'equal', 'json', 'simple', 'null', 'complex', 'array'],
                 'json2', JsonSchemaResolver::class,
             ],
         ];

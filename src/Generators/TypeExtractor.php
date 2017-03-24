@@ -19,6 +19,7 @@ class TypeExtractor implements NamespaceAwareInterface
     const STRING = 'string';
     const OBJECT = 'object';
     const ARRAY = 'array';
+    const NULL = 'null';
 
     /**
      * @var array

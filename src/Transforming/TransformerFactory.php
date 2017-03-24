@@ -8,6 +8,7 @@ use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
 use Mildberry\Specifications\Exceptions\ResolverNotFoundException;
 use Mildberry\Specifications\Transforming\Resolvers\AbstractResolver;
 use Mildberry\Specifications\Transforming\Resolvers\ArrayResolver;
+use Mildberry\Specifications\Transforming\Resolvers\NullResolver;
 use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
 use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
@@ -167,6 +168,9 @@ class TransformerFactory
             ],
             'complex' => [
                 'class' => Resolvers\ComplexSchemaResolver::class,
+            ],
+            'null' => [
+                'class' => NullResolver::class,
             ],
             'simple' => [
                 'class' => Resolvers\SimpleTypeResolver::class,
