@@ -13,10 +13,10 @@ Mildberry\Specifications\Transforming\Transformers\ValueDescriptor:
     value:
       id: 1
     schema:
-      $ref: 'schema://entities/company'
+      type: 'integer'
 
   expected_2:
     value:
       name: '1'
     schema:
-      $ref: 'schema://entities/company'
+      type: 'string'

@@ -23,18 +23,13 @@ class IdTransformation extends AbstractTransformation
      */
     public function apply(ValueDescriptor $from, ValueDescriptor $value, $next): ValueDescriptor
     {
-        $field = new ValueDescriptor();
-
-        $field
-            ->setSchema($value->getSchema()->properties->{$this->field});
-
         $object = new ValueDescriptor();
 
         $object
+            ->setSchema($value->getSchema()->properties->{$this->field})
             ->setValue((object) [
-                $this->field => $this->transform($from, $field)->getValue(),
-            ])
-            ->setSchema($value->getSchema());
+                $this->field => $this->transform($from, $object)->getValue(),
+            ]);
 
         return $next($object, $value);
     }
