@@ -1,0 +1,22 @@
+Mildberry\Specifications\Transforming\Transformers\ValueDescriptor:
+  from:
+    value: 1
+    schema:
+      type: 'integer'
+
+  to:
+    value: ~
+    schema:
+      $ref: 'schema://entities/company'
+
+  expected:
+    value:
+      id: 1
+    schema:
+      $ref: 'schema://entities/company'
+
+  expected_2:
+    value:
+      name: '1'
+    schema:
+      $ref: 'schema://entities/company'

@@ -2,6 +2,7 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations;
 
+use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\ValueDescriptor;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
@@ -42,5 +43,29 @@ abstract class AbstractTransformation implements ContainerAwareInterface
      */
     public function configure(array $config)
     {
+    }
+
+    /**
+     * @param ValueDescriptor $from
+     * @param ValueDescriptor $to
+     *
+     * @return ValueDescriptor
+     */
+    public function transform(ValueDescriptor $from, ValueDescriptor $to): ValueDescriptor
+    {
+        /**
+         * @var TransformerFactory $factory
+         */
+        $factory = $this->container->make(TransformerFactory::class);
+
+        $transformer = $factory->create($from->getSchema(), $to->getSchema());
+
+        $new = new ValueDescriptor();
+
+        $new
+            ->setSchema($to->getSchema())
+            ->setValue($transformer->transform($from->getValue(), $to->getValue()));
+
+        return $new;
     }
 }
