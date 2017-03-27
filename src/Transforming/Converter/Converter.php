@@ -6,6 +6,7 @@ use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Exceptions\PopulatorException;
 use Mildberry\Specifications\Exceptions\PopulatorObjectException;
 use Mildberry\Specifications\Schema\LaravelFactory;
+use Mildberry\Specifications\Support\OrderedList;
 use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
 use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
 use Mildberry\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
@@ -32,9 +33,9 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     private $resolvers = [];
 
     /**
-     * @var string[]
+     * @var OrderedList
      */
-    protected $resolversOrder = [];
+    protected $resolversOrder;
 
     /**
      * Populator constructor.
@@ -44,13 +45,10 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     public function __construct(LaravelFactory $factory)
     {
         $this->factory = $factory;
-
-        $lastResolver = null;
+        $this->resolversOrder = new OrderedList();
 
         foreach ($this->getInternalResolvers() as $name => $resolver) {
-            $this->registerResolver($name, $resolver, $lastResolver);
-
-            $lastResolver = $name;
+            $this->registerResolver($name, $resolver);
         }
     }
 
@@ -134,23 +132,15 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     /**
      * @param string $name
      * @param array $definition
-     * @param string|null $after
+     * @param string|null $before
      *
      * @return $this
      */
-    public function registerResolver(string $name, array $definition, string $after = null)
+    public function registerResolver(string $name, array $definition, string $before = null)
     {
         $this->resolvers[$name] = $definition;
 
-        $id = isset($after) ? (array_search($after, $this->resolversOrder)) : (0);
-
-        if ($id === false) {
-            $this->resolversOrder[] = $name;
-        } elseif ($id === 0) {
-            array_unshift($this->resolversOrder, $name);
-        } else {
-            array_splice($this->resolversOrder, $id + 1, 0, [$name]);
-        }
+        $this->resolversOrder->add($name, $before);
 
         return $this;
     }
@@ -164,11 +154,7 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     {
         unset($this->resolvers[$name]);
 
-        $this->resolversOrder[] = array_values(
-            array_filter($this->resolversOrder, function (string $resolver) use ($name) {
-                return $name != $resolver;
-            })
-        );
+        $this->resolversOrder->remove($name);
 
         return $this;
     }
