@@ -20,17 +20,19 @@ class DateTimeResolver extends AbstractResolver
      */
     public function resolve($data, $next)
     {
-        return ($this->isDateTime()) ?
+        return ($this->isDateTime($data)) ?
             ($this->createDateTime($data)) :
             ($next($data));
     }
 
     /**
+     * @param $data
+     *
      * @return bool
      */
-    public function isDateTime(): bool
+    public function isDateTime($data): bool
     {
-        return isset($this->schema->id) && ($this->schema->id == self::DATETIME_SCHEMA);
+        return !empty($data) && isset($this->schema->id) && ($this->schema->id == self::DATETIME_SCHEMA);
     }
 
     /**
