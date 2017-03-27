@@ -10,6 +10,7 @@ use Mildberry\Tests\Specifications\Fixtures\Entities\Company;
 use Mildberry\Tests\Specifications\Mocks\LoaderMock;
 use Mildberry\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
+use DateTime;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -78,6 +79,18 @@ class PopulatorTest extends TestCase
         ]);
     }
 
+    public function testDateTime()
+    {
+        $expected = '28.02.2017';
+
+        /**
+         * @var DateTime $actual
+         */
+        $actual = $this->populator->convert($expected, 'schema://common/datetime');
+
+        $this->assertEquals($expected, $actual->format('d.m.Y'));
+    }
+
     protected function setUp()
     {
         parent::setUp();
@@ -94,6 +107,7 @@ class PopulatorTest extends TestCase
         $this->app->instance(Loader::class, new LoaderMock([
             'entities/client' => $this->getFixturePath('schema/client.json'),
             'entities/company' => $this->getFixturePath('schema/company.json'),
+            'common/datetime' => $this->getResourcePath('schema/common/datetime.json'),
         ]));
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Mildberry\Specifications\Transforming\Converter;
 
+use Mildberry\Specifications\Schema\LaravelFactory;
+use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator\DateTimeResolver;
 use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator\ObjectResolver;
 
 /**
@@ -10,14 +12,16 @@ use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator\ObjectRe
 class Populator extends Converter
 {
     /**
-     * @return array
+     * Populator constructor.
+     *
+     * @param LaravelFactory $factory
      */
-    public function getInternalResolvers(): array
+    public function __construct(LaravelFactory $factory)
     {
-        return array_merge(parent::getInternalResolvers(), [
-            'object' => [
-                'class' => ObjectResolver::class,
-            ],
-        ]);
+        parent::__construct($factory);
+
+        $this
+            ->registerResolver('object', ['class' => ObjectResolver::class], 'complex')
+            ->registerResolver('datetime', ['class' => DateTimeResolver::class], 'simple');
     }
 }

@@ -88,7 +88,9 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
      */
     protected function createResolvers($schema): array
     {
-        return array_map(function ($config) use ($schema) {
+        return array_map(function ($name) use ($schema) {
+            $config = $this->resolvers[$name];
+
             /**
              * @var AbstractResolver $resolver
              */
@@ -100,7 +102,7 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
                 ->setConverter($this);
 
             return $resolver;
-        }, $this->resolvers);
+        }, $this->resolversOrder->items());
     }
 
     /**
