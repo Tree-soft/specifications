@@ -2,7 +2,6 @@
 
 namespace Mildberry\Specifications\Transforming\Converter;
 
-use Closure;
 use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Exceptions\PopulatorException;
 use Mildberry\Specifications\Exceptions\PopulatorObjectException;
@@ -12,6 +11,7 @@ use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\Namespace
 use Mildberry\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
+use Mildberry\Specifications\Transforming\Converter\Resolvers as ConverterResolvers;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -29,7 +29,12 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     /**
      * @var array
      */
-    protected $resolvers = [];
+    private $resolvers = [];
+
+    /**
+     * @var string[]
+     */
+    private $resolversOrder = [];
 
     /**
      * Populator constructor.
@@ -39,6 +44,10 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     public function __construct(LaravelFactory $factory)
     {
         $this->factory = $factory;
+
+        foreach ($this->getInternalResolvers() as $name => $resolver) {
+            $this->registerResolver($name, $resolver);
+        }
     }
 
     /**
@@ -59,6 +68,7 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
 
         return $pipeline
             ->send($data)
+            ->via('resolve')
             ->through($resolvers)
             ->then(function () use ($data) {
                 $e = new PopulatorException('Cannot populate data');
@@ -76,34 +86,19 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
      */
     protected function createResolvers($schema): array
     {
-        $resolvers = $this->resolvers;
-
         return array_map(function ($config) use ($schema) {
-            return $this->wrapResolver($config, $schema);
-        }, $resolvers);
-    }
+            /**
+             * @var AbstractResolver $resolver
+             */
+            $resolver = $this->container->make($config['class']);
 
-    /**
-     * @param array $config
-     * @param object $schema
-     *
-     * @return Closure
-     */
-    protected function wrapResolver(array $config, $schema): Closure
-    {
-        /**
-         * @var AbstractResolver $resolver
-         */
-        $resolver = $this->container->make($config['class']);
+            $resolver
+                ->setConfig($config)
+                ->setSchema($schema)
+                ->setConverter($this);
 
-        $resolver
-            ->setConfig($config)
-            ->setSchema($schema)
-            ->setConverter($this);
-
-        return function ($data, $next) use ($resolver) {
-            return $resolver->resolve($data, $next);
-        };
+            return $resolver;
+        }, $this->resolvers);
     }
 
     /**
@@ -115,13 +110,61 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     }
 
     /**
-     * @param array $resolvers
+     * @return array
+     */
+    public function getInternalResolvers(): array
+    {
+        return [
+            'nullable' => [
+                'class' => ConverterResolvers\NullableResolver::class,
+            ],
+            'simple' => [
+                'class' => ConverterResolvers\SimpleResolver::class,
+            ],
+            'complex' => [
+                'class' => ConverterResolvers\ComplexResolver::class,
+            ],
+        ];
+    }
+
+    /**
+     * @param string $name
+     * @param array $definition
+     * @param string|null $after
      *
      * @return $this
      */
-    public function setResolvers(array $resolvers)
+    public function registerResolver(string $name, array $definition, string $after = null)
     {
-        $this->resolvers = $resolvers;
+        $this->resolvers[$name] = $definition;
+
+        $id = isset($after) ? (array_search($after, $this->resolversOrder)) : (0);
+
+        if ($id === false) {
+            $this->resolversOrder[] = $name;
+        } elseif ($id === 0) {
+            array_unshift($this->resolversOrder, $name);
+        } else {
+            array_splice($this->resolversOrder, $id + 1, 0, [$name]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function removeResolver(string $name)
+    {
+        unset($this->resolvers[$name]);
+
+        $this->resolversOrder[] = array_values(
+            array_filter($this->resolversOrder, function (string $resolver) use ($name) {
+                return $name != $resolver;
+            })
+        );
 
         return $this;
     }

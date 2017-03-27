@@ -2,8 +2,7 @@
 
 namespace Mildberry\Specifications\Transforming\Converter;
 
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Illuminate\Contracts\Config\Repository as Config;
+use Mildberry\Specifications\Transforming\Converter\Resolvers\Extractor\ObjectResolver;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -11,18 +10,14 @@ use Illuminate\Contracts\Config\Repository as Config;
 class Extractor extends Converter
 {
     /**
-     * Extractor constructor.
-     *
-     * @param LaravelFactory $factory
-     * @param Config $config
+     * @return array
      */
-    public function __construct(LaravelFactory $factory, Config $config)
+    public function getInternalResolvers(): array
     {
-        parent::__construct($factory);
-
-        $data = $config->get('specifications.extract');
-
-        $this
-            ->setResolvers($data['resolvers'] ?? []);
+        return array_merge(parent::getInternalResolvers(), [
+            'object' => [
+                'class' => ObjectResolver::class,
+            ],
+        ]);
     }
 }
