@@ -38,6 +38,19 @@ class SimpleResolver extends AbstractResolver
 
         $type = $extractor->extract($schema);
 
-        return !is_array($type) && in_array($type, ['string', 'bool', 'number', 'int']);
+        return !is_array($type) && in_array($type, ['string', 'bool', 'number', 'int']) &&
+            !$this->shouldBeIgnored($schema);
+    }
+
+    /**
+     * @param $schema
+     *
+     * @return bool
+     */
+    public function shouldBeIgnored($schema): bool
+    {
+        return isset($schema->id) && in_array($schema->id, [
+            'schema://common/datetime',
+        ]);
     }
 }

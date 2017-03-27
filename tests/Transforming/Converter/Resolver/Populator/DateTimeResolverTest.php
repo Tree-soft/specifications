@@ -2,6 +2,7 @@
 
 namespace Mildberry\Tests\Specifications\Transforming\Converter\Resolver\Populator;
 
+use Mildberry\Specifications\Support\DataPreparator;
 use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator\DateTimeResolver;
 use Mildberry\Tests\Specifications\TestCase;
 
@@ -24,6 +25,12 @@ class DateTimeResolverTest extends TestCase
     {
         parent::setUp();
 
+        $preparator = new DataPreparator();
+
         $this->resolver = $this->app->make(DateTimeResolver::class);
+        $this->resolver
+            ->setSchema($preparator->prepare([
+                'id' => 'schema://common/datetime',
+            ]));
     }
 }
