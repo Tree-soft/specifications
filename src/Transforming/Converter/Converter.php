@@ -34,7 +34,7 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     /**
      * @var string[]
      */
-    private $resolversOrder = [];
+    protected $resolversOrder = [];
 
     /**
      * Populator constructor.
@@ -45,8 +45,12 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
     {
         $this->factory = $factory;
 
+        $lastResolver = null;
+
         foreach ($this->getInternalResolvers() as $name => $resolver) {
-            $this->registerResolver($name, $resolver);
+            $this->registerResolver($name, $resolver, $lastResolver);
+
+            $lastResolver = $name;
         }
     }
 

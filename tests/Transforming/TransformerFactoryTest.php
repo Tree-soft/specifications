@@ -6,7 +6,6 @@ use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
 use Mildberry\Specifications\Exceptions\ResolverNotFoundException;
 use Mildberry\Specifications\Schema\Loader;
 use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Resolvers\JsonSchemaResolver;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 use Mildberry\Specifications\Transforming\Transformers\ArrayTransformer;
 use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
@@ -83,8 +82,8 @@ class TransformerFactoryTest extends TestCase
         return [
             'equal' => [
                 CopyTransformer::class,
-                'schema://entity/client',
-                'schema://entity/client',
+                'schema://entities/client',
+                'schema://entities/client',
             ],
             'json-schema' => [
                 JsonSchemaTransformer::class,
@@ -121,42 +120,6 @@ class TransformerFactoryTest extends TestCase
                 NullTransformer::class,
                 $preparator->prepare(['type' => 'string']),
                 $preparator->prepare(['type' => 'null']),
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider resolversProvider
-     *
-     * @param array $expected
-     * @param string $name
-     * @param string $class
-     * @param string|null $after
-     */
-    public function testRegister(array $expected, string $name, string $class, string $after = null)
-    {
-        $this->factory->registerResolver($name, $this->app->make($class), $after);
-
-        $this->assertEquals($expected, $this->factory->getCallbacks());
-    }
-
-    /**
-     * @return array
-     */
-    public function resolversProvider()
-    {
-        return [
-            'last' => [
-                ['equal', 'json', 'simple', 'null', 'complex', 'array', 'json2'],
-                'json2', JsonSchemaResolver::class, 'array',
-            ],
-            'after' => [
-                ['equal', 'json', 'json2', 'simple', 'null', 'complex', 'array'],
-                'json2', JsonSchemaResolver::class, 'json',
-            ],
-            'first' => [
-                ['json2', 'equal', 'json', 'simple', 'null', 'complex', 'array'],
-                'json2', JsonSchemaResolver::class,
             ],
         ];
     }

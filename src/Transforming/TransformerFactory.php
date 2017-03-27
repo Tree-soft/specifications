@@ -6,6 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Pipeline\Pipeline;
 use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
 use Mildberry\Specifications\Exceptions\ResolverNotFoundException;
+use Mildberry\Specifications\Support\OrderedList;
 use Mildberry\Specifications\Transforming\Resolvers\AbstractResolver;
 use Mildberry\Specifications\Transforming\Resolvers\ArrayResolver;
 use Mildberry\Specifications\Transforming\Resolvers\NullResolver;
@@ -26,9 +27,9 @@ class TransformerFactory
     private $resolvers = [];
 
     /**
-     * @var callable[]
+     * @var OrderedList;
      */
-    private $callbacks = [];
+    private $callbacks;
 
     /**
      * TransformerFactory constructor.
@@ -37,6 +38,7 @@ class TransformerFactory
      */
     public function __construct(Container $container)
     {
+        $this->callbacks = new OrderedList();
         $this->setContainer($container);
 
         foreach ($this->getInternalResolvers() as $name => $config) {
@@ -88,29 +90,21 @@ class TransformerFactory
     {
         return array_map(function (string $name) {
             return $this->resolvers[$name];
-        }, $this->callbacks);
+        }, $this->callbacks->items());
     }
 
     /**
      * @param string $name
      * @param AbstractResolver $resolver
-     * @param string $after
+     * @param string $before
      *
      * @return $this
      */
-    public function registerResolver(string $name, AbstractResolver $resolver, string $after = null)
+    public function registerResolver(string $name, AbstractResolver $resolver, string $before = null)
     {
         $this->resolvers[$name] = $resolver;
 
-        $id = isset($after) ? (array_search($after, $this->callbacks)) : (0);
-
-        if ($id === false) {
-            $this->callbacks[] = $name;
-        } elseif ($id === 0) {
-            array_unshift($this->callbacks, $name);
-        } else {
-            array_splice($this->callbacks, $id + 1, 0, [$name]);
-        }
+        $this->callbacks->add($name, $before);
 
         return $this;
     }
@@ -124,11 +118,7 @@ class TransformerFactory
     {
         unset($this->resolvers[$name]);
 
-        $this->callbacks[] = array_values(
-            array_filter($this->callbacks, function (string $resolver) use ($name) {
-                return $name != $resolver;
-            })
-        );
+        $this->callbacks->remove($name);
 
         return $this;
     }
@@ -138,7 +128,7 @@ class TransformerFactory
      */
     public function getCallbacks(): array
     {
-        return $this->callbacks;
+        return $this->callbacks->items();
     }
 
     /**
@@ -163,14 +153,12 @@ class TransformerFactory
     protected function getInternalResolvers(): array
     {
         return [
-            'array' => [
-                'class' => ArrayResolver::class,
+            'equal' => [
+                'class' => Resolvers\CopyResolver::class,
             ],
-            'complex' => [
-                'class' => Resolvers\ComplexSchemaResolver::class,
-            ],
-            'null' => [
-                'class' => NullResolver::class,
+            'json' => [
+                'class' => Resolvers\JsonSchemaResolver::class,
+                'schema' => 'transform://transformations',
             ],
             'simple' => [
                 'class' => Resolvers\SimpleTypeResolver::class,
@@ -181,12 +169,14 @@ class TransformerFactory
                     'int' => Casters\IntegerCaster::class,
                 ],
             ],
-            'json' => [
-                'class' => Resolvers\JsonSchemaResolver::class,
-                'schema' => 'transform://transformations',
+            'null' => [
+                'class' => NullResolver::class,
             ],
-            'equal' => [
-                'class' => Resolvers\CopyResolver::class,
+            'complex' => [
+                'class' => Resolvers\ComplexSchemaResolver::class,
+            ],
+            'array' => [
+                'class' => ArrayResolver::class,
             ],
         ];
     }
