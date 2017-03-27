@@ -29,7 +29,7 @@ class SetterFiller implements FillerInterface
      */
     public function setter(string $field): string
     {
-        $property = ucfirst($field);
+        $property = ucfirst(camel_case($field));
 
         return "set{$property}";
     }
