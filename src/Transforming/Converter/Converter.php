@@ -126,6 +126,9 @@ abstract class Converter implements ContainerAwareInterface, NamespaceAwareInter
             'complex' => [
                 'class' => ConverterResolvers\ComplexResolver::class,
             ],
+            'array' => [
+                'class' => ConverterResolvers\ArrayResolver::class,
+            ],
         ];
     }
 

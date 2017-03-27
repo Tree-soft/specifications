@@ -29,7 +29,7 @@ class ExtractorTest extends TestCase
      * @param string $namespace
      */
     public function testExtract(
-        $expected, $entity, string $schema,
+        $expected, $entity, $schema,
         string $namespace = '\Mildberry\Tests\Specifications\Fixtures'
     ) {
         /**
@@ -83,6 +83,12 @@ class ExtractorTest extends TestCase
                     'id' => 1,
                 ], $objects['complexSimple'], 'schema://entities/complexType',
                 '\Mildberry\Tests\Specifications\Mocks',
+            ],
+            'array' => [
+                [1, 2, 3], [1, 2, 3], $preparator->prepare([
+                    'type' => 'array',
+                    'items' => ['type' => 'integer'],
+                ]),
             ],
         ];
     }
