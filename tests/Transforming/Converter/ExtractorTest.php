@@ -90,6 +90,9 @@ class ExtractorTest extends TestCase
                     'items' => ['type' => 'integer'],
                 ]),
             ],
+            'null-type' => [
+                null, [1, 2, 3], $preparator->prepare(['type' => 'null']),
+            ],
         ];
     }
 

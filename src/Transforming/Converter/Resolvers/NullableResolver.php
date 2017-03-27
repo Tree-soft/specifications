@@ -2,6 +2,8 @@
 
 namespace Mildberry\Specifications\Transforming\Converter\Resolvers;
 
+use Mildberry\Specifications\Generators\TypeExtractor;
+
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
@@ -22,11 +24,9 @@ class NullableResolver extends AbstractResolver
      * @param $data
      *
      * @return bool
-     *
-     * @internal param string $property
      */
     public function isNull($data): bool
     {
-        return is_null($data);
+        return is_null($data) || (isset($this->schema->type) && ($this->schema->type == TypeExtractor::NULL));
     }
 }
