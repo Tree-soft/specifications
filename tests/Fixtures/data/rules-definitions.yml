@@ -4,6 +4,12 @@ Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\Co
       - configure:
         - ['expr<current()>']
 
+Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation:
+  default_t:
+    __calls:
+      - configure:
+        - [[]]
+
 
 Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule:
   copy:
@@ -27,3 +33,9 @@ Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule:
       - '@const_t1'
       - '@const_t2'
       - '@const_t3'
+
+  default:
+    from: '&'
+    to: '&'
+    transformations:
+      - '@default_t'

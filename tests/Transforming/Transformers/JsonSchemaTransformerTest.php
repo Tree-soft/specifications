@@ -227,6 +227,13 @@ class JsonSchemaTransformerTest extends TestCase
                     ['>', 'ext2'],
                 ],
             ],
+            'default' => [
+                $data['default'], [
+                    ['<', '&'],
+                    ['default', []],
+                    ['>', '&'],
+                ],
+            ],
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace Mildberry\Specifications\Transforming\Transformers;
 
+use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
 use Mildberry\Specifications\Transforming\TransformerFactory;
 
 /**
@@ -22,6 +23,8 @@ class ArrayTransformer extends AbstractTransformer
     /**
      * @param array $from
      * @param array $to
+     *
+     * @throws ProhibitedTransformationException
      *
      * @return mixed
      */

@@ -10,6 +10,7 @@ use Mildberry\Specifications\Schema\LaravelFactory;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
+use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
 use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
 use RuntimeException;
@@ -58,6 +59,7 @@ class JsonSchemaTransformer extends AbstractTransformer
      */
     private $transformations = [
         'const' => ConstTransformation::class,
+        'default' => DefaultTransformation::class,
     ];
 
     /**
