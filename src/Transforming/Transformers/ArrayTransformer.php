@@ -30,6 +30,19 @@ class ArrayTransformer extends AbstractTransformer
      */
     public function transform($from, $to = null)
     {
+        if (!is_array($from)) {
+            /**
+             * @var ProhibitedTransformationException $exception
+             */
+            $exception = $this->container->make(ProhibitedTransformationException::class);
+
+            $exception
+                ->setFrom($from)
+                ->setTo($to);
+
+            throw $exception;
+        }
+        
         /**
          * @var TransformerFactory $factory
          */
