@@ -62,7 +62,9 @@ class ObjectResolver extends ParentObjectResolver
      */
     public function isObject($data): bool
     {
-        return is_object($data) && $this->getSchema()->type == 'object';
+        $schema = $this->getSchema();
+
+        return is_object($data) && isset($schema->type) && ($schema->type == 'object');
     }
 
     /**

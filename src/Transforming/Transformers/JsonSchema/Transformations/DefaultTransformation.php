@@ -35,7 +35,7 @@ class DefaultTransformation extends AbstractTransformation
             $default = clone $from;
 
             $default
-                ->setValue($from->getValue() ?? $this->default)
+                ->setValue($fromValue ?? $this->default)
                 ->setSchema($this->schema ?? $value->getSchema());
         }
 

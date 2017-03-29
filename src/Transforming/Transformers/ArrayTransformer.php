@@ -42,7 +42,7 @@ class ArrayTransformer extends AbstractTransformer
 
             throw $exception;
         }
-        
+
         /**
          * @var TransformerFactory $factory
          */
