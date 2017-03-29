@@ -31,9 +31,21 @@ class DefaultTransformationTest extends TestCase
             $value, $schema,
         ]);
 
-        $this->assertEquals($expected, $this->transformation->apply($from, $to, function ($from) {
-            return $from;
-        }));
+        $handled = false;
+
+        $this->assertEquals(
+            $expected,
+            $this->transformation->apply(
+                $from, $to, function ($from, $value) use (&$handled, $to) {
+                    $this->assertEquals($value, $to);
+                    $handled = true;
+
+                    return $from;
+                }
+            )
+        );
+
+        $this->assertTrue($handled);
     }
 
     /**

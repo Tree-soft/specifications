@@ -28,13 +28,18 @@ class DefaultTransformation extends AbstractTransformation
      */
     public function apply(ValueDescriptor $from, ValueDescriptor $value, $next): ValueDescriptor
     {
-        $default = clone $from;
+        $fromValue = $from->getValue();
+        $default = null;
 
-        $default
-            ->setValue($from->getValue() ?? $this->default)
-            ->setSchema($this->schema ?? $value->getSchema());
+        if (is_null($fromValue)) {
+            $default = clone $from;
 
-        return $default;
+            $default
+                ->setValue($from->getValue() ?? $this->default)
+                ->setSchema($this->schema ?? $value->getSchema());
+        }
+
+        return $next($default ?? $from, $value);
     }
 
     /**
