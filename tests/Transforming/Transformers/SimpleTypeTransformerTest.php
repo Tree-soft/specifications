@@ -1,12 +1,12 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\BooleanCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\FloatCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\IntegerCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
-use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleType\Casters\BooleanCaster;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleType\Casters\FloatCaster;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleType\Casters\IntegerCaster;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleType\Casters\StringCaster;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

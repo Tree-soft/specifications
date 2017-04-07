@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks;
+namespace TreeSoft\Tests\Specifications\Mocks;
 
-use Mildberry\Specifications\Core\Interfaces\CacheInterface;
-use Mildberry\Specifications\Support\Testing\CallsTrait;
+use TreeSoft\Specifications\Core\Interfaces\CacheInterface;
+use TreeSoft\Specifications\Support\Testing\CallsTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

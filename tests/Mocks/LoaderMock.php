@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks;
+namespace TreeSoft\Tests\Specifications\Mocks;
 
 use League\JsonGuard\Loader as LoaderInterface;
 use League\JsonGuard;

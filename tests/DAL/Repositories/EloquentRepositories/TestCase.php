@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\DAL\Repositories\EloquentRepositories;
+namespace TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories;
 
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Transforming\Converter\Extractor;
-use Mildberry\Tests\Specifications\DAL\TestCase as ParentTestCase;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Transforming\Converter\Extractor;
+use TreeSoft\Tests\Specifications\DAL\TestCase as ParentTestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

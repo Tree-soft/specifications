@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Core\Services;
+namespace TreeSoft\Specifications\Core\Services;
 
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;

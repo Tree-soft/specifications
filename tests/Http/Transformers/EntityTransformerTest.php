@@ -1,15 +1,15 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Http\Transformers;
+namespace TreeSoft\Tests\Specifications\Http\Transformers;
 
-use Mildberry\Specifications\Http\Requests\Request;
-use Mildberry\Specifications\Http\Transformers\EntityTransformer;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Transforming\Resolvers\JsonSchemaResolver;
-use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
-use Mildberry\Tests\Specifications\Http\TestCase;
+use TreeSoft\Specifications\Http\Requests\Request;
+use TreeSoft\Specifications\Http\Transformers\EntityTransformer;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Transforming\Resolvers\JsonSchemaResolver;
+use TreeSoft\Tests\Specifications\Fixtures\Entities\Client;
+use TreeSoft\Tests\Specifications\Http\TestCase;
 use Illuminate\Config\Repository as Config;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -50,7 +50,7 @@ class EntityTransformerTest extends TestCase
         return [
             'root' => ['schema://entities/client', '\Entities\Client'],
             'namespace' => ['schema://entities/client', '\Core\Entities\Client', '\Core'],
-            'client' => ['schema://entities/client', Client::class, '\Mildberry\Tests\Specifications\Fixtures'],
+            'client' => ['schema://entities/client', Client::class, '\TreeSoft\Tests\Specifications\Fixtures'],
         ];
     }
 
@@ -61,7 +61,7 @@ class EntityTransformerTest extends TestCase
          */
         $config = $this->app->make(Config::class);
 
-        $namespace = '\Mildberry\Tests\Specifications\Fixtures';
+        $namespace = '\TreeSoft\Tests\Specifications\Fixtures';
 
         $config->set('specifications.namespace', $namespace);
 
@@ -110,7 +110,7 @@ class EntityTransformerTest extends TestCase
 
         $config = $this->app->make(Config::class);
 
-        $namespace = '\Mildberry\Tests\Specifications\Fixtures';
+        $namespace = '\TreeSoft\Tests\Specifications\Fixtures';
         $config->set('specifications.namespace', $namespace);
 
         $this->transformer

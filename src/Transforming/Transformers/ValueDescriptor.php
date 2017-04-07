@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers;
+namespace TreeSoft\Specifications\Transforming\Transformers;
 
 /**
  * Class ValueDescriptor.

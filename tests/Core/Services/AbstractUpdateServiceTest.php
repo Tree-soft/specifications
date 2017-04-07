@@ -1,15 +1,15 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Core\Services;
+namespace TreeSoft\Tests\Specifications\Core\Services;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
-use Mildberry\Specifications\Core\Interfaces\RepositoryInterface;
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
-use Mildberry\Specifications\Core\Services\AbstractService;
-use Mildberry\Specifications\Core\Services\AbstractUpdateService;
-use Mildberry\Tests\Specifications\Core\TestCase;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Core\Services\AbstractService;
+use TreeSoft\Specifications\Core\Services\AbstractUpdateService;
+use TreeSoft\Tests\Specifications\Core\TestCase;
 use Exception;
-use Mildberry\Specifications\Support\Testing\DAL\TransactionMock;
+use TreeSoft\Specifications\Support\Testing\DAL\TransactionMock;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

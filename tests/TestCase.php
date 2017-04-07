@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Tests\Specifications;
+namespace TreeSoft\Tests\Specifications;
 
 use Illuminate\Foundation\Application;
-use Mildberry\Specifications\Providers\SpecificationsProvider;
-use Mildberry\Specifications\Support\Testing\BootstrapTestTrait;
-use Mildberry\Specifications\Support\Testing\FixtureLoaderTrait;
+use TreeSoft\Specifications\Providers\SpecificationsProvider;
+use TreeSoft\Specifications\Support\Testing\BootstrapTestTrait;
+use TreeSoft\Specifications\Support\Testing\FixtureLoaderTrait;
 use Orchestra\Testbench\TestCase as ParentTestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 

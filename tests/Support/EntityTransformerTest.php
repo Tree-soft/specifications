@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace TreeSoft\Tests\Specifications\Support;
 
-use Mildberry\Specifications\Support\Transformers\EntityTransformer;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Support\Transformers\EntityTransformer;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

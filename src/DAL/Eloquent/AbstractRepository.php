@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\DAL\Eloquent;
+namespace TreeSoft\Specifications\DAL\Eloquent;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryInterface;
-use Mildberry\Specifications\DAL\Transformers\EntityTransformerFactory;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
+use TreeSoft\Specifications\DAL\Transformers\EntityTransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 

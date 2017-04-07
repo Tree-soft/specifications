@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\DAL\Transformers;
+namespace TreeSoft\Specifications\DAL\Transformers;
 
-use Mildberry\Specifications\DAL\Eloquent\Model;
-use Mildberry\Specifications\Support\Transformers\EntityTransformer as ParentTransformer;
-use Mildberry\Specifications\Transforming\Converter\Extractor;
-use Mildberry\Specifications\Transforming\Converter\Populator;
+use TreeSoft\Specifications\DAL\Eloquent\Model;
+use TreeSoft\Specifications\Support\Transformers\EntityTransformer as ParentTransformer;
+use TreeSoft\Specifications\Transforming\Converter\Extractor;
+use TreeSoft\Specifications\Transforming\Converter\Populator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

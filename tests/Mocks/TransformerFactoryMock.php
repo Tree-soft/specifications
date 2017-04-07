@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks;
+namespace TreeSoft\Tests\Specifications\Mocks;
 
-use Mildberry\Specifications\Transforming\TransformerFactory;
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
 use PHPUnit\Framework\TestCase;
 
 /**

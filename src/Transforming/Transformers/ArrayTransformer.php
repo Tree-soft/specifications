@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers;
+namespace TreeSoft\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
-use Mildberry\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Exceptions\ProhibitedTransformationException;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
 
 /**
  * Class ArrayTransformer.

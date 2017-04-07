@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Transformers;
+namespace TreeSoft\Specifications\Support\Transformers;
 
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
-use Mildberry\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 

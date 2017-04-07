@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace TreeSoft\Tests\Specifications\Support;
 
-use Mildberry\Specifications\Support\OrderedList;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Support\OrderedList;
+use TreeSoft\Tests\Specifications\TestCase;
 
 class OrderedListTest extends TestCase
 {

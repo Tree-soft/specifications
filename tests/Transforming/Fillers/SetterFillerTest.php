@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Fillers;
+namespace TreeSoft\Tests\Specifications\Transforming\Fillers;
 
-use Mildberry\Specifications\Transforming\Fillers\SetterFiller;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Transforming\Fillers\SetterFiller;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * Class SetterFillerTest.

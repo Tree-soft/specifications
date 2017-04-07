@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations;
+namespace TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations;
 
-use Mildberry\Specifications\Transforming\TransformerFactory;
-use Mildberry\Specifications\Transforming\Transformers\ValueDescriptor;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Transforming\Transformers\ValueDescriptor;
 
 /**
  * Class EnumTransformation.

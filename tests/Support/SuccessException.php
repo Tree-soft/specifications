@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace TreeSoft\Tests\Specifications\Support;
 
 use Exception;
 

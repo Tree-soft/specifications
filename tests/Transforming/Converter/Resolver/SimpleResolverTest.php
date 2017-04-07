@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Converter\Resolver;
+namespace TreeSoft\Tests\Specifications\Transforming\Converter\Resolver;
 
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\SimpleResolver;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\SimpleResolver;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * Class SimpleResolverTest.

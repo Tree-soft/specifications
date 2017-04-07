@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Core\Services;
+namespace TreeSoft\Specifications\Core\Services;
 
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
-use Mildberry\Specifications\Core\Services\Traits\TransactionTrait;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Core\Services\Traits\TransactionTrait;
 use Throwable;
 
 /**

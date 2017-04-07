@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter\Resolvers;
+namespace TreeSoft\Specifications\Transforming\Converter\Resolvers;
 
-use Mildberry\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Generators\TypeExtractor;
 
 /**
  * Class ArrayResolver.

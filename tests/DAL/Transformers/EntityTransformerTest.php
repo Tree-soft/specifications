@@ -1,18 +1,18 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\DAL\Transformers;
+namespace TreeSoft\Tests\Specifications\DAL\Transformers;
 
-use Mildberry\Specifications\DAL\Transformers\EntityTransformer;
-use Mildberry\Specifications\Generators\TypeExtractor;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Support\Testing\CallsTrait;
-use Mildberry\Specifications\Transforming\TransformerFactory;
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Tests\Specifications\DAL\Repositories\EloquentRepositories\TestCase;
-use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
-use Mildberry\Tests\Specifications\Mocks\DAL\Models\ModelMock;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\Mocks\TransformerFactoryMock;
+use TreeSoft\Specifications\DAL\Transformers\EntityTransformer;
+use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Support\Testing\CallsTrait;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories\TestCase;
+use TreeSoft\Tests\Specifications\Mocks\DAL\Entities\Client;
+use TreeSoft\Tests\Specifications\Mocks\DAL\Models\ModelMock;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\Mocks\TransformerFactoryMock;
 use Illuminate\Contracts\Config\Repository as Config;
 
 /**
@@ -38,7 +38,7 @@ class EntityTransformerTest extends TestCase
 
         $this->transformer
             ->setClass(Client::class)
-            ->setNamespace('\Mildberry\Tests\Specifications\Mocks');
+            ->setNamespace('\TreeSoft\Tests\Specifications\Mocks');
 
         $transformer = new class() extends AbstractTransformer {
             /**
@@ -84,7 +84,7 @@ class EntityTransformerTest extends TestCase
 
         $this->transformer
             ->setClass(Client::class)
-            ->setNamespace('\Mildberry\Tests\Specifications\Mocks');
+            ->setNamespace('\TreeSoft\Tests\Specifications\Mocks');
 
         $transformer = new class() extends AbstractTransformer {
             use CallsTrait;
@@ -143,7 +143,7 @@ class EntityTransformerTest extends TestCase
          */
         $config = $this->app->make(Config::class);
 
-        $config->set('specifications.namespace', '\Mildberry\Tests\Specifications\Mocks');
+        $config->set('specifications.namespace', '\TreeSoft\Tests\Specifications\Mocks');
 
         $this->factory = $this->app->make(TransformerFactoryMock::class);
 

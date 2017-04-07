@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Fillers;
+namespace TreeSoft\Specifications\Transforming\Fillers;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Resolvers;
+namespace TreeSoft\Specifications\Transforming\Resolvers;
 
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchemaTransformer;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

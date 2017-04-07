@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Transforming\Transformers\NullTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\NullTransformer;
 
 /**
  * Class NullResolverTest.

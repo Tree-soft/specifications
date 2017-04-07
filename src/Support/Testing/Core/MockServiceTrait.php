@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Testing\Core;
+namespace TreeSoft\Specifications\Support\Testing\Core;
 
-use Mildberry\Specifications\Core\Services\AbstractService;
+use TreeSoft\Specifications\Core\Services\AbstractService;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_Exception;
 use Illuminate\Container\Container;

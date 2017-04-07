@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Generators;
+namespace TreeSoft\Specifications\Generators;
 
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;

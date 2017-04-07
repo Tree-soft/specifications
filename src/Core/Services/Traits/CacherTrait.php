@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Core\Services\Traits;
+namespace TreeSoft\Specifications\Core\Services\Traits;
 
-use Mildberry\Specifications\Core\Interfaces\CacheInterface;
+use TreeSoft\Specifications\Core\Interfaces\CacheInterface;
 use Throwable;
 
 /**

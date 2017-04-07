@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Schema;
+namespace TreeSoft\Tests\Specifications\Schema;
 
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -23,7 +23,7 @@ class ValidatorTest extends TestCase
             'name' => 'Sergei',
             'phone' => '+7-913-...',
             'company' => [
-                'name' => 'Mildberry',
+                'name' => 'TreeSoft',
             ],
         ], 'schema://entities/client');
 

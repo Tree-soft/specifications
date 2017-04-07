@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter\Resolvers;
+namespace TreeSoft\Specifications\Transforming\Converter\Resolvers;
 
-use Mildberry\Specifications\Exceptions\ComplexPopulatorException;
-use Mildberry\Specifications\Exceptions\PopulatorException;
-use Mildberry\Specifications\Generators\TypeExtractor;
-use Mildberry\Specifications\Transforming\Converter\Converter;
+use TreeSoft\Specifications\Exceptions\ComplexPopulatorException;
+use TreeSoft\Specifications\Exceptions\PopulatorException;
+use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Transforming\Converter\Converter;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

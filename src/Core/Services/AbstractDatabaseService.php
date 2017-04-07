@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Core\Services;
+namespace TreeSoft\Specifications\Core\Services;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

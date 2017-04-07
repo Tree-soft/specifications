@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace;
+namespace TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace;
 
 /**
  * Interface NamespaceAwareInterface.

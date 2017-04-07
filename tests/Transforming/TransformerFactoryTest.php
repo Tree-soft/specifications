@@ -1,20 +1,20 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming;
+namespace TreeSoft\Tests\Specifications\Transforming;
 
-use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
-use Mildberry\Specifications\Exceptions\ResolverNotFoundException;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\TransformerFactory;
-use Mildberry\Specifications\Transforming\Transformers\ArrayTransformer;
-use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
-use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
-use Mildberry\Specifications\Transforming\Transformers\NullTransformer;
-use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Exceptions\ProhibitedTransformationException;
+use TreeSoft\Specifications\Exceptions\ResolverNotFoundException;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Transforming\Transformers\ArrayTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\CopyTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchemaTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\NullTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleTypeTransformer;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Exceptions;
+namespace TreeSoft\Specifications\Exceptions;
 
 use Exception;
-use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
+use TreeSoft\Specifications\Generators\ClassBuilders\TypeExtractor;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 

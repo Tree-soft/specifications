@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Core\Interfaces;
+namespace TreeSoft\Specifications\Core\Interfaces;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

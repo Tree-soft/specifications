@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Testing;
+namespace TreeSoft\Specifications\Support\Testing;
 
-use Mildberry\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Support\DataPreparator;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Component\Yaml\Yaml;
 

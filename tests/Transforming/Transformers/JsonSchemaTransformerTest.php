@@ -1,18 +1,18 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers;
 
 use DeepCopy\DeepCopy;
-use Mildberry\Specifications\Exceptions\TransformationNotFoundException;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\TransformerFactory;
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchemaTransformer;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\Support\SuccessException;
+use TreeSoft\Specifications\Exceptions\TransformationNotFoundException;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchemaTransformer;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\Support\SuccessException;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

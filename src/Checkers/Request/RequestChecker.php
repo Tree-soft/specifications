@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Checkers\Request;
+namespace TreeSoft\Specifications\Checkers\Request;
 
-use Mildberry\Specifications\Exceptions\EntityValidationException;
-use Mildberry\Specifications\Objects\RequestInterface;
-use Mildberry\Specifications\Checkers\AbstractChecker;
+use TreeSoft\Specifications\Exceptions\EntityValidationException;
+use TreeSoft\Specifications\Objects\RequestInterface;
+use TreeSoft\Specifications\Checkers\AbstractChecker;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Schema;
+namespace TreeSoft\Tests\Specifications\Schema;
 
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

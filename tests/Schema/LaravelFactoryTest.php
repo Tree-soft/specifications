@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Schema;
+namespace TreeSoft\Tests\Specifications\Schema;
 
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Schema\TransformerLoader;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Schema\TransformerLoader;
+use TreeSoft\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 
 /**

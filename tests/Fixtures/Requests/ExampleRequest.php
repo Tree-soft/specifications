@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Fixtures\Requests;
+namespace TreeSoft\Tests\Specifications\Fixtures\Requests;
 
-use Mildberry\Specifications\Http\Requests\Request;
+use TreeSoft\Specifications\Http\Requests\Request;
 
 /**
  * @author Json-schema request generator

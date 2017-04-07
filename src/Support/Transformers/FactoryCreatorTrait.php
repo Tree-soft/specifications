@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Transformers;
+namespace TreeSoft\Specifications\Support\Transformers;
 
 use Illuminate\Contracts\Config\Repository as Config;
 

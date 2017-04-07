@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Generators\ClassBuilders;
+namespace TreeSoft\Specifications\Generators\ClassBuilders;
 
-use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocClass;
-use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocFunction;
-use Mildberry\Specifications\Generators\PhpDocGenerators\PhpDocProperty;
-use Mildberry\Specifications\Support\Printer;
+use TreeSoft\Specifications\Generators\PhpDocGenerators\PhpDocClass;
+use TreeSoft\Specifications\Generators\PhpDocGenerators\PhpDocFunction;
+use TreeSoft\Specifications\Generators\PhpDocGenerators\PhpDocProperty;
+use TreeSoft\Specifications\Support\Printer;
 use PhpParser\Builder\Class_;
 use PhpParser\Builder\Method;
 use PhpParser\Builder\Property;

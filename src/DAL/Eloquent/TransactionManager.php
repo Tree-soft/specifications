@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\DAL\Eloquent;
+namespace TreeSoft\Specifications\DAL\Eloquent;
 
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
 use Rnr\Resolvers\Interfaces\DatabaseAwareInterface;
 use Rnr\Resolvers\Traits\DatabaseAwareTrait;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Core\Services\Traits;
+namespace TreeSoft\Specifications\Core\Services\Traits;
 
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

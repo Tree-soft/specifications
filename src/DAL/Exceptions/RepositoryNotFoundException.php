@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\DAL\Exceptions;
+namespace TreeSoft\Specifications\DAL\Exceptions;
 
 use Exception;
 

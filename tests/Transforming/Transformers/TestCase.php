@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Tests\Specifications\TestCase as ParentTestCase;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Tests\Specifications\TestCase as ParentTestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

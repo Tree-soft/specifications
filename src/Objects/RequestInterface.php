@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Objects;
+namespace TreeSoft\Specifications\Objects;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

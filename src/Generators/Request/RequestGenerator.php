@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Generators\Request;
+namespace TreeSoft\Specifications\Generators\Request;
 
-use Mildberry\Specifications\Generators\AbstractTemplateGenerator;
-use Mildberry\Specifications\Http\Requests\Request;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
+use TreeSoft\Specifications\Generators\AbstractTemplateGenerator;
+use TreeSoft\Specifications\Http\Requests\Request;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

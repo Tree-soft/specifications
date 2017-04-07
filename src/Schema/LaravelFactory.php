@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Schema;
+namespace TreeSoft\Specifications\Schema;
 
 use League\JsonGuard\Dereferencer;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;

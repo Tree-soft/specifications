@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Resolvers\Transform;
+namespace TreeSoft\Specifications\Support\Resolvers\Transform;
 
-use Mildberry\Specifications\Http\Transformers\EntityTransformerFactory;
+use TreeSoft\Specifications\Http\Transformers\EntityTransformerFactory;
 use Rnr\Resolvers\Resolvers\AbstractResolver;
 
 /**

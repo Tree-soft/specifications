@@ -1,12 +1,12 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Core\Services;
+namespace TreeSoft\Tests\Specifications\Core\Services;
 
-use Mildberry\Specifications\Core\Interfaces\CacheInterface;
-use Mildberry\Specifications\Core\Services\AbstractCacheService;
-use Mildberry\Specifications\Core\Services\AbstractService;
-use Mildberry\Tests\Specifications\Core\TestCase;
-use Mildberry\Tests\Specifications\Mocks\CacheMock;
+use TreeSoft\Specifications\Core\Interfaces\CacheInterface;
+use TreeSoft\Specifications\Core\Services\AbstractCacheService;
+use TreeSoft\Specifications\Core\Services\AbstractService;
+use TreeSoft\Tests\Specifications\Core\TestCase;
+use TreeSoft\Tests\Specifications\Mocks\CacheMock;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

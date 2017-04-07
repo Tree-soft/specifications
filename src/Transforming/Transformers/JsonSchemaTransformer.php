@@ -1,18 +1,18 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers;
+namespace TreeSoft\Specifications\Transforming\Transformers;
 
 use Illuminate\Pipeline\Pipeline;
-use Mildberry\Specifications\Exceptions\TransformationDefinitionException;
-use Mildberry\Specifications\Exceptions\TransformationNotFoundException;
-use Mildberry\Specifications\Generators\TypeExtractor;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
+use TreeSoft\Specifications\Exceptions\TransformationDefinitionException;
+use TreeSoft\Specifications\Exceptions\TransformationNotFoundException;
+use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
 use RuntimeException;
 
 /**

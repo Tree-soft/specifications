@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Fixtures\Entities;
+namespace TreeSoft\Tests\Specifications\Fixtures\Entities;
 
 class UnderscoreCompany
 {

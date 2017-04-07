@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter;
+namespace TreeSoft\Specifications\Transforming\Converter;
 
-use Mildberry\Specifications\Transforming\Converter\Resolvers\Extractor\ObjectResolver;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\Extractor\ObjectResolver;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

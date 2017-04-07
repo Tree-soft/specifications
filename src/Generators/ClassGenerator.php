@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Generators;
+namespace TreeSoft\Specifications\Generators;
 
-use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
-use Mildberry\Specifications\Generators\ClassBuilders\Factory;
+use TreeSoft\Specifications\Exceptions\UndefinedSchemaIdException;
+use TreeSoft\Specifications\Generators\ClassBuilders\Factory;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

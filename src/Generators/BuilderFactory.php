@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Generators;
+namespace TreeSoft\Specifications\Generators;
 
-use Mildberry\Specifications\Exceptions\UnknownTypeException;
+use TreeSoft\Specifications\Exceptions\UnknownTypeException;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 

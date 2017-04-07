@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\DAL;
+namespace TreeSoft\Tests\Specifications\DAL;
 
-use Mildberry\Tests\Specifications\TestCase as ParentTestCase;
+use TreeSoft\Tests\Specifications\TestCase as ParentTestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

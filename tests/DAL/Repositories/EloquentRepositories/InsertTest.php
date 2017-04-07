@@ -1,14 +1,14 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\DAL\Repositories\EloquentRepositories;
+namespace TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories;
 
-use Mildberry\Specifications\DAL\Eloquent\Model;
-use Mildberry\Specifications\DAL\Eloquent\AbstractRepository;
-use Mildberry\Specifications\DAL\Transformers\EntityTransformer;
-use Mildberry\Specifications\DAL\Transformers\EntityTransformerFactory;
-use Mildberry\Specifications\Support\Testing\CallsTrait;
-use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
-use Mildberry\Tests\Specifications\Mocks\DAL\Models\ModelMock;
+use TreeSoft\Specifications\DAL\Eloquent\Model;
+use TreeSoft\Specifications\DAL\Eloquent\AbstractRepository;
+use TreeSoft\Specifications\DAL\Transformers\EntityTransformer;
+use TreeSoft\Specifications\DAL\Transformers\EntityTransformerFactory;
+use TreeSoft\Specifications\Support\Testing\CallsTrait;
+use TreeSoft\Tests\Specifications\Mocks\DAL\Entities\Client;
+use TreeSoft\Tests\Specifications\Mocks\DAL\Models\ModelMock;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

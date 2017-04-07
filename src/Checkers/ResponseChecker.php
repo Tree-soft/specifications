@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Checkers;
+namespace TreeSoft\Specifications\Checkers;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter\Resolvers\Populator;
+namespace TreeSoft\Specifications\Transforming\Converter\Resolvers\Populator;
 
-use Mildberry\Specifications\Generators\TypeExtractor;
-use Mildberry\Specifications\Transforming\Converter\Converter;
-use Mildberry\Specifications\Transforming\Fillers\FillerInterface;
-use Mildberry\Specifications\Transforming\Fillers\SetterFiller;
-use Mildberry\Specifications\Transforming\Converter\Populator;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\ObjectResolver as ParentObjectResolver;
+use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Transforming\Converter\Converter;
+use TreeSoft\Specifications\Transforming\Fillers\FillerInterface;
+use TreeSoft\Specifications\Transforming\Fillers\SetterFiller;
+use TreeSoft\Specifications\Transforming\Converter\Populator;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\ObjectResolver as ParentObjectResolver;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

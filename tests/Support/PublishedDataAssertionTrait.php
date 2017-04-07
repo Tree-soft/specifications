@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace TreeSoft\Tests\Specifications\Support;
 
-use Mildberry\Specifications\Support\PublisherInterface;
+use TreeSoft\Specifications\Support\PublisherInterface;
 use ArrayAccess;
 
 /**

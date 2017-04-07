@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Core\Services;
+namespace TreeSoft\Tests\Specifications\Core\Services;
 
-use Mildberry\Specifications\Core\Services\AbstractService;
-use Mildberry\Tests\Specifications\Core\TestCase;
+use TreeSoft\Specifications\Core\Services\AbstractService;
+use TreeSoft\Tests\Specifications\Core\TestCase;
 use Exception;
 use Throwable;
 

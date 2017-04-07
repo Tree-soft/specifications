@@ -1,22 +1,22 @@
 <?php
 
-namespace Mildberry\Specifications\Providers;
+namespace TreeSoft\Specifications\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
-use Mildberry\Specifications\Generators\OutputInterface;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceResolver;
-use Mildberry\Specifications\Support\Resolvers\Transform\TransformAwareInterface;
-use Mildberry\Specifications\Support\Resolvers\Transform\TransformResolver;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Checkers\AbstractChecker;
-use Mildberry\Specifications\Schema\TransformerLoader;
-use Mildberry\Specifications\Support\FileWriter;
-use Mildberry\Specifications\Support\PublisherInterface;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Generators\OutputInterface;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceResolver;
+use TreeSoft\Specifications\Support\Resolvers\Transform\TransformAwareInterface;
+use TreeSoft\Specifications\Support\Resolvers\Transform\TransformResolver;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Checkers\AbstractChecker;
+use TreeSoft\Specifications\Schema\TransformerLoader;
+use TreeSoft\Specifications\Support\FileWriter;
+use TreeSoft\Specifications\Support\PublisherInterface;
 use Illuminate\Contracts\Config\Repository as Config;
 use Rnr\Resolvers\Manage\ResolverConfigurator;
 use Rnr\Resolvers\Providers\ResolversProvider;

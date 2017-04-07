@@ -1,12 +1,12 @@
 <?php
 
-namespace Mildberry\Specifications\Console;
+namespace TreeSoft\Specifications\Console;
 
 use Illuminate\Console\Command;
-use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
-use Mildberry\Specifications\Generators\ClassGenerator;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Support\FileWriter;
+use TreeSoft\Specifications\Generators\ClassBuilders\TypeExtractor;
+use TreeSoft\Specifications\Generators\ClassGenerator;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Support\FileWriter;
 use Rnr\Resolvers\Interfaces\ConfigAwareInterface;
 use Rnr\Resolvers\Traits\ConfigAwareTrait;
 

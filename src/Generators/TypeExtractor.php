@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Generators;
+namespace TreeSoft\Specifications\Generators;
 
-use Mildberry\Specifications\Exceptions\SchemaExtractionException;
-use Mildberry\Specifications\Exceptions\UndefinedSchemaIdException;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
+use TreeSoft\Specifications\Exceptions\SchemaExtractionException;
+use TreeSoft\Specifications\Exceptions\UndefinedSchemaIdException;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

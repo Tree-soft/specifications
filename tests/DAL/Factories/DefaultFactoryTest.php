@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\DAL\Factories;
+namespace TreeSoft\Tests\Specifications\DAL\Factories;
 
-use Mildberry\Specifications\DAL\Exceptions\RepositoryNotFoundException;
-use Mildberry\Specifications\DAL\Factories\DefaultFactory;
-use Mildberry\Tests\Specifications\DAL\TestCase;
+use TreeSoft\Specifications\DAL\Exceptions\RepositoryNotFoundException;
+use TreeSoft\Specifications\DAL\Factories\DefaultFactory;
+use TreeSoft\Tests\Specifications\DAL\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
-use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
-use Mildberry\Tests\Specifications\Mocks\Repositories\ClientRepository;
+use TreeSoft\Tests\Specifications\Fixtures\Entities\Client;
+use TreeSoft\Tests\Specifications\Mocks\Repositories\ClientRepository;
 
 
 /**

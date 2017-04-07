@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks\DAL\Entities;
+namespace TreeSoft\Tests\Specifications\Mocks\DAL\Entities;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Console;
+namespace TreeSoft\Specifications\Console;
 
 use Illuminate\Console\Command;
-use Mildberry\Specifications\Generators\Request\RequestGenerator;
-use Mildberry\Specifications\Support\FileWriter;
+use TreeSoft\Specifications\Generators\Request\RequestGenerator;
+use TreeSoft\Specifications\Support\FileWriter;
 use Rnr\Resolvers\Interfaces\ConfigAwareInterface;
 use Rnr\Resolvers\Traits\ConfigAwareTrait;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Core\Services;
+namespace TreeSoft\Specifications\Core\Services;
 
-use Mildberry\Specifications\Core\Interfaces\CacheInterface;
-use Mildberry\Specifications\Core\Services\Traits\CacherTrait;
+use TreeSoft\Specifications\Core\Interfaces\CacheInterface;
+use TreeSoft\Specifications\Core\Services\Traits\CacherTrait;
 use Throwable;
 
 /**

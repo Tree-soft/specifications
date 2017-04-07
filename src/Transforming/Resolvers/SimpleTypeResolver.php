@@ -1,12 +1,12 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Resolvers;
+namespace TreeSoft\Specifications\Transforming\Resolvers;
 
-use Mildberry\Specifications\Exceptions\SchemaExtractionException;
-use Mildberry\Specifications\Generators\TypeExtractor;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Specifications\Transforming\Transformers\SimpleTypeTransformer;
+use TreeSoft\Specifications\Exceptions\SchemaExtractionException;
+use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleTypeTransformer;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

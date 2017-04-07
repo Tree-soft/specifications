@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\CopyTransformer;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

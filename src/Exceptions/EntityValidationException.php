@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Exceptions;
+namespace TreeSoft\Specifications\Exceptions;
 
 use Exception;
 

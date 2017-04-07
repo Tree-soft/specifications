@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Http\Handler;
+namespace TreeSoft\Specifications\Http\Handler;
 
 use Illuminate\Foundation\Exceptions\Handler;
 use Exception;
-use Mildberry\Specifications\Exceptions\EntityValidationException;
+use TreeSoft\Specifications\Exceptions\EntityValidationException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**

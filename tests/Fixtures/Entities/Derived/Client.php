@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Fixtures\Entities\Derived;
+namespace TreeSoft\Tests\Specifications\Fixtures\Entities\Derived;
 
-use Mildberry\Tests\Specifications\Fixtures\Entities\Client as ParentClient;
+use TreeSoft\Tests\Specifications\Fixtures\Entities\Client as ParentClient;
 
 /**
  * @author Json-schema class generator

@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers\JsonSchema\Transformations;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers\JsonSchema\Transformations;
 
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation;
-use Mildberry\Specifications\Transforming\Transformers\ValueDescriptor;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation;
+use TreeSoft\Specifications\Transforming\Transformers\ValueDescriptor;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * Class DefaultTransformationTest.

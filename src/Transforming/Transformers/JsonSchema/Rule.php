@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema;
+namespace TreeSoft\Specifications\Transforming\Transformers\JsonSchema;
 
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
-use Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
 
 /**
  * Class Rule.

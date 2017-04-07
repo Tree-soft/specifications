@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter;
+namespace TreeSoft\Specifications\Transforming\Converter;
 
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator\DateTimeResolver;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator\ObjectResolver;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\Populator\DateTimeResolver;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\Populator\ObjectResolver;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

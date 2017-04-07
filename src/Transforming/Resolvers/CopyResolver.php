@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Resolvers;
+namespace TreeSoft\Specifications\Transforming\Resolvers;
 
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Specifications\Transforming\Transformers\CopyTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\CopyTransformer;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

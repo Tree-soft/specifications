@@ -1,8 +1,8 @@
-Mildberry\Tests\Specifications\Mocks\Entities\ObjectMock:
+TreeSoft\Tests\Specifications\Mocks\Entities\ObjectMock:
   object:
     id: 5
 
-Mildberry\Tests\Specifications\Mocks\Entities\ComplexType:
+TreeSoft\Tests\Specifications\Mocks\Entities\ComplexType:
   complexSimple:
     id: 1
     object: null

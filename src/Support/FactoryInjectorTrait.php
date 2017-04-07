@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Support;
+namespace TreeSoft\Specifications\Support;
 
-use Mildberry\Specifications\Schema\Factory;
+use TreeSoft\Specifications\Schema\Factory;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

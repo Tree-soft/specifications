@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers;
+namespace TreeSoft\Specifications\Transforming\Transformers;
 
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;

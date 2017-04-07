@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Http\Transformers;
+namespace TreeSoft\Specifications\Http\Transformers;
 
-use Mildberry\Specifications\Http\Requests\Request;
-use Mildberry\Specifications\Transforming\Converter\Extractor;
-use Mildberry\Specifications\Transforming\Converter\Populator;
-use Mildberry\Specifications\Support\Transformers\EntityTransformer as ParentTransformer;
+use TreeSoft\Specifications\Http\Requests\Request;
+use TreeSoft\Specifications\Transforming\Converter\Extractor;
+use TreeSoft\Specifications\Transforming\Converter\Populator;
+use TreeSoft\Specifications\Support\Transformers\EntityTransformer as ParentTransformer;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

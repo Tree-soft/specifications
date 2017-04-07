@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks\Specifications;
+namespace TreeSoft\Tests\Specifications\Mocks\Specifications;
 
-use Mildberry\Specifications\Checkers\Request\RequestChecker;
+use TreeSoft\Specifications\Checkers\Request\RequestChecker;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Testing\DAL;
+namespace TreeSoft\Specifications\Support\Testing\DAL;
 
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
 use PHPUnit\Framework\TestCase;
 
 /**

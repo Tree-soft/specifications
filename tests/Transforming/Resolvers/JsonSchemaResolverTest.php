@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Resolvers;
+namespace TreeSoft\Tests\Specifications\Transforming\Resolvers;
 
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Resolvers\JsonSchemaResolver;
-use Mildberry\Tests\Specifications\Core\TestCase;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Resolvers\JsonSchemaResolver;
+use TreeSoft\Tests\Specifications\Core\TestCase;
 use Generator;
 
 /**

@@ -1,17 +1,17 @@
-Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation:
+TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation:
   const_t{1..3}:
     __calls:
       - configure:
         - ['expr<current()>']
 
-Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation:
+TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation:
   default_t:
     __calls:
       - configure:
         - [[]]
 
 
-Mildberry\Specifications\Transforming\Transformers\JsonSchema\Rule:
+TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule:
   copy:
     from: ext
     to: ext2

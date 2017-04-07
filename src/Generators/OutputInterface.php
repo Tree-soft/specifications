@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Generators;
+namespace TreeSoft\Specifications\Generators;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

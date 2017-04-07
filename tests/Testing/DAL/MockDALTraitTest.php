@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Testing\DAL;
+namespace TreeSoft\Tests\Specifications\Testing\DAL;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
-use Mildberry\Specifications\Support\Testing\DAL\MockDALTrait;
-use Mildberry\Specifications\Support\Testing\DAL\RepositoryFactoryMock;
-use Mildberry\Specifications\Support\Testing\DAL\TransactionMock;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Support\Testing\DAL\MockDALTrait;
+use TreeSoft\Specifications\Support\Testing\DAL\RepositoryFactoryMock;
+use TreeSoft\Specifications\Support\Testing\DAL\TransactionMock;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

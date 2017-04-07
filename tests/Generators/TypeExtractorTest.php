@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Generators;
+namespace TreeSoft\Tests\Specifications\Generators;
 
-use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Tests\Specifications\Mocks\DAL\Entities\Client;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Generators\ClassBuilders\TypeExtractor;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Tests\Specifications\Mocks\DAL\Entities\Client;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 
 /**

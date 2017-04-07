@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers;
+namespace TreeSoft\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
-use Mildberry\Specifications\Generators\TypeExtractor;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Transforming\TransformerFactory;
+use TreeSoft\Specifications\Exceptions\ProhibitedTransformationException;
+use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Transforming\TransformerFactory;
 
 /**
  * Class ComplexSchemaTransformer.

@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Resolvers;
+namespace TreeSoft\Tests\Specifications\Transforming\Resolvers;
 
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Resolvers\CopyResolver;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Resolvers\CopyResolver;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * Class CopyResolverTestCase.

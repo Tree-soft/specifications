@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Http\Transformers;
+namespace TreeSoft\Specifications\Http\Transformers;
 
-use Mildberry\Specifications\Support\Transformers\FactoryCreatorTrait;
+use TreeSoft\Specifications\Support\Transformers\FactoryCreatorTrait;
 use Rnr\Resolvers\Interfaces\ConfigAwareInterface;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ConfigAwareTrait;

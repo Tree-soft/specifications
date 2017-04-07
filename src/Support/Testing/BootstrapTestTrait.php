@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Testing;
+namespace TreeSoft\Specifications\Support\Testing;
 
 use ReflectionClass;
 use ReflectionMethod;

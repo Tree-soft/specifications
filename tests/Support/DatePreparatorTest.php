@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Support;
+namespace TreeSoft\Tests\Specifications\Support;
 
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks\Repositories;
+namespace TreeSoft\Tests\Specifications\Mocks\Repositories;
 
 
 /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Checkers\Request;
+namespace TreeSoft\Specifications\Checkers\Request;
 
-use Mildberry\Specifications\Exceptions\DataValidationException;
-use Mildberry\Specifications\Exceptions\EntityValidationException;
-use Mildberry\Specifications\Checkers\EntityChecker;
-use Mildberry\Specifications\Support\DynamicSchemaInjectorTrait;
+use TreeSoft\Specifications\Exceptions\DataValidationException;
+use TreeSoft\Specifications\Exceptions\EntityValidationException;
+use TreeSoft\Specifications\Checkers\EntityChecker;
+use TreeSoft\Specifications\Support\DynamicSchemaInjectorTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

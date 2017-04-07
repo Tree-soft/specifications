@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
+namespace TreeSoft\Specifications\Transforming\Transformers\SimpleType\Casters;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

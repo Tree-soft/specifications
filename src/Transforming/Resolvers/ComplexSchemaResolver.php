@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Resolvers;
+namespace TreeSoft\Specifications\Transforming\Resolvers;
 
-use Mildberry\Specifications\Generators\TypeExtractor;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
+use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
 
 /**
  * Class ComplexSchemaResolver.

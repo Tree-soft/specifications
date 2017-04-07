@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Generators\ClassBuilders;
+namespace TreeSoft\Specifications\Generators\ClassBuilders;
 
-use Mildberry\Specifications\Generators\AbstractBuilder as ParentBuilder;
-use Mildberry\Specifications\Generators\ClassGenerator;
+use TreeSoft\Specifications\Generators\AbstractBuilder as ParentBuilder;
+use TreeSoft\Specifications\Generators\ClassGenerator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

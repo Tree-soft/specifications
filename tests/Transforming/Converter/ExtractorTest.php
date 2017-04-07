@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Converter;
+namespace TreeSoft\Tests\Specifications\Transforming\Converter;
 
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Converter\Extractor;
-use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Converter\Extractor;
+use TreeSoft\Tests\Specifications\Fixtures\Entities\Client;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 
 /**
@@ -30,7 +30,7 @@ class ExtractorTest extends TestCase
      */
     public function testExtract(
         $expected, $entity, $schema,
-        string $namespace = '\Mildberry\Tests\Specifications\Fixtures'
+        string $namespace = '\TreeSoft\Tests\Specifications\Fixtures'
     ) {
         /**
          * @var Config $config
@@ -40,7 +40,7 @@ class ExtractorTest extends TestCase
         $config->set('specifications.namespace', $namespace);
 
         $this->extractor
-            ->setNamespace($namespace ?? '\Mildberry\Tests\Specifications\Fixtures');
+            ->setNamespace($namespace ?? '\TreeSoft\Tests\Specifications\Fixtures');
 
         $data = $this->extractor->convert($entity, $schema);
 
@@ -82,7 +82,7 @@ class ExtractorTest extends TestCase
                 (object) [
                     'id' => 1,
                 ], $objects['complexSimple'], 'schema://entities/complexType',
-                '\Mildberry\Tests\Specifications\Mocks',
+                '\TreeSoft\Tests\Specifications\Mocks',
             ],
             'array' => [
                 [1, 2, 3], [1, 2, 3], $preparator->prepare([

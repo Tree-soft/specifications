@@ -1,17 +1,17 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming;
+namespace TreeSoft\Specifications\Transforming;
 
 use Illuminate\Container\Container;
 use Illuminate\Pipeline\Pipeline;
-use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
-use Mildberry\Specifications\Exceptions\ResolverNotFoundException;
-use Mildberry\Specifications\Support\OrderedList;
-use Mildberry\Specifications\Transforming\Resolvers\AbstractResolver;
-use Mildberry\Specifications\Transforming\Resolvers\ArrayResolver;
-use Mildberry\Specifications\Transforming\Resolvers\NullResolver;
-use Mildberry\Specifications\Transforming\Transformers\AbstractTransformer;
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters;
+use TreeSoft\Specifications\Exceptions\ProhibitedTransformationException;
+use TreeSoft\Specifications\Exceptions\ResolverNotFoundException;
+use TreeSoft\Specifications\Support\OrderedList;
+use TreeSoft\Specifications\Transforming\Resolvers\AbstractResolver;
+use TreeSoft\Specifications\Transforming\Resolvers\ArrayResolver;
+use TreeSoft\Specifications\Transforming\Resolvers\NullResolver;
+use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleType\Casters;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
 /**

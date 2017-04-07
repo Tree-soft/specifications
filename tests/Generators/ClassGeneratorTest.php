@@ -1,12 +1,12 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Generators;
+namespace TreeSoft\Tests\Specifications\Generators;
 
-use Mildberry\Specifications\Generators\ClassBuilders\TypeExtractor;
-use Mildberry\Specifications\Generators\ClassGenerator;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Specifications\Generators\ClassBuilders\TypeExtractor;
+use TreeSoft\Specifications\Generators\ClassGenerator;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -33,7 +33,7 @@ class ClassGeneratorTest extends TestCase
     {
         $schema = $this->factory->schema($fnSchema);
 
-        $this->generator->getExtractor()->setNamespace('\Mildberry\Tests\Specifications\Fixtures');
+        $this->generator->getExtractor()->setNamespace('\TreeSoft\Tests\Specifications\Fixtures');
         $this->generator->generate($schema);
 
         $this->assertEquals($expected, $this->output->getFiles());

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Checkers;
+namespace TreeSoft\Specifications\Checkers;
 
-use Mildberry\Specifications\Exceptions\EntityValidationException;
+use TreeSoft\Specifications\Exceptions\EntityValidationException;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

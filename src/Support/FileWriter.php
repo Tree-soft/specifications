@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Support;
+namespace TreeSoft\Specifications\Support;
 
-use Mildberry\Specifications\Generators\OutputInterface;
+use TreeSoft\Specifications\Generators\OutputInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

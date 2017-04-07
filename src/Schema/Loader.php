@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Schema;
+namespace TreeSoft\Specifications\Schema;
 
 use League\JsonGuard\Exceptions\SchemaLoadingException;
 use League\JsonGuard\Loader as LoaderInterface;

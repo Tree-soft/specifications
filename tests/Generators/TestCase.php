@@ -1,14 +1,14 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Generators;
+namespace TreeSoft\Tests\Specifications\Generators;
 
-use Mildberry\Specifications\Schema\Factory;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\Mocks\OutputMock;
-use Mildberry\Tests\Specifications\TestCase as ParentTestCase;
-use Mildberry\Specifications\Generators\AbstractGenerator;
+use TreeSoft\Specifications\Schema\Factory;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\Mocks\OutputMock;
+use TreeSoft\Tests\Specifications\TestCase as ParentTestCase;
+use TreeSoft\Specifications\Generators\AbstractGenerator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

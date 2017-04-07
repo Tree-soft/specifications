@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Generators\PhpDocGenerators;
+namespace TreeSoft\Specifications\Generators\PhpDocGenerators;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

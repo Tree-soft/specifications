@@ -1,23 +1,23 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Checkers;
+namespace TreeSoft\Tests\Specifications\Checkers;
 
-use Mildberry\Specifications\Exceptions\DataValidationException;
-use Mildberry\Specifications\Exceptions\HeaderValidationException;
-use Mildberry\Specifications\Exceptions\QueryValidationException;
-use Mildberry\Specifications\Exceptions\RouteValidationException;
-use Mildberry\Specifications\Objects\RequestInterface;
-use Mildberry\Specifications\Checkers\Request\RequestChecker;
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\Mocks\RequestMock;
-use Mildberry\Tests\Specifications\Mocks\Specifications\EmptyQuerySpecification;
-use Mildberry\Tests\Specifications\Mocks\Specifications\HeaderTeapotSpecification;
-use Mildberry\Tests\Specifications\Mocks\Specifications\IntegerIdSpecification;
-use Mildberry\Tests\Specifications\Mocks\Specifications\RouteTestSpecification;
-use Mildberry\Tests\Specifications\TestCase;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Exceptions\EntityValidationException;
+use TreeSoft\Specifications\Exceptions\DataValidationException;
+use TreeSoft\Specifications\Exceptions\HeaderValidationException;
+use TreeSoft\Specifications\Exceptions\QueryValidationException;
+use TreeSoft\Specifications\Exceptions\RouteValidationException;
+use TreeSoft\Specifications\Objects\RequestInterface;
+use TreeSoft\Specifications\Checkers\Request\RequestChecker;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\Mocks\RequestMock;
+use TreeSoft\Tests\Specifications\Mocks\Specifications\EmptyQuerySpecification;
+use TreeSoft\Tests\Specifications\Mocks\Specifications\HeaderTeapotSpecification;
+use TreeSoft\Tests\Specifications\Mocks\Specifications\IntegerIdSpecification;
+use TreeSoft\Tests\Specifications\Mocks\Specifications\RouteTestSpecification;
+use TreeSoft\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Exceptions\EntityValidationException;
 use League\JsonGuard\ValidationError;
 
 /**

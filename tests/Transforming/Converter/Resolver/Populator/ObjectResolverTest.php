@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Converter\Resolver\Populator;
+namespace TreeSoft\Tests\Specifications\Transforming\Converter\Resolver\Populator;
 
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\Populator\ObjectResolver;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\Populator\ObjectResolver;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * Class ObjectResolverTest.

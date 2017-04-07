@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Checkers;
+namespace TreeSoft\Specifications\Checkers;
 
-use Mildberry\Specifications\Support\FactoryInjectorTrait;
+use TreeSoft\Specifications\Support\FactoryInjectorTrait;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 

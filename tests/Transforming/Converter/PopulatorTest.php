@@ -1,14 +1,14 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Converter;
+namespace TreeSoft\Tests\Specifications\Transforming\Converter;
 
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Converter\Populator;
-use Mildberry\Tests\Specifications\Fixtures\Entities\Client;
-use Mildberry\Tests\Specifications\Fixtures\Entities\Company;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Converter\Populator;
+use TreeSoft\Tests\Specifications\Fixtures\Entities\Client;
+use TreeSoft\Tests\Specifications\Fixtures\Entities\Company;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 use DateTime;
 
@@ -100,7 +100,7 @@ class PopulatorTest extends TestCase
          */
         $config = $this->app->make(Config::class);
 
-        $config->set('specifications.namespace', '\Mildberry\Tests\Specifications\Fixtures');
+        $config->set('specifications.namespace', '\TreeSoft\Tests\Specifications\Fixtures');
 
         $this->populator = $this->app->make(Populator::class);
 

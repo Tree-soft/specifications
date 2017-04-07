@@ -1,7 +1,7 @@
 <?php
 
-use Mildberry\Specifications\DAL\Factories\DefaultFactory;
-use Mildberry\Specifications\DAL\Eloquent\TransactionManager;
+use TreeSoft\Specifications\DAL\Factories\DefaultFactory;
+use TreeSoft\Specifications\DAL\Eloquent\TransactionManager;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

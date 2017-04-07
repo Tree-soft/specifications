@@ -1,4 +1,4 @@
-Mildberry\Specifications\Transforming\Transformers\ValueDescriptor:
+TreeSoft\Specifications\Transforming\Transformers\ValueDescriptor:
   from:
     value: 1
     schema:

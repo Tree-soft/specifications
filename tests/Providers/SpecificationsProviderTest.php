@@ -1,20 +1,20 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Providers;
+namespace TreeSoft\Tests\Specifications\Providers;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
-use Mildberry\Specifications\DAL\Eloquent\TransactionManager;
-use Mildberry\Specifications\DAL\Factories\DefaultFactory;
-use Mildberry\Specifications\Generators\OutputInterface;
-use Mildberry\Specifications\Providers\SpecificationsProvider;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Checkers\EntityChecker;
-use Mildberry\Specifications\Schema\TransformerLoader;
-use Mildberry\Specifications\Support\FileWriter;
-use Mildberry\Tests\Specifications\Support\PublishedDataAssertionTrait;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\DAL\Eloquent\TransactionManager;
+use TreeSoft\Specifications\DAL\Factories\DefaultFactory;
+use TreeSoft\Specifications\Generators\OutputInterface;
+use TreeSoft\Specifications\Providers\SpecificationsProvider;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Checkers\EntityChecker;
+use TreeSoft\Specifications\Schema\TransformerLoader;
+use TreeSoft\Specifications\Support\FileWriter;
+use TreeSoft\Tests\Specifications\Support\PublishedDataAssertionTrait;
+use TreeSoft\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
 use Rnr\Resolvers\Providers\ResolversProvider;
 

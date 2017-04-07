@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks\Repositories;
+namespace TreeSoft\Tests\Specifications\Mocks\Repositories;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryInterface;
-use Mildberry\Specifications\Support\Testing\CallsTrait;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
+use TreeSoft\Specifications\Support\Testing\CallsTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

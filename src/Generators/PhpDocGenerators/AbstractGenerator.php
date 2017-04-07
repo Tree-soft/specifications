@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Generators\PhpDocGenerators;
+namespace TreeSoft\Specifications\Generators\PhpDocGenerators;
 
-use Mildberry\Specifications\Generators\AbstractTemplateGenerator;
+use TreeSoft\Specifications\Generators\AbstractTemplateGenerator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

@@ -1,18 +1,18 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter;
+namespace TreeSoft\Specifications\Transforming\Converter;
 
 use Illuminate\Pipeline\Pipeline;
-use Mildberry\Specifications\Exceptions\PopulatorException;
-use Mildberry\Specifications\Exceptions\PopulatorObjectException;
-use Mildberry\Specifications\Schema\LaravelFactory;
-use Mildberry\Specifications\Support\OrderedList;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
-use Mildberry\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
-use Mildberry\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
+use TreeSoft\Specifications\Exceptions\PopulatorException;
+use TreeSoft\Specifications\Exceptions\PopulatorObjectException;
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Support\OrderedList;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareInterface;
+use TreeSoft\Specifications\Support\Resolvers\SpecificationsNamespace\NamespaceAwareTrait;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
-use Mildberry\Specifications\Transforming\Converter\Resolvers as ConverterResolvers;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers as ConverterResolvers;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

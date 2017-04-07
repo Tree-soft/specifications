@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Testing\Core;
+namespace TreeSoft\Tests\Specifications\Testing\Core;
 
-use Mildberry\Specifications\Core\Services\AbstractService;
-use Mildberry\Specifications\Support\Testing\Core\MockServiceTrait;
-use Mildberry\Tests\Specifications\TestCase;
+use TreeSoft\Specifications\Core\Services\AbstractService;
+use TreeSoft\Specifications\Support\Testing\Core\MockServiceTrait;
+use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

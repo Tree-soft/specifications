@@ -1,11 +1,11 @@
 <?php
 
-namespace Mildberry\Specifications\DAL\Factories;
+namespace TreeSoft\Specifications\DAL\Factories;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
-use Mildberry\Specifications\Core\Interfaces\RepositoryInterface;
-use Mildberry\Specifications\DAL\Exceptions\RepositoryException;
-use Mildberry\Specifications\DAL\Exceptions\RepositoryNotFoundException;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
+use TreeSoft\Specifications\DAL\Exceptions\RepositoryException;
+use TreeSoft\Specifications\DAL\Exceptions\RepositoryNotFoundException;
 use Rnr\Resolvers\Interfaces\ConfigAwareInterface;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ConfigAwareTrait;

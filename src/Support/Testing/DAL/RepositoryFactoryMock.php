@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Testing\DAL;
+namespace TreeSoft\Specifications\Support\Testing\DAL;
 
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
-use Mildberry\Specifications\Core\Interfaces\RepositoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Generators\ClassBuilders;
+namespace TreeSoft\Specifications\Generators\ClassBuilders;
 
-use Mildberry\Specifications\Generators\TypeExtractor as ParentTypeExtractor;
+use TreeSoft\Specifications\Generators\TypeExtractor as ParentTypeExtractor;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

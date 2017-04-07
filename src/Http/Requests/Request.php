@@ -1,13 +1,13 @@
 <?php
 
-namespace Mildberry\Specifications\Http\Requests;
+namespace TreeSoft\Specifications\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Mildberry\Specifications\Exceptions\EntityValidationException;
-use Mildberry\Specifications\Objects\RequestInterface;
-use Mildberry\Specifications\Checkers\Request\DynamicRequestChecker;
-use Mildberry\Specifications\Checkers\Request\RequestChecker;
-use Mildberry\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Exceptions\EntityValidationException;
+use TreeSoft\Specifications\Objects\RequestInterface;
+use TreeSoft\Specifications\Checkers\Request\DynamicRequestChecker;
+use TreeSoft\Specifications\Checkers\Request\RequestChecker;
+use TreeSoft\Specifications\Support\DataPreparator;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

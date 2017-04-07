@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers;
+namespace TreeSoft\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Transforming\Transformers\SimpleType\Casters\AbstractCaster;
+use TreeSoft\Specifications\Transforming\Transformers\SimpleType\Casters\AbstractCaster;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

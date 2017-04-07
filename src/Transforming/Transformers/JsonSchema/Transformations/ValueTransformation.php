@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Transformers\JsonSchema\Transformations;
+namespace TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations;
 
 /**
  * Class ValueTransformation.

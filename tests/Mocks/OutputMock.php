@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks;
+namespace TreeSoft\Tests\Specifications\Mocks;
 
-use Mildberry\Specifications\Generators\OutputInterface;
+use TreeSoft\Specifications\Generators\OutputInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

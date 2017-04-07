@@ -1,8 +1,8 @@
 <?php
 
-namespace Mildberry\Specifications\Transforming\Converter\Resolvers\Populator;
+namespace TreeSoft\Specifications\Transforming\Converter\Resolvers\Populator;
 
-use Mildberry\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\AbstractResolver;
 use DateTime;
 
 /**

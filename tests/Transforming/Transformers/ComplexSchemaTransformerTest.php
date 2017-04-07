@@ -1,12 +1,12 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Exceptions\ProhibitedTransformationException;
-use Mildberry\Specifications\Schema\Loader;
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
-use Mildberry\Tests\Specifications\Mocks\LoaderMock;
+use TreeSoft\Specifications\Exceptions\ProhibitedTransformationException;
+use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Transformers\ComplexSchemaTransformer;
+use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
 
 /**
  * Class ComplexSchemaTransformerTest.

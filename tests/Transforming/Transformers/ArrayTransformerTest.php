@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Transforming\Transformers;
+namespace TreeSoft\Tests\Specifications\Transforming\Transformers;
 
-use Mildberry\Specifications\Support\DataPreparator;
-use Mildberry\Specifications\Transforming\Transformers\ArrayTransformer;
+use TreeSoft\Specifications\Support\DataPreparator;
+use TreeSoft\Specifications\Transforming\Transformers\ArrayTransformer;
 
 /**
  * Class ArrayTransformerTest.

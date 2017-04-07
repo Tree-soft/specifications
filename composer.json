@@ -1,5 +1,5 @@
 {
-    "name": "mildberry/specifications",
+    "name": "TreeSoft/specifications",
     "description": "The specifications library",
     "type": "library",
     "require": {
@@ -22,12 +22,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Mildberry\\Specifications\\": "src/"
+            "TreeSoft\\Specifications\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mildberry\\Tests\\Specifications\\": "tests/"
+            "TreeSoft\\Tests\\Specifications\\": "tests/"
         }
     }
 }

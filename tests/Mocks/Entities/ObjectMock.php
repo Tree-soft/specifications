@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks\Entities;
+namespace TreeSoft\Tests\Specifications\Mocks\Entities;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

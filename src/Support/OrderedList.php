@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Support;
+namespace TreeSoft\Specifications\Support;
 
 use ArrayAccess;
 

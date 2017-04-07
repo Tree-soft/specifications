@@ -1,10 +1,10 @@
 <?php
 
-namespace Mildberry\Specifications\Support\Testing\DAL;
+namespace TreeSoft\Specifications\Support\Testing\DAL;
 
 use Illuminate\Container\Container;
-use Mildberry\Specifications\Core\Interfaces\RepositoryFactoryInterface;
-use Mildberry\Specifications\Core\Interfaces\TransactionInterface;
+use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
+use TreeSoft\Specifications\Core\Interfaces\TransactionInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

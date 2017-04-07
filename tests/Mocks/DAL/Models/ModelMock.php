@@ -1,9 +1,9 @@
 <?php
 
-namespace Mildberry\Tests\Specifications\Mocks\DAL\Models;
+namespace TreeSoft\Tests\Specifications\Mocks\DAL\Models;
 
-use Mildberry\Specifications\DAL\Eloquent\Model;
-use Mildberry\Specifications\Support\Testing\CallsTrait;
+use TreeSoft\Specifications\DAL\Eloquent\Model;
+use TreeSoft\Specifications\Support\Testing\CallsTrait;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

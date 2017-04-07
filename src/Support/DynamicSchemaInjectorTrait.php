@@ -1,6 +1,6 @@
 <?php
 
-namespace Mildberry\Specifications\Support;
+namespace TreeSoft\Specifications\Support;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
