@@ -2,15 +2,15 @@
 
 namespace TreeSoft\Specifications\Support\Testing\DAL;
 
-use TreeSoft\Specifications\Core\Interfaces\RepositoryFactoryInterface;
 use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
+use TreeSoft\Specifications\DAL\Factories\DefaultFactory;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class RepositoryFactoryMock implements RepositoryFactoryInterface, ContainerAwareInterface
+class RepositoryFactoryMock extends DefaultFactory implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
@@ -26,6 +26,8 @@ class RepositoryFactoryMock implements RepositoryFactoryInterface, ContainerAwar
      */
     public function create(string $class): RepositoryInterface
     {
+        $this->check($class);
+
         return value($this->mock);
     }
 
