@@ -53,7 +53,7 @@ class ObjectResolver extends ParentObjectResolver
      */
     public function getMethod(string $field): string
     {
-        $property = ucfirst($field);
+        $property = ucfirst(camel_case($field));
 
         return "get{$property}";
     }

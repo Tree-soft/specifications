@@ -54,7 +54,7 @@ class SetterFiller implements FillerInterface
      */
     public function getter(string $field): string
     {
-        $property = ucfirst($field);
+        $property = ucfirst(camel_case($field));
 
         return "get{$property}";
     }
