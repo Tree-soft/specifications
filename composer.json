@@ -1,5 +1,5 @@
 {
-    "name": "TreeSoft/specifications",
+    "name": "tree-soft/specifications",
     "description": "The specifications library",
     "type": "library",
     "require": {
