@@ -2,6 +2,7 @@
     "name": "tree-soft/specifications",
     "description": "The specifications library",
     "type": "library",
+    "license": "MIT",
     "require": {
         "league/json-guard": "dev-master as 0.5.1",
         "rnr/resolver-provider": "^1.0",
