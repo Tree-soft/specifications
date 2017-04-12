@@ -1,8 +1,8 @@
-TreeSoft\Tests\Specifications\Mocks\DAL\Entities\Company:
+TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Company:
   company:
     name: '<company()>'
 
-TreeSoft\Tests\Specifications\Mocks\DAL\Entities\Client:
+TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Client:
   client:
     name: '<name()>'
     company: '@company'
