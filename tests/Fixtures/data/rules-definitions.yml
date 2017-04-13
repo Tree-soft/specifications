@@ -10,6 +10,11 @@ TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\Def
       - configure:
         - [[]]
 
+TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\NormalizeTransformation:
+  normalize_t:
+    __calls:
+      - configure:
+        - []
 
 TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule:
   copy:
@@ -39,3 +44,9 @@ TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule:
     to: '&'
     transformations:
       - '@default_t'
+
+  normalize:
+    from: 'ext'
+    to: 'ext2'
+    transformations:
+      - '@normalize_t'

@@ -4,7 +4,6 @@ namespace TreeSoft\Tests\Specifications\Transforming\Transformers\JsonSchema\Tra
 
 use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation;
 use TreeSoft\Specifications\Transforming\Transformers\ValueDescriptor;
-use TreeSoft\Tests\Specifications\TestCase;
 
 /**
  * Class DefaultTransformationTest.
@@ -12,9 +11,9 @@ use TreeSoft\Tests\Specifications\TestCase;
 class DefaultTransformationTest extends TestCase
 {
     /**
-     * @var DefaultTransformation
+     * @var string
      */
-    private $transformation;
+    protected $transformationClass = DefaultTransformation::class;
 
     /**
      * @dataProvider defaultsProvider
@@ -31,21 +30,7 @@ class DefaultTransformationTest extends TestCase
             $value, $schema,
         ]);
 
-        $handled = false;
-
-        $this->assertEquals(
-            $expected,
-            $this->transformation->apply(
-                $from, $to, function ($from, $value) use (&$handled, $to) {
-                    $this->assertEquals($value, $to);
-                    $handled = true;
-
-                    return $from;
-                }
-            )
-        );
-
-        $this->assertTrue($handled);
+        $this->assertTransformerResult($expected, $from, $to);
     }
 
     /**
@@ -69,12 +54,5 @@ class DefaultTransformationTest extends TestCase
                 [],
             ],
         ];
-    }
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->transformation = $this->app->make(DefaultTransformation::class);
     }
 }
