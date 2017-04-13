@@ -214,26 +214,26 @@ class JsonSchemaTransformerTest extends TestCase
         $data = $this->loadEntities('rules-definitions.yml');
 
         return [
-//            'copy' => [$data['copy'], 'ext>ext2'],
-//            'const' => [$data['const'], '>const:expr1>ext'],
-//            'ignore' => [$data['ignore'], 'ext>'],
-//            'general' => [$data['general'], 'ext>const:expr1|const:expr2|const:expr3>ext2'],
-//            'as-array' => [
-//                $data['general'], [
-//                    ['<', 'ext'],
-//                    ['const', 'expr1'],
-//                    ['const', 'expr2'],
-//                    ['const', 'expr3'],
-//                    ['>', 'ext2'],
-//                ],
-//            ],
-//            'default' => [
-//                $data['default'], [
-//                    ['<', '&'],
-//                    ['default', []],
-//                    ['>', '&'],
-//                ],
-//            ],
+            'copy' => [$data['copy'], 'ext>ext2'],
+            'const' => [$data['const'], '>const:expr1>ext'],
+            'ignore' => [$data['ignore'], 'ext>'],
+            'general' => [$data['general'], 'ext>const:expr1|const:expr2|const:expr3>ext2'],
+            'as-array' => [
+                $data['general'], [
+                    ['<', 'ext'],
+                    ['const', 'expr1'],
+                    ['const', 'expr2'],
+                    ['const', 'expr3'],
+                    ['>', 'ext2'],
+                ],
+            ],
+            'default' => [
+                $data['default'], [
+                    ['<', '&'],
+                    ['default', []],
+                    ['>', '&'],
+                ],
+            ],
             'normalize' => [
                 $data['normalize'], 'ext>normalize>ext2',
             ],
