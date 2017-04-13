@@ -2,6 +2,8 @@
 
 namespace TreeSoft\Specifications\Transforming\Converter;
 
+use TreeSoft\Specifications\Schema\LaravelFactory;
+use TreeSoft\Specifications\Transforming\Converter\Resolvers\Extractor\DateTimeResolver;
 use TreeSoft\Specifications\Transforming\Converter\Resolvers\Extractor\ObjectResolver;
 
 /**
@@ -19,5 +21,18 @@ class Extractor extends Converter
                 'class' => ObjectResolver::class,
             ],
         ]);
+    }
+
+    /**
+     * Populator constructor.
+     *
+     * @param LaravelFactory $factory
+     */
+    public function __construct(LaravelFactory $factory)
+    {
+        parent::__construct($factory);
+
+        $this
+            ->registerResolver('datetime', ['class' => DateTimeResolver::class], 'simple');
     }
 }

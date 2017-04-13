@@ -3,6 +3,7 @@
 namespace TreeSoft\Specifications\DAL\Transformers;
 
 use TreeSoft\Specifications\DAL\Eloquent\Model;
+use TreeSoft\Specifications\Support\DataPreparator;
 use TreeSoft\Specifications\Support\Transformers\EntityTransformer as ParentTransformer;
 use TreeSoft\Specifications\Transforming\Converter\Extractor;
 use TreeSoft\Specifications\Transforming\Converter\Populator;
@@ -52,7 +53,12 @@ class EntityTransformer extends ParentTransformer
 
         $transformer = $this->factory->create($model->schema, $schema);
 
-        $data = $transformer->transform((object) $model->toArray());
+        /**
+         * @var DataPreparator $preparator
+         */
+        $preparator = $this->container->make(DataPreparator::class);
+
+        $data = $transformer->transform($preparator->prepare($model->toArray()));
 
         /**
          * @var Populator $populator

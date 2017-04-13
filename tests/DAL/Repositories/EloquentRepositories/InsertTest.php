@@ -7,8 +7,8 @@ use TreeSoft\Specifications\DAL\Eloquent\AbstractRepository;
 use TreeSoft\Specifications\DAL\Transformers\EntityTransformer;
 use TreeSoft\Specifications\DAL\Transformers\EntityTransformerFactory;
 use TreeSoft\Specifications\Support\Testing\CallsTrait;
-use TreeSoft\Tests\Specifications\Mocks\DAL\Entities\Client;
-use TreeSoft\Tests\Specifications\Mocks\DAL\Models\ModelMock;
+use TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Client;
+use TreeSoft\Tests\Specifications\Mocks\Dal\Models\ModelMock;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>

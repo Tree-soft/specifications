@@ -1,0 +1,4 @@
+{
+  "id": "schema://dal/models/ext-client",
+  "$ref": "schema://dal/entities/client"
+}

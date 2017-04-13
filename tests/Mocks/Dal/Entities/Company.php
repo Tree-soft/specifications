@@ -1,11 +1,11 @@
 <?php
 
-namespace TreeSoft\Tests\Specifications\Mocks\DAL\Entities;
+namespace TreeSoft\Tests\Specifications\Mocks\Dal\Entities;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class Client
+class Company
 {
     /**
      * @var int|null
@@ -16,11 +16,6 @@ class Client
      * @var string
      */
     private $name;
-
-    /**
-     * @var Company
-     */
-    private $company;
 
     /**
      * @return int|null
@@ -46,26 +41,6 @@ class Client
     public function setName(string $name)
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Company
-     */
-    public function getCompany(): Company
-    {
-        return $this->company;
-    }
-
-    /**
-     * @param Company $company
-     *
-     * @return $this
-     */
-    public function setCompany(Company $company)
-    {
-        $this->company = $company;
 
         return $this;
     }

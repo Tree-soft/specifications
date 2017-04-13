@@ -4,13 +4,16 @@ namespace TreeSoft\Tests\Specifications\DAL\Transformers;
 
 use TreeSoft\Specifications\DAL\Transformers\EntityTransformer;
 use TreeSoft\Specifications\Generators\TypeExtractor;
+use TreeSoft\Specifications\Schema\LaravelFactory;
 use TreeSoft\Specifications\Schema\Loader;
+use TreeSoft\Specifications\Support\DataPreparator;
 use TreeSoft\Specifications\Support\Testing\CallsTrait;
 use TreeSoft\Specifications\Transforming\TransformerFactory;
 use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
 use TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories\TestCase;
-use TreeSoft\Tests\Specifications\Mocks\DAL\Entities\Client;
-use TreeSoft\Tests\Specifications\Mocks\DAL\Models\ModelMock;
+use TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Client;
+use TreeSoft\Tests\Specifications\Mocks\Dal\Models\JsonModel;
+use TreeSoft\Tests\Specifications\Mocks\Dal\Models\ModelMock;
 use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
 use TreeSoft\Tests\Specifications\Mocks\TransformerFactoryMock;
 use Illuminate\Contracts\Config\Repository as Config;
@@ -134,6 +137,51 @@ class EntityTransformerTest extends TestCase
         );
     }
 
+    public function testPopulateJson()
+    {
+        $model = new JsonModel();
+
+        $attributes = $this->loadArray('json-model.yml');
+        $model->fill($attributes);
+
+        $transformer = new class() extends AbstractTransformer {
+            /**
+             * @var array
+             */
+            public $data;
+
+            /**
+             * @var LaravelFactory
+             */
+            public $factory;
+
+            /**
+             * @param mixed $from
+             * @param mixed|null $to
+             *
+             * @return mixed
+             */
+            public function transform($from, $to = null)
+            {
+                $validator = $this->factory->validator($from, 'schema://dal/models/ext-client');
+                TestCase::assertTrue($validator->passes(), print_r($validator->errors(), true));
+
+                return $this->data;
+            }
+        };
+
+        $preparator = new DataPreparator();
+
+        $transformer->data = $preparator->prepare($attributes);
+        $transformer->factory = $this->app->make(LaravelFactory::class);
+
+        $this->factory
+            ->setTransformer($transformer);
+
+        $this->transformer->setClass(Client::class);
+        $this->transformer->populate($model);
+    }
+
     protected function setUp()
     {
         parent::setUp();
@@ -155,6 +203,7 @@ class EntityTransformerTest extends TestCase
             'dal/entities/client' => $this->getFixturePath('schema/dal/entities/client.json'),
             'dal/entities/company' => $this->getFixturePath('schema/dal/entities/company.json'),
             'dal/models/client' => $this->getFixturePath('schema/dal/models/client.json'),
+            'dal/models/ext-client' => $this->getFixturePath('schema/dal/models/ext-client.json'),
         ]));
 
         /**

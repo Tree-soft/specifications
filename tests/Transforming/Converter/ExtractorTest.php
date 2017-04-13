@@ -9,6 +9,7 @@ use TreeSoft\Tests\Specifications\Fixtures\Entities\Client;
 use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
 use TreeSoft\Tests\Specifications\TestCase;
 use Illuminate\Contracts\Config\Repository as Config;
+use DateTime;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -61,6 +62,8 @@ class ExtractorTest extends TestCase
         $client = $objects['client'];
         $company = $client->getCompany();
 
+        $dateTime = new DateTime();
+
         return [
             'null' => [
                 null, null, 'schema://types/null',
@@ -93,6 +96,11 @@ class ExtractorTest extends TestCase
             'null-type' => [
                 null, [1, 2, 3], $preparator->prepare(['type' => 'null']),
             ],
+            'datetime' => [
+                $dateTime->format(DateTime::ATOM), $dateTime, $preparator->prepare([
+                    '$ref' => 'schema://common/datetime',
+                ]),
+            ],
         ];
     }
 
@@ -111,6 +119,7 @@ class ExtractorTest extends TestCase
             'common/id' => $this->getResourcePath('schema/common/id.json'),
             'types/int' => $this->getFixturePath('schema/types/int.json'),
             'types/null' => $this->getFixturePath('schema/types/null.json'),
+            'common/datetime' => $this->getResourcePath('schema/common/datetime.json'),
         ]));
     }
 }
