@@ -1,6 +1,6 @@
 <?php
 
-namespace TreeSoft\Specifications\DAL\Transformers;
+namespace TreeSoft\Specifications\DAL\Eloquent\Transformers;
 
 use TreeSoft\Specifications\DAL\Eloquent\Model;
 use TreeSoft\Specifications\Support\DataPreparator;

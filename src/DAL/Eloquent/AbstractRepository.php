@@ -3,7 +3,7 @@
 namespace TreeSoft\Specifications\DAL\Eloquent;
 
 use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
-use TreeSoft\Specifications\DAL\Transformers\EntityTransformerFactory;
+use TreeSoft\Specifications\DAL\Eloquent\Transformers\EntityTransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
@@ -32,42 +32,52 @@ abstract class AbstractRepository implements RepositoryInterface, ContainerAware
     public function __construct(EntityTransformerFactory $factory)
     {
         assert(isset($this->model), 'Set up a class of model');
-        assert(is_a($this->model, Model::class, true), 'Class should be derived from ' . Model::class);
+        assert(
+            is_a($this->model, Model::class, true),
+            'Class should be derived from ' . Model::class
+        );
 
         $this->factory = $factory;
     }
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      *
      * @return array
      */
-    public function findBy($queryOptions)
+    public function findBy($expression)
     {
-        // TODO: Implement findBy() method.
-        return [];
+        /**
+         * @var QueryBuilder $builder
+         */
+        $builder = $this->container->make(QueryBuilder::class);
+
+        return $builder->result($this->container->make($this->model), $expression)->map(function (Model $model) {
+            $transformer = $this->factory->createByModel($model);
+
+            return $transformer->populate($model);
+        })->toArray();
     }
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      *
      * @return mixed
      */
-    public function findOneBy($queryOptions)
+    public function findOneBy($expression)
     {
-        // TODO: Implement findOneBy() method.
-        return null;
+        return $this->findBy($expression)[0] ?? null;
     }
 
     /**
      * @param mixed $entity
-     * @param mixed|null $queryOptions
+     * @param mixed|null $expression
      *
      * @return mixed
      */
-    public function insert($entity, $queryOptions = null)
+    public function insert($entity, $expression = null)
     {
-        $transformer = $this->factory->create(get_class($entity));
+        $transformer = $this->factory->createByEntity(get_class($entity));
 
         $model = $this->container->make($this->model);
         $model = $transformer->extract($entity, $model);
@@ -78,20 +88,20 @@ abstract class AbstractRepository implements RepositoryInterface, ContainerAware
 
     /**
      * @param mixed $entity
-     * @param mixed|null $queryOptions
+     * @param mixed|null $expression
      *
      * @return mixed
      */
-    public function update($entity, $queryOptions = null)
+    public function update($entity, $expression = null)
     {
         // TODO: Implement update() method.
         return null;
     }
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      */
-    public function updateBy($queryOptions)
+    public function updateBy($expression)
     {
         // TODO: Implement updateBy() method.
     }
@@ -105,20 +115,20 @@ abstract class AbstractRepository implements RepositoryInterface, ContainerAware
     }
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      */
-    public function deleteBy($queryOptions)
+    public function deleteBy($expression)
     {
         // TODO: Implement deleteBy() method.
     }
 
     /**
-     * @param $queryOptions
+     * @param $expression
      *
      * @return bool
      */
-    public function exists($queryOptions): bool
+    public function exists($expression): bool
     {
-        return !is_null($this->findOneBy($queryOptions));
+        return !is_null($this->findOneBy($expression));
     }
 }

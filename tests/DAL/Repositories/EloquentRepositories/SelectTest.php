@@ -2,8 +2,10 @@
 
 namespace TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories;
 
-use TreeSoft\Specifications\DAL\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use TreeSoft\Specifications\DAL\Eloquent\AbstractRepository;
+use TreeSoft\Specifications\DAL\Eloquent\Model;
+use TreeSoft\Specifications\DAL\Eloquent\QueryBuilder;
 use TreeSoft\Specifications\DAL\Eloquent\Transformers\EntityTransformer;
 use TreeSoft\Specifications\DAL\Eloquent\Transformers\EntityTransformerFactory;
 use TreeSoft\Specifications\Support\Testing\CallsTrait;
@@ -11,13 +13,12 @@ use TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Client;
 use TreeSoft\Tests\Specifications\Mocks\Dal\Models\ModelMock;
 
 /**
- * @author Sergei Melnikov <me@rnr.name>
+ * Class SelectTest.
  */
-class InsertTest extends TestCase
+class SelectTest extends TestCase
 {
-    public function testInsert()
+    public function testFind()
     {
-        /** @noinspection PhpMissingParentConstructorInspection */
         $transformer = new class() extends EntityTransformer {
             use CallsTrait;
 
@@ -60,21 +61,35 @@ class InsertTest extends TestCase
             }
         };
 
-        $objects = $this->loadEntities('client.yml');
-        $client = $objects['client'];
-
-        $transformer->actual = new Client();
+        $transformer->actual = [new Client()];
 
         $this->app->instance(EntityTransformer::class, $transformer);
 
         $model = new ModelMock('schema://dal/models/client');
-
         $this->app->instance(ModelMock::class, $model);
+
+        $this->app->instance(QueryBuilder::class, new class() extends QueryBuilder {
+            /**
+             * @param Model $model
+             * @param $expression
+             *
+             * @return Collection
+             */
+            public function result(Model $model, $expression): Collection
+            {
+                return new Collection([$model]);
+            }
+        });
 
         /**
          * @var EntityTransformerFactory $factory
          */
         $factory = $this->app->make(EntityTransformerFactory::class);
+
+        $factory
+            ->setBuilders([
+                ModelMock::class => Client::class,
+            ]);
 
         /**
          * @var AbstractRepository $repository
@@ -89,30 +104,10 @@ class InsertTest extends TestCase
         $repository
             ->setContainer($this->app);
 
-        /**
-         * @var Client $actual
-         */
-        $this->assertSame($transformer->actual, $repository->insert($client));
+        $expression = [];
 
-        $this->assertEquals([
-            [
-                'method' => 'extract',
-                'args' => [
-                    $client, $model,
-                ],
-            ], [
-                'method' => 'populate',
-                'args' => [
-                    $model,
-                ],
-            ],
-        ], $transformer->calls);
+        $entities = $repository->findBy($expression);
 
-        $this->assertEquals([
-            [
-                'method' => 'save',
-                'args' => [[]],
-            ],
-        ], $model->calls);
+        $this->assertNotEmpty($entities);
     }
 }

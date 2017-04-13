@@ -8,39 +8,39 @@ namespace TreeSoft\Specifications\Core\Interfaces;
 interface RepositoryInterface
 {
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      *
      * @return array
      */
-    public function findBy($queryOptions);
+    public function findBy($expression);
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      *
      * @return mixed
      */
-    public function findOneBy($queryOptions);
+    public function findOneBy($expression);
 
     /**
      * @param mixed $entity
-     * @param mixed|null $queryOptions
+     * @param mixed|null $expression
      *
      * @return mixed
      */
-    public function insert($entity, $queryOptions = null);
+    public function insert($entity, $expression = null);
 
     /**
      * @param mixed $entity
-     * @param mixed|null $queryOptions
+     * @param mixed|null $expression
      *
      * @return mixed
      */
-    public function update($entity, $queryOptions = null);
+    public function update($entity, $expression = null);
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      */
-    public function updateBy($queryOptions);
+    public function updateBy($expression);
 
     /**
      * @param mixed $entity
@@ -48,14 +48,14 @@ interface RepositoryInterface
     public function delete($entity);
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      */
-    public function deleteBy($queryOptions);
+    public function deleteBy($expression);
 
     /**
-     * @param $queryOptions
+     * @param $expression
      *
      * @return bool
      */
-    public function exists($queryOptions): bool;
+    public function exists($expression): bool;
 }

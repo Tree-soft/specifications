@@ -13,36 +13,36 @@ class RepositoryMock implements RepositoryInterface
     use CallsTrait;
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      *
      * @return array
      */
-    public function findBy($queryOptions)
+    public function findBy($expression)
     {
-        $this->_handle(__FUNCTION__, $queryOptions);
+        $this->_handle(__FUNCTION__, $expression);
 
         return [];
     }
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      *
      * @return mixed
      */
-    public function findOneBy($queryOptions)
+    public function findOneBy($expression)
     {
-        $this->_handle(__FUNCTION__, $queryOptions);
+        $this->_handle(__FUNCTION__, $expression);
 
         return null;
     }
 
     /**
      * @param mixed $entity
-     * @param mixed|null $queryOptions
+     * @param mixed|null $expression
      *
      * @return mixed
      */
-    public function insert($entity, $queryOptions = null)
+    public function insert($entity, $expression = null)
     {
         $this->_handle(__FUNCTION__, $entity);
 
@@ -51,11 +51,11 @@ class RepositoryMock implements RepositoryInterface
 
     /**
      * @param mixed $entity
-     * @param mixed|null $queryOptions
+     * @param mixed|null $expression
      *
      * @return mixed
      */
-    public function update($entity, $queryOptions = null)
+    public function update($entity, $expression = null)
     {
         $this->_handle(__FUNCTION__, $entity);
 
@@ -63,11 +63,11 @@ class RepositoryMock implements RepositoryInterface
     }
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      */
-    public function updateBy($queryOptions)
+    public function updateBy($expression)
     {
-        $this->_handle(__FUNCTION__, $queryOptions);
+        $this->_handle(__FUNCTION__, $expression);
     }
 
     /**
@@ -79,21 +79,21 @@ class RepositoryMock implements RepositoryInterface
     }
 
     /**
-     * @param mixed $queryOptions
+     * @param mixed $expression
      */
-    public function deleteBy($queryOptions)
+    public function deleteBy($expression)
     {
-        $this->_handle(__FUNCTION__, $queryOptions);
+        $this->_handle(__FUNCTION__, $expression);
     }
 
     /**
-     * @param $queryOptions
+     * @param $expression
      *
      * @return bool
      */
-    public function exists($queryOptions): bool
+    public function exists($expression): bool
     {
-        $this->_handle(__FUNCTION__, $queryOptions);
+        $this->_handle(__FUNCTION__, $expression);
 
         return false;
     }

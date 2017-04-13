@@ -2,7 +2,7 @@
 
 namespace TreeSoft\Tests\Specifications\DAL\Transformers;
 
-use TreeSoft\Specifications\DAL\Transformers\EntityTransformer;
+use TreeSoft\Specifications\DAL\Eloquent\Transformers\EntityTransformer;
 use TreeSoft\Specifications\Generators\TypeExtractor;
 use TreeSoft\Specifications\Schema\LaravelFactory;
 use TreeSoft\Specifications\Schema\Loader;
