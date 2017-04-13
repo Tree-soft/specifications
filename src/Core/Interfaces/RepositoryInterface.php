@@ -51,4 +51,11 @@ interface RepositoryInterface
      * @param mixed $queryOptions
      */
     public function deleteBy($queryOptions);
+
+    /**
+     * @param $queryOptions
+     *
+     * @return bool
+     */
+    public function exists($queryOptions): bool;
 }

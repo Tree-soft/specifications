@@ -111,4 +111,14 @@ abstract class AbstractRepository implements RepositoryInterface, ContainerAware
     {
         // TODO: Implement deleteBy() method.
     }
+
+    /**
+     * @param $queryOptions
+     *
+     * @return bool
+     */
+    public function exists($queryOptions): bool
+    {
+        return !is_null($this->findOneBy($queryOptions));
+    }
 }

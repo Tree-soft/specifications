@@ -85,4 +85,16 @@ class RepositoryMock implements RepositoryInterface
     {
         $this->_handle(__FUNCTION__, $queryOptions);
     }
+
+    /**
+     * @param $queryOptions
+     *
+     * @return bool
+     */
+    public function exists($queryOptions): bool
+    {
+        $this->_handle(__FUNCTION__, $queryOptions);
+
+        return false;
+    }
 }
