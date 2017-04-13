@@ -234,6 +234,9 @@ class JsonSchemaTransformerTest extends TestCase
                     ['>', '&'],
                 ],
             ],
+            'normalize' => [
+                $data['normalize'], 'ext>normalize>ext2',
+            ],
         ];
     }
 

@@ -11,6 +11,7 @@ use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule;
 use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\AbstractTransformation;
 use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ConstTransformation;
 use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\DefaultTransformation;
+use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\NormalizeTransformation;
 use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValueExtractor;
 use TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\ValuePopulator;
 use RuntimeException;
@@ -60,6 +61,7 @@ class JsonSchemaTransformer extends AbstractTransformer
     private $transformations = [
         'const' => ConstTransformation::class,
         'default' => DefaultTransformation::class,
+        'normalize' => NormalizeTransformation::class,
     ];
 
     /**
