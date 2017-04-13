@@ -16,6 +16,12 @@ TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\Nor
       - configure:
         - []
 
+TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Transformations\NullIfTransformation:
+  nullif_t:
+    __calls:
+      - configure:
+        - []
+
 TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule:
   copy:
     from: ext
@@ -50,3 +56,9 @@ TreeSoft\Specifications\Transforming\Transformers\JsonSchema\Rule:
     to: 'ext2'
     transformations:
       - '@normalize_t'
+
+  nullif:
+    from: '&'
+    to: id
+    transformations:
+      - '@nullif_t'
