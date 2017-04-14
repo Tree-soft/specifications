@@ -3,12 +3,9 @@
 namespace TreeSoft\Tests\Specifications\DAL\Repositories\Eloquent\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
-use TreeSoft\Specifications\DAL\Eloquent\AbstractRepository;
 use TreeSoft\Specifications\DAL\Eloquent\Model;
 use TreeSoft\Specifications\DAL\Eloquent\QueryBuilder;
-use TreeSoft\Specifications\DAL\Eloquent\Transformers\EntityTransformer;
 use TreeSoft\Specifications\DAL\Eloquent\Transformers\EntityTransformerFactory;
-use TreeSoft\Specifications\Support\Testing\CallsTrait;
 use TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Client;
 use TreeSoft\Tests\Specifications\Mocks\Dal\Models\ModelMock;
 
@@ -19,51 +16,7 @@ class SelectTest extends TestCase
 {
     public function testFind()
     {
-        $transformer = new class() extends EntityTransformer {
-            use CallsTrait;
-
-            /**
-             * @var Client
-             */
-            public $actual;
-
-            /**
-             *  constructor.
-             */
-            public function __construct()
-            {
-            }
-
-            /**
-             * @param object $entity
-             * @param Model $model
-             *
-             * @return Model
-             */
-            public function extract($entity, Model $model): Model
-            {
-                $this->_handle(__FUNCTION__, $entity, $model);
-
-                return $model;
-            }
-
-            /**
-             * @param Model $model
-             * @param null $entity
-             *
-             * @return Client
-             */
-            public function populate(Model $model, $entity = null)
-            {
-                $this->_handle(__FUNCTION__, $model);
-
-                return $this->actual;
-            }
-        };
-
-        $transformer->actual = [new Client()];
-
-        $this->app->instance(EntityTransformer::class, $transformer);
+        $this->instanceTransformer([new Client()]);
 
         $model = new ModelMock('schema://dal/models/client');
         $this->app->instance(ModelMock::class, $model);
@@ -91,22 +44,9 @@ class SelectTest extends TestCase
                 ModelMock::class => Client::class,
             ]);
 
-        /**
-         * @var AbstractRepository $repository
-         */
-        $repository = new class($factory) extends AbstractRepository {
-            /**
-             * @var string
-             */
-            protected $model = ModelMock::class;
-        };
+        $repository = $this->createRepository();
 
-        $repository
-            ->setContainer($this->app);
-
-        $expression = [];
-
-        $entities = $repository->findBy($expression);
+        $entities = $repository->findAll();
 
         $this->assertNotEmpty($entities);
     }

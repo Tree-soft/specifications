@@ -2,60 +2,69 @@
 
 namespace TreeSoft\Specifications\Core\Interfaces;
 
+use TreeSoft\Specifications\Core\Specifications\SpecificationInterface;
+
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
 interface RepositoryInterface
 {
     /**
-     * @param mixed $expression
+     * @param SpecificationInterface $specification
      *
      * @return array
      */
-    public function findBy($expression);
+    public function findBy(SpecificationInterface $specification);
 
     /**
-     * @param mixed $expression
+     * @param SpecificationInterface $specification
      *
      * @return mixed
      */
-    public function findOneBy($expression);
+    public function findOneBy(SpecificationInterface $specification);
 
     /**
      * @param mixed $entity
-     * @param mixed|null $expression
+     * @param SpecificationInterface|null $specification
      *
      * @return mixed
      */
-    public function insert($entity, $expression = null);
+    public function insert($entity, SpecificationInterface $specification = null);
 
     /**
      * @param mixed $entity
-     * @param mixed|null $expression
+     * @param SpecificationInterface|null $specification
      *
      * @return mixed
      */
-    public function update($entity, $expression = null);
+    public function update($entity, SpecificationInterface $specification = null);
 
     /**
-     * @param mixed $expression
+     * @param SpecificationInterface $specification
+     *
+     * @return
      */
-    public function updateBy($expression);
+    public function updateBy(SpecificationInterface $specification);
 
     /**
      * @param mixed $entity
+     * @param SpecificationInterface|null $specification
+     *
+     * @return
      */
-    public function delete($entity);
+    public function delete($entity, SpecificationInterface $specification = null);
 
     /**
-     * @param mixed $expression
+     * @param SpecificationInterface $specification
+     *
+     * @return
      */
-    public function deleteBy($expression);
+    public function deleteBy(SpecificationInterface $specification);
 
     /**
-     * @param $expression
+     * @param SpecificationInterface $specification
      *
      * @return bool
      */
-    public function exists($expression): bool;
+    public function exists(SpecificationInterface $specification): bool;
 }

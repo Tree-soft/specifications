@@ -3,6 +3,7 @@
 namespace TreeSoft\Tests\Specifications\Mocks\Repositories;
 
 use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
+use TreeSoft\Specifications\Core\Specifications\SpecificationInterface;
 use TreeSoft\Specifications\Support\Testing\CallsTrait;
 
 /**
@@ -13,36 +14,36 @@ class RepositoryMock implements RepositoryInterface
     use CallsTrait;
 
     /**
-     * @param mixed $expression
+     * @param mixed $specification
      *
      * @return array
      */
-    public function findBy($expression)
+    public function findBy(SpecificationInterface $specification)
     {
-        $this->_handle(__FUNCTION__, $expression);
+        $this->_handle(__FUNCTION__, $specification);
 
         return [];
     }
 
     /**
-     * @param mixed $expression
+     * @param mixed $specification
      *
      * @return mixed
      */
-    public function findOneBy($expression)
+    public function findOneBy(SpecificationInterface $specification)
     {
-        $this->_handle(__FUNCTION__, $expression);
+        $this->_handle(__FUNCTION__, $specification);
 
         return null;
     }
 
     /**
      * @param mixed $entity
-     * @param mixed|null $expression
+     * @param mixed|null $specification
      *
      * @return mixed
      */
-    public function insert($entity, $expression = null)
+    public function insert($entity, SpecificationInterface $specification = null)
     {
         $this->_handle(__FUNCTION__, $entity);
 
@@ -51,11 +52,11 @@ class RepositoryMock implements RepositoryInterface
 
     /**
      * @param mixed $entity
-     * @param mixed|null $expression
+     * @param mixed|null $specification
      *
      * @return mixed
      */
-    public function update($entity, $expression = null)
+    public function update($entity, SpecificationInterface $specification = null)
     {
         $this->_handle(__FUNCTION__, $entity);
 
@@ -63,37 +64,38 @@ class RepositoryMock implements RepositoryInterface
     }
 
     /**
-     * @param mixed $expression
+     * @param mixed $specification
      */
-    public function updateBy($expression)
+    public function updateBy(SpecificationInterface $specification)
     {
-        $this->_handle(__FUNCTION__, $expression);
+        $this->_handle(__FUNCTION__, $specification);
     }
 
     /**
      * @param mixed $entity
+     * @param SpecificationInterface|null $specification
      */
-    public function delete($entity)
+    public function delete($entity, SpecificationInterface $specification = null)
     {
         $this->_handle(__FUNCTION__, $entity);
     }
 
     /**
-     * @param mixed $expression
+     * @param mixed $specification
      */
-    public function deleteBy($expression)
+    public function deleteBy(SpecificationInterface $specification)
     {
-        $this->_handle(__FUNCTION__, $expression);
+        $this->_handle(__FUNCTION__, $specification);
     }
 
     /**
-     * @param $expression
+     * @param SpecificationInterface $specification
      *
      * @return bool
      */
-    public function exists($expression): bool
+    public function exists(SpecificationInterface $specification): bool
     {
-        $this->_handle(__FUNCTION__, $expression);
+        $this->_handle(__FUNCTION__, $specification);
 
         return false;
     }

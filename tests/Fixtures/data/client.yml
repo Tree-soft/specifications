@@ -6,3 +6,6 @@ TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Client:
   client:
     name: '<name()>'
     company: '@company'
+  client_new:
+    name: '<name()>'
+    company: '@company'
