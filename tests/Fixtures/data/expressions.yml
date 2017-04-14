@@ -1,0 +1,4 @@
+TreeSoft\Specifications\Core\Specifications\Filters\IdSpecification:
+  filter-by-id:
+    __calls:
+      - equalId: [5]

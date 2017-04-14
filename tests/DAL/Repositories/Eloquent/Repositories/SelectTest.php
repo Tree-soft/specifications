@@ -1,6 +1,6 @@
 <?php
 
-namespace TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories;
+namespace TreeSoft\Tests\Specifications\DAL\Repositories\Eloquent\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use TreeSoft\Specifications\DAL\Eloquent\AbstractRepository;

@@ -11,10 +11,10 @@ use TreeSoft\Specifications\Checkers\Request\RequestChecker;
 use TreeSoft\Specifications\Support\DataPreparator;
 use TreeSoft\Tests\Specifications\Mocks\LoaderMock;
 use TreeSoft\Tests\Specifications\Mocks\RequestMock;
-use TreeSoft\Tests\Specifications\Mocks\Specifications\EmptyQuerySpecification;
-use TreeSoft\Tests\Specifications\Mocks\Specifications\HeaderTeapotSpecification;
-use TreeSoft\Tests\Specifications\Mocks\Specifications\IntegerIdSpecification;
-use TreeSoft\Tests\Specifications\Mocks\Specifications\RouteTestSpecification;
+use TreeSoft\Tests\Specifications\Mocks\RequestChecker\EmptyQueryChecker;
+use TreeSoft\Tests\Specifications\Mocks\RequestChecker\HeaderTeapotChecker;
+use TreeSoft\Tests\Specifications\Mocks\RequestChecker\IntegerIdChecker;
+use TreeSoft\Tests\Specifications\Mocks\RequestChecker\RouteTestChecker;
 use TreeSoft\Tests\Specifications\TestCase;
 use TreeSoft\Specifications\Schema\Loader;
 use TreeSoft\Specifications\Exceptions\EntityValidationException;
@@ -94,7 +94,7 @@ class RequestCheckerTest extends TestCase
         return [
             'data' => [
                 $schemaMap,
-                IntegerIdSpecification::class,
+                IntegerIdChecker::class,
                 (new RequestMock())
                     ->setData($data),
                 $data, [[
@@ -108,7 +108,7 @@ class RequestCheckerTest extends TestCase
             ],
             'query' => [
                 $schemaMap,
-                EmptyQuerySpecification::class,
+                EmptyQueryChecker::class,
                 (new RequestMock())
                     ->setQuery($data),
                 $data, [[
@@ -119,7 +119,7 @@ class RequestCheckerTest extends TestCase
             ],
             'header' => [
                 $schemaMap,
-                HeaderTeapotSpecification::class,
+                HeaderTeapotChecker::class,
                 (new RequestMock())
                     ->setHeaders($headers),
                 $headers, [[
@@ -130,7 +130,7 @@ class RequestCheckerTest extends TestCase
             ],
             'route' => [
                 $schemaMap,
-                RouteTestSpecification::class,
+                RouteTestChecker::class,
                 (new RequestMock())
                     ->setRoute($data),
                 $data, [[

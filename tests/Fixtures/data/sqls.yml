@@ -1,0 +1,7 @@
+all:
+  query: select * from `models`
+  bindings: []
+
+filter-by-id:
+  query: select * from `models` where `models`.`id` = ?
+  bindings: [5]

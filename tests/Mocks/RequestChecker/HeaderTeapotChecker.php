@@ -1,13 +1,16 @@
 <?php
 
-namespace TreeSoft\Tests\Specifications\Mocks\Specifications;
+namespace TreeSoft\Tests\Specifications\Mocks\RequestChecker;
 
 use TreeSoft\Specifications\Checkers\Request\RequestChecker;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
  */
-class HeaderTeapotSpecification extends RequestChecker
+class HeaderTeapotChecker extends RequestChecker
 {
+    /**
+     * @var string
+     */
     protected $headerSchema = 'schema://mock/teapot';
 }

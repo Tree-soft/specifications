@@ -1,6 +1,6 @@
 <?php
 
-namespace TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories;
+namespace TreeSoft\Tests\Specifications\DAL\Repositories\Eloquent\Repositories;
 
 use TreeSoft\Specifications\Schema\LaravelFactory;
 use TreeSoft\Specifications\Schema\Loader;

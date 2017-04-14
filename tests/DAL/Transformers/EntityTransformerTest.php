@@ -10,7 +10,7 @@ use TreeSoft\Specifications\Support\DataPreparator;
 use TreeSoft\Specifications\Support\Testing\CallsTrait;
 use TreeSoft\Specifications\Transforming\TransformerFactory;
 use TreeSoft\Specifications\Transforming\Transformers\AbstractTransformer;
-use TreeSoft\Tests\Specifications\DAL\Repositories\EloquentRepositories\TestCase;
+use TreeSoft\Tests\Specifications\DAL\Repositories\Eloquent\Repositories\TestCase;
 use TreeSoft\Tests\Specifications\Mocks\Dal\Entities\Client;
 use TreeSoft\Tests\Specifications\Mocks\Dal\Models\JsonModel;
 use TreeSoft\Tests\Specifications\Mocks\Dal\Models\ModelMock;
