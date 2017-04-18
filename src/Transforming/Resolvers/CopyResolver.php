@@ -53,7 +53,8 @@ class CopyResolver extends AbstractResolver
         return
             $this->isEqualId($from, $to) &&
             $this->isEqualType($from, $to) &&
-            $this->isEqualArray($from, $to);
+            $this->isEqualArray($from, $to) &&
+            $this->isEqualOneOf($from, $to);
     }
 
     /**
@@ -108,5 +109,41 @@ class CopyResolver extends AbstractResolver
         $to = $this->sanitize($to->items);
 
         return $this->isEqualSchema($from, $to);
+    }
+
+    /**
+     * @param mixed $from
+     * @param mixed $to
+     *
+     * @return bool
+     */
+    public function isEqualOneOf($from, $to): bool
+    {
+        if (empty($from->oneOf) && empty($to->oneOf)) {
+            return true;
+        }
+
+        if (empty($from->oneOf) || empty($to->oneOf)) {
+            return false;
+        }
+
+        $fromEqual = [];
+        $toEqual = [];
+
+        foreach ($from->oneOf as $fromId => $fromType) {
+            foreach ($to->oneOf as $toId => $toType) {
+                if ($this->isEqualSchema($fromType, $toType)) {
+                    $fromEqual[] = $fromId;
+                    $toEqual[] = $toId;
+                }
+            }
+        }
+
+        sort($fromEqual);
+        sort($toEqual);
+
+        return
+            ($fromEqual == array_keys($from->oneOf)) &&
+            ($toEqual == array_keys($toEqual));
     }
 }

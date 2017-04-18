@@ -77,6 +77,32 @@ class CopyResolverTestCase extends TestCase
                     ],
                 ]),
             ],
+            'oneOf' => [
+                $preparator->prepare([
+                    'oneOf' => [
+                        [
+                            'id' => 'schema://common/id',
+                            'oneOf' => [
+                                ['type' => 'integer'],
+                                ['type' => 'null'],
+                            ],
+                        ],
+                        ['type' => 'null'],
+                    ],
+                ]),
+                $preparator->prepare([
+                    'oneOf' => [
+                        ['type' => 'null'],
+                        [
+                            'id' => 'schema://common/id',
+                            'oneOf' => [
+                                ['type' => 'integer'],
+                                ['type' => 'null'],
+                            ],
+                        ],
+                    ],
+                ]),
+            ],
         ];
     }
 
@@ -143,6 +169,32 @@ class CopyResolverTestCase extends TestCase
                         'items' => [
                             'type' => 'string',
                         ],
+                    ],
+                ]),
+            ],
+            'oneOf' => [
+                $preparator->prepare([
+                    'oneOf' => [
+                        [
+                            'id' => 'schema://common/id',
+                            'oneOf' => [
+                                ['type' => 'integer'],
+                                ['type' => 'null'],
+                            ],
+                        ],
+                        ['type' => 'null'],
+                    ],
+                ]),
+                $preparator->prepare([
+                    'oneOf' => [
+                        [
+                            'id' => 'schema://entities/location/city',
+                            'type' => 'object',
+                            'properties' => [
+                                'id' => ['type' => 'integer'],
+                            ],
+                        ],
+                        ['type' => 'null'],
                     ],
                 ]),
             ],
