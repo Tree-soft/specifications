@@ -10,8 +10,11 @@ interface CacheInterface
     /**
      * @param string $key
      * @param mixed $data
+     * @param int $minutes
+     *
+     * @return
      */
-    public function set(string $key, $data);
+    public function set(string $key, $data, int $minutes);
 
     /**
      * @param string $key

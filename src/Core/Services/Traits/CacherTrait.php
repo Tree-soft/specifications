@@ -16,6 +16,11 @@ trait CacherTrait
     private $cacher;
 
     /**
+     * @var int
+     */
+    protected $minutes = 60;
+
+    /**
      * @return string
      */
     abstract public function getKey(): string;
@@ -35,7 +40,7 @@ trait CacherTrait
 
         $result = parent::execute();
 
-        $this->cacher->set($key, $result);
+        $this->cacher->set($key, $result, $this->minutes);
 
         return $result;
     }

@@ -66,8 +66,21 @@ class EntityValidationException extends Exception
     {
         $message = $this->getMessage();
         $data = json_encode($this->data);
-        $errors = json_encode($this->errors);
+        $errors = json_encode($this->printErrors());
 
         return "'{$message}' Data '{$data}', errors '{$errors}";
+    }
+
+    /**
+     * @return string[]
+     */
+    public function printErrors() {
+        $messages = [];
+
+        foreach ($this->errors as $error) {
+            $messages[$error->getPointer()] = $error->getMessage();
+        }
+
+        return $messages;
     }
 }

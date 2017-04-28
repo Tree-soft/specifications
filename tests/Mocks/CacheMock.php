@@ -15,8 +15,9 @@ class CacheMock implements CacheInterface
     /**
      * @param string $key
      * @param mixed $data
+     * @param int $minutes
      */
-    public function set(string $key, $data)
+    public function set(string $key, $data, int $minutes)
     {
         $this->_handle(__FUNCTION__, $key, $data);
     }
