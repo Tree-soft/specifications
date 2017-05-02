@@ -6,6 +6,7 @@ use TreeSoft\Specifications\Core\Services\AbstractService;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_Exception;
 use Illuminate\Container\Container;
+use Exception;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -43,6 +44,25 @@ trait MockServiceTrait
         $service->method('execute')->willReturnCallback(function () use ($result) {
             return value($result);
         });
+
+        $this->app->instance($class, $service);
+
+        return $service;
+    }
+
+    /**
+     * @param string $class
+     * @param Exception $exception
+     *
+     * @return AbstractService
+     */
+    public function mockThrowableService(string $class, Exception $exception): AbstractService {
+        /**
+         * @var AbstractService|PHPUnit_Framework_MockObject_MockObject $service
+         */
+        $service = $this->createMock($class);
+
+        $service->method('execute')->willThrowException($exception);
 
         $this->app->instance($class, $service);
 
