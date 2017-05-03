@@ -54,4 +54,16 @@ class EntityTransformer extends ParentTransformer
 
         return $transformer->transform($data);
     }
+
+    /**
+     * @param array $entities
+     * @param string|object $responseSchema
+     *
+     * @return array
+     */
+    public function extractCollectionToResponse($entities, $responseSchema) {
+        return array_map(function ($entity) use ($responseSchema) {
+            return $this->extractToResponse($entity, $responseSchema);
+        }, $entities);
+    }
 }
