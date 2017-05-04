@@ -41,4 +41,14 @@ class ModelMock extends Model
 
         return true;
     }
+
+    /**
+     * @return bool
+     */
+    public function delete()
+    {
+        $this->_handle(__FUNCTION__);
+
+        return true;
+    }
 }

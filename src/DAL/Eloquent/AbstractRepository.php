@@ -4,6 +4,7 @@ namespace TreeSoft\Specifications\DAL\Eloquent;
 
 use TreeSoft\Specifications\Core\Interfaces\RepositoryInterface;
 use TreeSoft\Specifications\Core\Specifications\DummySpecification;
+use TreeSoft\Specifications\Core\Specifications\Filters\IdSpecification;
 use TreeSoft\Specifications\Core\Specifications\SpecificationInterface;
 use TreeSoft\Specifications\DAL\Eloquent\Transformers\EntityTransformerFactory;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
@@ -140,7 +141,10 @@ abstract class AbstractRepository implements RepositoryInterface, ContainerAware
      */
     public function delete($entity, SpecificationInterface $specification = null)
     {
-        // TODO: Implement delete() method.
+        $transformer = $this->factory->createByEntity(get_class($entity));
+        $model = $transformer->extract($entity, $this->container->make($this->model));
+
+        $model->delete();
     }
 
     /**
@@ -148,7 +152,14 @@ abstract class AbstractRepository implements RepositoryInterface, ContainerAware
      */
     public function deleteBy(SpecificationInterface $specification)
     {
-        // TODO: Implement deleteBy() method.
+        /**
+         * @var QueryBuilder $builder
+         */
+        $builder = $this->container->make(QueryBuilder::class);
+
+        $builder->build(
+            $this->container->make($this->model), $specification
+        )->delete();
     }
 
     /**
