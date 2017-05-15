@@ -5,10 +5,11 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "league/json-guard": "dev-master as 0.5.1",
         "rnr/resolver-provider": "^1.0",
         "myclabs/deep-copy": "^1.5",
-        "nikic/php-parser": "^3.0"
+        "nikic/php-parser": "^3.0",
+        "league/json-reference": "~1.0",
+        "league/json-guard": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",

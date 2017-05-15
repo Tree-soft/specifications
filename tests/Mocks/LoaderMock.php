@@ -2,8 +2,7 @@
 
 namespace TreeSoft\Tests\Specifications\Mocks;
 
-use League\JsonGuard\Loader as LoaderInterface;
-use League\JsonGuard;
+use League\JsonReference\LoaderInterface;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -32,7 +31,7 @@ class LoaderMock implements LoaderInterface
      */
     public function load($path)
     {
-        return JsonGuard\json_decode(
+        return json_decode(
             file_get_contents($this->schemaMap[$path])
         );
     }

@@ -99,10 +99,8 @@ class RequestCheckerTest extends TestCase
                     ->setData($data),
                 $data, [[
                     'keyword' => 'type',
-                    'message' => 'Value "test" is not a(n) "integer"',
                 ], [
                     'keyword' => 'required',
-                    'message' => 'Required properties missing: ["name"]',
                 ]],
                 DataValidationException::class,
             ],
@@ -113,7 +111,6 @@ class RequestCheckerTest extends TestCase
                     ->setQuery($data),
                 $data, [[
                     'keyword' => 'additionalProperties',
-                    'message' => 'Additional properties found which are not allowed: "id"',
                 ]],
                 QueryValidationException::class,
             ],
@@ -124,7 +121,6 @@ class RequestCheckerTest extends TestCase
                     ->setHeaders($headers),
                 $headers, [[
                     'keyword' => 'enum',
-                    'message' => 'Value "Bosch XXX" is not one of: ["Bosch 123","Vitek"]',
                 ]],
                 HeaderValidationException::class,
             ],
@@ -135,10 +131,8 @@ class RequestCheckerTest extends TestCase
                     ->setRoute($data),
                 $data, [[
                     'keyword' => 'type',
-                    'message' => 'Value "test" is not a(n) "integer"',
                 ], [
                     'keyword' => 'required',
-                    'message' => 'Required properties missing: ["name"]',
                 ]],
                 RouteValidationException::class,
             ],
@@ -154,7 +148,6 @@ class RequestCheckerTest extends TestCase
         $actual = array_map(function (ValidationError $error) {
             return [
                 'keyword' => $error->getKeyword(),
-                'message' => $error->getMessage(),
             ];
         }, $errors);
 

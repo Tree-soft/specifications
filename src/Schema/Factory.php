@@ -2,9 +2,10 @@
 
 namespace TreeSoft\Specifications\Schema;
 
-use League\JsonGuard\Dereferencer;
-use League\JsonGuard\Reference;
 use League\JsonGuard\Validator;
+use League\JsonReference\Dereferencer;
+use League\JsonReference\Reference;
+
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -40,7 +41,7 @@ class Factory
      */
     protected function createDereferencer(): Dereferencer
     {
-        return new Dereferencer();
+        return Dereferencer::draft4();
     }
 
     /**

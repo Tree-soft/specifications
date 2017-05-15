@@ -2,7 +2,7 @@
 
 namespace TreeSoft\Tests\Specifications\Schema;
 
-use League\JsonGuard\Reference;
+use League\JsonReference\Reference;
 use TreeSoft\Specifications\Schema\Factory;
 use TreeSoft\Specifications\Schema\LaravelFactory;
 use TreeSoft\Specifications\Schema\Loader;

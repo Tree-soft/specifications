@@ -2,9 +2,8 @@
 
 namespace TreeSoft\Specifications\Schema;
 
-use League\JsonGuard\Exceptions\SchemaLoadingException;
-use League\JsonGuard\Loader as LoaderInterface;
-use League\JsonGuard;
+use League\JsonReference\LoaderInterface;
+use League\JsonReference;
 
 /**
  * @author Sergei Melnikov <me@rnr.name>
@@ -26,10 +25,10 @@ class Loader implements LoaderInterface
         $path = $this->getFileName($path);
 
         if (!file_exists($path)) {
-            throw SchemaLoadingException::notFound($path);
+            throw JsonReference\SchemaLoadingException::notFound($path);
         }
 
-        return JsonGuard\json_decode(file_get_contents($path), false, 512, JSON_BIGINT_AS_STRING);
+        return json_decode(file_get_contents($path), false, 512, JSON_BIGINT_AS_STRING);
     }
 
     /**
@@ -39,7 +38,7 @@ class Loader implements LoaderInterface
      */
     public function getFileName(string $path): string
     {
-        $path = rtrim(JsonGuard\strip_fragment($path), '#');
+        $path = rtrim(JsonReference\strip_fragment($path), '#');
         $paths = [$path];
 
         if (!empty($this->path)) {
@@ -47,9 +46,7 @@ class Loader implements LoaderInterface
         }
 
         $path = implode(DIRECTORY_SEPARATOR, $paths);
-        $path = "{$path}.json";
-
-        return $path;
+        return "{$path}.json";
     }
 
     /**

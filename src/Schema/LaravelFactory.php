@@ -2,7 +2,7 @@
 
 namespace TreeSoft\Specifications\Schema;
 
-use League\JsonGuard\Dereferencer;
+use League\JsonReference\Dereferencer;
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
 
