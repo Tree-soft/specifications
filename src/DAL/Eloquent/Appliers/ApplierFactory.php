@@ -19,7 +19,7 @@ class ApplierFactory implements ContainerAwareInterface
      * @var array
      */
     private $appliers = [
-        DummySpecification::class => DummySpecification::class,
+        DummySpecification::class => DummySpecificationApplier::class,
         IdSpecification::class => IdSpecificationApplier::class,
     ];
 
