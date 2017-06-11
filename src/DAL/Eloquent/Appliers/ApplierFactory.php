@@ -4,6 +4,7 @@ namespace TreeSoft\Specifications\DAL\Eloquent\Appliers;
 
 use Rnr\Resolvers\Interfaces\ContainerAwareInterface;
 use Rnr\Resolvers\Traits\ContainerAwareTrait;
+use TreeSoft\Specifications\Core\Specifications\DummySpecification;
 use TreeSoft\Specifications\Core\Specifications\Filters\IdSpecification;
 use TreeSoft\Specifications\Core\Specifications\SpecificationInterface;
 
@@ -18,6 +19,7 @@ class ApplierFactory implements ContainerAwareInterface
      * @var array
      */
     private $appliers = [
+        DummySpecification::class => DummySpecification::class,
         IdSpecification::class => IdSpecificationApplier::class,
     ];
 
