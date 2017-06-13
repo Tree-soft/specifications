@@ -144,6 +144,7 @@ abstract class AbstractRepository implements RepositoryInterface, ContainerAware
         $transformer = $this->factory->createByEntity(get_class($entity));
         $model = $transformer->extract($entity, $this->container->make($this->model));
 
+        $model->exists = true;
         $model->delete();
     }
 
