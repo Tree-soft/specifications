@@ -74,11 +74,12 @@ class EntityValidationException extends Exception
     /**
      * @return string[]
      */
-    public function printErrors() {
+    public function printErrors()
+    {
         $messages = [];
 
         foreach ($this->errors as $error) {
-            $messages[$error->getPointer()] = $error->getMessage();
+            $messages[$error->getDataPath()] = $error->getMessage();
         }
 
         return $messages;

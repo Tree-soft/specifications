@@ -63,6 +63,7 @@ class RequestCheckerTest extends TestCase
 
             $this->assertEquals($expectedData, $e->getData());
             $this->assertValidationsError($expected, $e->getErrors());
+            $this->assertNotEmpty(array_keys($e->printErrors()));
         }
     }
 
